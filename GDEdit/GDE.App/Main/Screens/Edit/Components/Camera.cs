@@ -39,7 +39,7 @@ namespace GDE.App.Main.Screens.Edit.Components
 
         public GeneralObject GetClonedGhostObjectLevelObject() => snappedCursorContainer.GhostObject.GetObject().Clone();
 
-        protected override bool OnDrag(DragEvent e)
+        /*protected override bool OnDrag(DragEvent e)
         {
             if (AbleToDrag)
             {
@@ -58,15 +58,13 @@ namespace GDE.App.Main.Screens.Edit.Components
                             -GetCoordinate(cameraOffsetBindable.Value.Y) + cameraOffsetBindable.Value.Y);
                     }
                 }
-
-                return true;
             }
 
-            return false;
+            return base.OnDrag(e);
         }
 
-        protected override bool OnDragEnd(DragEndEvent e) => true;
-        protected override bool OnDragStart(DragStartEvent e) => true;
+        protected override bool OnDragEnd(DragEndEvent e) => false;
+        protected override bool OnDragStart(DragStartEvent e) => true;*/
 
         protected override bool OnKeyDown(KeyDownEvent e)
         {

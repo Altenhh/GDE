@@ -130,7 +130,7 @@ namespace GDE.App.Main.Screens.Edit
                     RelativeSizeAxes = Axes.Both,
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
-                    //AbleToDrag = false, // TEMPORARY
+                    AbleToDrag = false, // TEMPORARY
                     Children = new Drawable[]
                     {
                         grid = new Grid

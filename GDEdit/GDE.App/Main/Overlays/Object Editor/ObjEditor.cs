@@ -38,21 +38,22 @@ using GDEdit.Utilities.Objects.GeometryDash.LevelObjects;
 using GDEdit.Utilities.Objects.GeometryDash;
 using GDEdit.Application;
 using GDE.App.Main.Graphics;
+using osu.Framework.Graphics.UserInterface;
 
 namespace GDE.App.Main.Overlays.ObjectEditor
 {
-    public class ObjEditor : GDEFocusedOverlayContainer
+    public class ObjEditor : FocusedOverlayContainer
     {
         private ObjectBase drawableObject;
         private GeneralObject generalObject;
-
+        private Database database;
+        private Level level => database.UserLevels[i];
         private int i;
 
-        private Database database;
+        // Bindables
+        private Bindable<string> objectName = new Bindable<string>();
 
-        private Level level => database.UserLevels[i];
-
-        public override bool BlockScreenWideMouse => false;
+        //public override bool BlockScreenWideMouse => true;
 
         public ObjEditor(GeneralObject obj, int i)
         {
@@ -80,6 +81,7 @@ namespace GDE.App.Main.Overlays.ObjectEditor
                 },
                 new SpriteText
                 {
+                    Font = GDEFont.Default,
                     Text = "Object Editor",
                     Padding = new MarginPadding
                     {
@@ -100,14 +102,28 @@ namespace GDE.App.Main.Overlays.ObjectEditor
                     },
                     Children = new Drawable[]
                     {
-                        drawableObject = new ObjectBase(generalObject)
+                        new FillFlowContainer
                         {
-                            Size = new Vector2(50),
-                            Anchor = Anchor.TopLeft,
-                            Origin = Anchor.TopLeft,
-                            // Resets values so theres no problems in design
-                            Position = new Vector2(0),
-                            Scale = new Vector2(1)
+                            RelativeSizeAxes = Axes.X,
+                            Height = 50,
+                            Direction = FillDirection.Horizontal,
+                            Children = new Drawable[]
+                            {
+                                drawableObject = new ObjectBase(generalObject)
+                                {
+                                    Size = new Vector2(50),
+                                    Anchor = Anchor.TopLeft,
+                                    Origin = Anchor.TopLeft,
+                                    // Resets values so theres no problems in design
+                                    Position = new Vector2(0),
+                                    Scale = new Vector2(1)
+                                },
+                                new EditableTextBox
+                                {
+                                    Bindable = objectName,
+                                    LabelText = "Name",
+                                }
+                            }
                         }
                     }
                 }
