@@ -26,6 +26,8 @@ namespace GDE.App.Main.Graphics.Containers
         [BackgroundDependencyLoader]
         private void load()
         {
+            if (gdeApp != null)
+                OverlayActivationMode.BindTo(gdeApp.OverlayActivationMode);
             StateChanged += onStateChanged;
         }
 
