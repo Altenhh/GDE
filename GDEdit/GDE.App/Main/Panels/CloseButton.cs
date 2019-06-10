@@ -1,4 +1,4 @@
-﻿using GDE.App.Main.UI;
+﻿using GDE.App.Main.Graphics.UserInterface;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;

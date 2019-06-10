@@ -1,7 +1,7 @@
 ﻿using System;
 using osu.Framework.Graphics.UserInterface;
 
-namespace GDE.App.Main.UI.Toolbar
+namespace GDE.App.Main.Graphics.UserInterface.Toolbar
 {
     public class ToolbarMenuItem : MenuItem
     {

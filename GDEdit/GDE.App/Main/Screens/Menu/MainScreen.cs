@@ -1,12 +1,10 @@
 ﻿using DiscordRPC;
 using GDE.App.Main.Colors;
-using GDE.App.Main.Containers;
+using GDE.App.Main.Graphics.Containers;
 using GDE.App.Main.Overlays;
 using GDE.App.Main.Screens.Menu.Components;
 using GDE.App.Main.Tools;
-using GDE.App.Main.UI;
 using GDEdit.Application;
-using GDEdit.Application.Editor;
 using GDEdit.Utilities.Objects.GeometryDash;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -14,14 +12,12 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Logging;
 using osu.Framework.Screens;
 using osuTK;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace GDE.App.Main.Screens.Menu
 {

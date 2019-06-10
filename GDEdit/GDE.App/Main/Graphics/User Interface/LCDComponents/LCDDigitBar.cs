@@ -3,7 +3,7 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osuTK.Graphics;
 
-namespace GDE.App.Main.UI.LCDComponents
+namespace GDE.App.Main.Graphics.UserInterface.LCDComponents
 {
     public abstract class LCDDigitBar : Container
     {

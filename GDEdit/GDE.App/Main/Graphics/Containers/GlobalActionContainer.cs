@@ -5,7 +5,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Input;
 using osu.Framework.Input.Bindings;
 
-namespace GDE.App.Main.Containers
+namespace GDE.App.Main.Graphics.Containers
 {
     public class GlobalActionContainer : KeyBindingContainer<GlobalAction>
     {

@@ -1,4 +1,4 @@
-﻿using GDE.App.Main.UI;
+﻿using GDE.App.Main.Graphics.UserInterface;
 using GDEdit.Application.Editor;
 using GDEdit.Utilities.Objects.GeometryDash.LevelObjects;
 using osu.Framework.Allocation;

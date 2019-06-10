@@ -1,7 +1,7 @@
 ﻿using GDE.App.Main.Colors;
 using GDE.App.Main.Levels;
 using GDE.App.Main.Objects;
-using GDE.App.Main.UI;
+using GDE.App.Main.Graphics.UserInterface;
 using GDEdit.Application;
 using GDEdit.Application.Editor;
 using GDEdit.Utilities.Objects.GeometryDash;

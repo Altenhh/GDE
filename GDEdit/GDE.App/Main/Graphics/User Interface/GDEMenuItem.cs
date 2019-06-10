@@ -1,7 +1,7 @@
 ﻿using System;
 using osu.Framework.Graphics.UserInterface;
 
-namespace GDE.App.Main.UI
+namespace GDE.App.Main.Graphics.UserInterface
 {
     public class GDEMenuItem : MenuItem
     {

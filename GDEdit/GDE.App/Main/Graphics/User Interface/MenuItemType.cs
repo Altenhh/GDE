@@ -1,4 +1,4 @@
-﻿namespace GDE.App.Main.UI.Toolbar
+﻿namespace GDE.App.Main.Graphics.UserInterface
 {
     public enum MenuItemType
     {

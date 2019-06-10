@@ -11,7 +11,7 @@ using GDE.App.Main.Colors;
 using osu.Framework.Input.Events;
 using System;
 
-namespace GDE.App.Main.UI.Tabs
+namespace GDE.App.Main.Graphics.UserInterface.Tabs
 {
     public class LevelTab : TabbableContainer
     {

@@ -1,6 +1,7 @@
-﻿using GDE.App.Main.Colors;
-using osu.Framework.Allocation;
+﻿using osu.Framework.Allocation;
 using osu.Framework.Audio;
+using osu.Framework.Audio.Sample;
+using osuTK.Graphics;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -8,13 +9,13 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
 using osuTK;
-using osuTK.Graphics;
+using GDE.App.Main.Colors;
 
-namespace GDE.App.Main.UI.Toolbar
+namespace GDE.App.Main.Graphics.UserInterface
 {
-    public class ToolbarMenu : Menu
+    public class GDEMenu : Menu
     {
-        public ToolbarMenu(Direction direction, bool topLevelMenu = false)
+        public GDEMenu(Direction direction, bool topLevelMenu = false)
             : base(direction, topLevelMenu)
         {
             BackgroundColour = Color4.Black.Opacity(0.5f);
@@ -40,29 +41,22 @@ namespace GDE.App.Main.UI.Toolbar
             }
         }
 
-        protected override DrawableMenuItem CreateDrawableMenuItem(MenuItem item) => new DrawableToolbarMenu(item);
-
-        protected override Menu CreateSubMenu() => new ToolbarMenu(Direction.Vertical)
+        protected override Menu CreateSubMenu() => new GDEMenu(Direction.Vertical)
         {
             Anchor = Direction == Direction.Horizontal ? Anchor.BottomLeft : Anchor.TopRight
         };
 
-        protected class DrawableToolbarMenu : DrawableMenuItem
+        protected class DrawableGDEMenuItem : DrawableMenuItem
         {
-            private const int margin_horizontal = 17;
+            private const int margin_horizontal = 10;
             private const int text_size = 17;
             private const int transition_length = 80;
             public const int MARGIN_VERTICAL = 4;
 
             private TextContainer text;
 
-            public DrawableToolbarMenu(MenuItem item)
+            public DrawableGDEMenuItem(MenuItem item)
                 : base(item)
-            {
-            }
-
-            [BackgroundDependencyLoader]
-            private void load(AudioManager audio)
             {
                 BackgroundColour = Color4.Transparent;
                 BackgroundColourHover = GDEColors.FromHex(@"172023");
@@ -72,17 +66,19 @@ namespace GDE.App.Main.UI.Toolbar
 
             private void updateTextColour()
             {
-                switch ((Item as ToolbarMenuItem)?.Type)
+                switch ((Item as GDEMenuItem)?.Type)
                 {
+                    default:
+                    case MenuItemType.Standard:
+                        text.Colour = Color4.White;
+                        break;
+
                     case MenuItemType.Destructive:
                         text.Colour = Color4.Red;
                         break;
+
                     case MenuItemType.Highlighted:
                         text.Colour = GDEColors.FromHex(@"ffcc22");
-                        break;
-                    case MenuItemType.Standard:
-                    default:
-                        text.Colour = Color4.White;
                         break;
                 }
             }
@@ -141,7 +137,7 @@ namespace GDE.App.Main.UI.Toolbar
                             Alpha = 0,
                             Anchor = Anchor.CentreLeft,
                             Origin = Anchor.CentreLeft,
-                            Font = new FontUsage(size: text_size),
+                            Font = new FontUsage(size: text_size, weight: "Bold"),
                             Margin = new MarginPadding { Horizontal = margin_horizontal, Vertical = MARGIN_VERTICAL },
                         }
                     };

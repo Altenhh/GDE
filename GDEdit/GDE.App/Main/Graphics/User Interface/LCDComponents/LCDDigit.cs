@@ -2,9 +2,9 @@
 using osu.Framework.Graphics.Containers;
 using osuTK;
 using System;
-using static GDE.App.Main.UI.LCDComponents.LCDDigitBar;
+using static GDE.App.Main.Graphics.UserInterface.LCDComponents.LCDDigitBar;
 
-namespace GDE.App.Main.UI.LCDComponents
+namespace GDE.App.Main.Graphics.UserInterface.LCDComponents
 {
     public class LCDDigit : Container
     {

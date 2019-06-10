@@ -1,5 +1,5 @@
 ﻿using GDE.App.Main.Colors;
-using GDE.App.Main.UI;
+using GDE.App.Main.Graphics.UserInterface;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;

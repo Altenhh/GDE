@@ -5,7 +5,7 @@ using GDE.App.Main.Objects;
 using GDE.App.Main.Screens.Edit.Components;
 using GDE.App.Main.Screens.Edit.Components.Menu;
 using GDE.App.Main.Tools;
-using GDE.App.Main.UI;
+using GDE.App.Main.Graphics.UserInterface;
 using GDEdit.Application;
 using GDEdit.Application.Editor;
 using GDEdit.Utilities.Objects.GeometryDash;

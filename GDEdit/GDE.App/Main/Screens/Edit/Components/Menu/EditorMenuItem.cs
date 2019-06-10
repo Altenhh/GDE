@@ -1,4 +1,4 @@
-﻿using GDE.App.Main.UI;
+﻿using GDE.App.Main.Graphics.UserInterface;
 using System;
 
 namespace GDE.App.Main.Screens.Edit.Components.Menu

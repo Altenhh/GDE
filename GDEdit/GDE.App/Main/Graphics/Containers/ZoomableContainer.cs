@@ -2,7 +2,7 @@
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Events;
 
-namespace GDE.App.Main.Containers
+namespace GDE.App.Main.Graphics.Containers
 {
     public class ZoomableContainer : Container
     {
