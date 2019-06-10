@@ -34,7 +34,7 @@ namespace GDE.App.Main.Overlays.ObjectEditor
                 if (text == null)
                 {
                     // construct lazily for cases where the label is not needed (may be provided by the Control).
-                    Add(text = new SpriteText { Font = GDEFont.GetFont(size:25), Position = new Vector2(0, -5) });
+                    Add(text = new SpriteText { Font = GDEFont.GetFont(size: 25), Position = new Vector2(0, -5) });
                     FlowContent.SetLayoutPosition(text, AppearBeforeText ? 1 : -1);
                 }
 
@@ -56,15 +56,13 @@ namespace GDE.App.Main.Overlays.ObjectEditor
 
         protected EditableItem()
         {
-            AutoSizeAxes = Axes.Y;
-            RelativeSizeAxes = Axes.X;
+            AutoSizeAxes = Axes.Both;
 
             InternalChildren = new Drawable[]
             {
                 FlowContent = new FillFlowContainer
                 {
-                    RelativeSizeAxes = Axes.X,
-                    AutoSizeAxes = Axes.Y,
+                    AutoSizeAxes = Axes.Both,
                     Direction = FillFlowDirection,
                     Padding = new MarginPadding { Left = 10 },
                     Child = Control = CreateControl()

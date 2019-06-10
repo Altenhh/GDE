@@ -42,7 +42,7 @@ using osu.Framework.Graphics.UserInterface;
 
 namespace GDE.App.Main.Overlays.ObjectEditor
 {
-    public class ObjEditor : FocusedOverlayContainer
+    public class ObjectEditor : FocusedOverlayContainer
     {
         private ObjectBase drawableObject;
         private GeneralObject generalObject;
@@ -55,7 +55,7 @@ namespace GDE.App.Main.Overlays.ObjectEditor
 
         //public override bool BlockScreenWideMouse => true;
 
-        public ObjEditor(GeneralObject obj, int i)
+        public ObjectEditor(GeneralObject obj, int i)
         {
             generalObject = obj;
             this.i = i;
@@ -89,8 +89,9 @@ namespace GDE.App.Main.Overlays.ObjectEditor
                         Left = 50
                     }
                 },
-                new Container
+                new DrawSizePreservingFillContainer
                 {
+                    Strategy = DrawSizePreservationStrategy.Minimum,
                     Name = "Content",
                     RelativeSizeAxes = Axes.Both,
                     Padding = new MarginPadding
@@ -117,12 +118,80 @@ namespace GDE.App.Main.Overlays.ObjectEditor
                                     // Resets values so theres no problems in design
                                     Position = new Vector2(0),
                                     Scale = new Vector2(1)
-                                },
-                                new EditableTextBox
-                                {
-                                    Bindable = objectName,
-                                    LabelText = "Name",
                                 }
+                            }
+                        },
+                        new FillFlowContainer
+                        {
+                            Direction = FillDirection.Horizontal,
+                            Spacing = new Vector2(10, 0),
+                            Anchor = Anchor.BottomLeft,
+                            Origin = Anchor.BottomLeft,
+                            RelativeSizeAxes = Axes.X,
+                            AutoSizeAxes = Axes.Y,
+                            Children = new Drawable[]
+                            {
+                                new FillFlowContainer
+                                {
+                                    AutoSizeAxes = Axes.Both,
+                                    Direction = FillDirection.Vertical,
+                                    Spacing = new Vector2(0, 10),
+                                    Anchor = Anchor.BottomLeft,
+                                    Origin = Anchor.BottomLeft,
+                                    Children = new Drawable[]
+                                    {
+                                        new EditableCheckbox
+                                        {
+                                            LabelText = "Flipped Horizontally"
+                                        },
+                                        new EditableCheckbox
+                                        {
+                                            LabelText = "Flipped Vertically"
+                                        },
+                                        new EditableCheckbox
+                                        {
+                                            LabelText = "Glow"
+                                        }
+                                    }
+                                },
+                                new FillFlowContainer
+                                {
+                                    AutoSizeAxes = Axes.Both,
+                                    Direction = FillDirection.Vertical,
+                                    Spacing = new Vector2(0, 10),
+                                    Anchor = Anchor.BottomLeft,
+                                    Origin = Anchor.BottomLeft,
+                                    Children = new Drawable[]
+                                    {
+                                        new EditableCheckbox
+                                        {
+                                            LabelText = "Don't Fade"
+                                        },
+                                        new EditableCheckbox
+                                        {
+                                            LabelText = "Don't Enter"
+                                        },
+                                        new EditableCheckbox
+                                        {
+                                            LabelText = "Group Parent"
+                                        }
+                                    }
+                                },
+                                new FillFlowContainer
+                                {
+                                    AutoSizeAxes = Axes.Both,
+                                    Direction = FillDirection.Vertical,
+                                    Spacing = new Vector2(0, 10),
+                                    Anchor = Anchor.BottomLeft,
+                                    Origin = Anchor.BottomLeft,
+                                    Children = new Drawable[]
+                                    {
+                                        new EditableCheckbox
+                                        {
+                                            LabelText = "High Detail"
+                                        }
+                                    }
+                                },
                             }
                         }
                     }

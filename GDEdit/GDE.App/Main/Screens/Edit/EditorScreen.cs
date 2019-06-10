@@ -37,7 +37,7 @@ namespace GDE.App.Main.Screens.Edit
         private Grid grid;
         private Camera camera;
         private EditorTools tools;
-        private ObjEditor objEditor;
+        private ObjectEditor objEditor;
 
         [BackgroundDependencyLoader]
         private void load(DatabaseCollection databases, TextureStore ts)
@@ -102,7 +102,7 @@ namespace GDE.App.Main.Screens.Edit
                 Depth = -float.MaxValue,
                 Children = new Drawable[]
                 {
-                    objEditor = new ObjEditor(level.LevelObjects[0], i)
+                    objEditor = new ObjectEditor(level.LevelObjects[0], i)
                     {
                         RelativeSizeAxes = Axes.Both,
                         Size = new Vector2(0.8f),
