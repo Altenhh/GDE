@@ -37,6 +37,7 @@ using GDE.App.Main.Colors;
 using GDEdit.Utilities.Objects.GeometryDash.LevelObjects;
 using GDEdit.Utilities.Objects.GeometryDash;
 using GDEdit.Application;
+using GDE.App.Main.Graphics;
 
 namespace GDE.App.Main.Overlays.ObjectEditor
 {
@@ -79,7 +80,6 @@ namespace GDE.App.Main.Overlays.ObjectEditor
                 },
                 new SpriteText
                 {
-                    Font = new FontUsage(size:30),
                     Text = "Object Editor",
                     Padding = new MarginPadding
                     {

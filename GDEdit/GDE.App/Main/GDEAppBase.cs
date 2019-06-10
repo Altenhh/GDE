@@ -36,8 +36,10 @@ namespace GDE.App.Main
         {
             Resources.AddStore(new DllResourceStore(mainResourceFile));
 
-            dependencies.Cache(storage);
+            Fonts.AddStore(new GlyphStore(Resources, @"Fonts/Purista/Purista"));
+            Fonts.AddStore(new GlyphStore(Resources, @"Fonts/Digitall/Digitall"));
 
+            dependencies.Cache(storage);
             dependencies.CacheAs(new Editor(null));
             dependencies.CacheAs(new DatabaseCollection());
         }
@@ -45,11 +47,9 @@ namespace GDE.App.Main
         public override void SetHost(GameHost host)
         {
             base.SetHost(host);
-
             var config = new FrameworkConfigManager(storage);
 
             Window.Title = @"GD Edit";
-
             host.ExceptionThrown += ExceptionHandler;
         }
 
