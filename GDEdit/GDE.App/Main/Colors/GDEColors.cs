@@ -6,6 +6,9 @@ namespace GDE.App.Main.Colors
     /// <summary>Provides the colors of the application and functions related to them.</summary>
     public static class GDEColors
     {
+        public static Color4 Gray(float amt) => new Color4(amt, amt, amt, 1f);
+        public static Color4 Gray(byte amt) => new Color4(amt, amt, amt, 255);
+
         /// <summary>Returns a <see cref="Color4"/> value from a hex string.</summary>
         /// <param name="hex">The hex string of the color.</param>
         public static Color4 FromHex(string hex)
