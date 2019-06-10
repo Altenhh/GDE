@@ -22,6 +22,8 @@ namespace GDE.App.Main.Overlays.ObjectEditor
 
         protected virtual FillDirection FillFlowDirection => FillDirection.Full;
 
+        protected virtual bool AppearBeforeText => false;
+
         private SpriteText text;
 
         public virtual string LabelText
@@ -33,7 +35,7 @@ namespace GDE.App.Main.Overlays.ObjectEditor
                 {
                     // construct lazily for cases where the label is not needed (may be provided by the Control).
                     Add(text = new SpriteText { Font = GDEFont.GetFont(size:25), Position = new Vector2(0, -5) });
-                    FlowContent.SetLayoutPosition(text, -1);
+                    FlowContent.SetLayoutPosition(text, AppearBeforeText ? 1 : -1);
                 }
 
                 text.Text = value;
