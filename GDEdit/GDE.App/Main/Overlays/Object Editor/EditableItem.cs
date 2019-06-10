@@ -1,16 +1,8 @@
-﻿using System.Collections.Generic;
-using osu.Framework.Allocation;
-using osu.Framework.Bindables;
-using osuTK.Graphics;
-using osu.Framework.Extensions.Color4Extensions;
+﻿using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Cursor;
-using osu.Framework.Graphics.Effects;
-using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
-using osu.Framework.Input.Events;
 using osuTK;
 using GDE.App.Main.Graphics;
 
@@ -40,7 +32,7 @@ namespace GDE.App.Main.Overlays.ObjectEditor
                 if (text == null)
                 {
                     // construct lazily for cases where the label is not needed (may be provided by the Control).
-                    Add(text = new SpriteText { Font = GDEFont.Default });
+                    Add(text = new SpriteText { Font = GDEFont.GetFont(size:25), Position = new Vector2(0, -5) });
                     FlowContent.SetLayoutPosition(text, -1);
                 }
 

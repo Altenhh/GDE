@@ -1,7 +1,6 @@
-﻿using osu.Framework.Graphics;
+﻿using GDE.App.Main.Overlays.ObjectEditor.Components;
+using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.UserInterface;
-using osuTK;
 
 namespace GDE.App.Main.Overlays.ObjectEditor
 {
@@ -9,11 +8,12 @@ namespace GDE.App.Main.Overlays.ObjectEditor
     {
         protected override FillDirection FillFlowDirection => FillDirection.Vertical;
 
-        protected override Drawable CreateControl() => new TextBox
+        protected override Drawable CreateControl() => new ShadowedTextBox
         {
-            Margin = new MarginPadding { Top = 5 },
-            Width = 100,
-            Height = 20,
+            Margin = new MarginPadding { Top = 2 },
+            Text = "Object",
+            Width = 200,
+            Height = 25,
         };
     }
 }
