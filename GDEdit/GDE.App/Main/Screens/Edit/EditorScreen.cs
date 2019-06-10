@@ -173,15 +173,7 @@ namespace GDE.App.Main.Screens.Edit
             Save();
             this.Exit();
         }
-        private void Save() => editor.Save(database, i);
 
-        public enum Types
-        {
-            one,
-            two,
-            three,
-            four,
-            five
-        }
+        private void Save() => editor.Save(database, i);
     }
 }
