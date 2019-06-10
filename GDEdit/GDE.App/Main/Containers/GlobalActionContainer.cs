@@ -19,6 +19,14 @@ namespace GDE.App.Main.Containers
 
             new KeyBinding(InputKey.Shift, GlobalAction.ObjMoveModifier),
 
+            //User Interface
+            new KeyBinding(InputKey.Escape, GlobalAction.Back),
+            new KeyBinding(InputKey.MouseButton1, GlobalAction.Back),
+
+            new KeyBinding(InputKey.Space, GlobalAction.Select),
+            new KeyBinding(InputKey.Enter, GlobalAction.Select),
+            new KeyBinding(InputKey.KeypadEnter, GlobalAction.Select),
+
             //Others
             new KeyBinding(new[] { InputKey.Alt, InputKey.Control, InputKey.F2 }, GlobalAction.LordsKeys),
         };
@@ -38,6 +46,10 @@ namespace GDE.App.Main.Containers
         ObjMoveUp,
         ObjMoveDown,
         ObjMoveModifier,
+
+        //User Interface
+        Back,
+        Select,
 
         //Others
         [Description("Toggles the lords screen")]
