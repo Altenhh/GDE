@@ -19,8 +19,9 @@ namespace GDE.App.Main
     {
         private const string mainResourceFile = "GDE.Resources.dll";
 
-        private DependencyContainer dependencies;
-        private Storage storage;
+        protected DependencyContainer dependencies;
+
+        protected Storage storage;
 
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent) =>
             dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
@@ -37,7 +38,6 @@ namespace GDE.App.Main
 
             dependencies.Cache(storage);
 
-            dependencies.Cache(this);
             dependencies.CacheAs(new Editor(null));
             dependencies.CacheAs(new DatabaseCollection());
         }

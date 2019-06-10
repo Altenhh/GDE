@@ -64,10 +64,17 @@ namespace GDE.App.Main
                     RelativeSizeAxes = Axes.Both,
                     Children = new Drawable[]
                     {
-                        new ScreenStack(new MainScreen())
+                        screenContainer = new Container
                         {
-                            RelativeSizeAxes = Axes.Both
-                        },
+                            RelativeSizeAxes = Axes.Both,
+                            Children = new Drawable[]
+                            {
+                                new ScreenStack(new MainScreen())
+                                {
+                                    RelativeSizeAxes = Axes.Both
+                                }
+                            }
+                        }
                     }   
                 },
                 notification = new ToastNotification
@@ -89,6 +96,8 @@ namespace GDE.App.Main
         {
             if (RuntimeInfo.OS == RuntimeInfo.Platform.Windows)
                 Add(new SquirrelUpdateManager());
+
+            dependencies.Cache(this);
 
             OverlayActivationMode.ValueChanged += mode =>
             {

@@ -20,6 +20,8 @@ namespace GDE.App.Main.Screens.Edit.Components
         private Bindable<Vector2> cameraOffsetBindable = new Bindable<Vector2>();
         private GridSnappedCursorContainer snappedCursorContainer;
 
+        public bool AbleToDrag = true;
+
         public Camera(Editor Editor)
         {
             editor = Editor;
@@ -39,23 +41,28 @@ namespace GDE.App.Main.Screens.Edit.Components
 
         protected override bool OnDrag(DragEvent e)
         {
-            cameraOffsetBindable.Value += e.Delta;
-            
-            foreach (var child in Children)
+            if (AbleToDrag)
             {
-                if (child is IDraggable draggable)
-                    if (draggable.Draggable)
-                        child.Position += e.Delta;
-
-                if (child is Grid grid)
+                cameraOffsetBindable.Value += e.Delta;
+            
+                foreach (var child in Children)
                 {
-                    grid.Position = new Vector2(
-                        -GetCoordinate(cameraOffsetBindable.Value.X) + cameraOffsetBindable.Value.X,
-                        -GetCoordinate(cameraOffsetBindable.Value.Y) + cameraOffsetBindable.Value.Y);
+                    if (child is IDraggable draggable)
+                        if (draggable.Draggable)
+                            child.Position += e.Delta;
+
+                    if (child is Grid grid)
+                    {
+                        grid.Position = new Vector2(
+                            -GetCoordinate(cameraOffsetBindable.Value.X) + cameraOffsetBindable.Value.X,
+                            -GetCoordinate(cameraOffsetBindable.Value.Y) + cameraOffsetBindable.Value.Y);
+                    }
                 }
+
+                return true;
             }
 
-            return true;
+            return false;
         }
 
         protected override bool OnDragEnd(DragEndEvent e) => true;

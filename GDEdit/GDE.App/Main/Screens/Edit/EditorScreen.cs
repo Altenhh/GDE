@@ -19,6 +19,7 @@ using osu.Framework.Input.Events;
 using osu.Framework.Screens;
 using osuTK;
 using System.Collections.Generic;
+using GDE.App.Main.Overlays.ObjectEditor;
 
 namespace GDE.App.Main.Screens.Edit
 {
@@ -36,6 +37,7 @@ namespace GDE.App.Main.Screens.Edit
         private Grid grid;
         private Camera camera;
         private EditorTools tools;
+        private ObjEditor objEditor;
 
         [BackgroundDependencyLoader]
         private void load(DatabaseCollection databases, TextureStore ts)
@@ -93,6 +95,26 @@ namespace GDE.App.Main.Screens.Edit
 
             i = index;
 
+            AddInternal(new Container
+            {
+                RelativeSizeAxes = Axes.Both,
+                Name = "Overlay Container",
+                Depth = -float.MaxValue,
+                Children = new Drawable[]
+                {
+                    objEditor = new ObjEditor(level.LevelObjects[0], i)
+                    {
+                        RelativeSizeAxes = Axes.Both,
+                        Size = new Vector2(0.8f),
+                        Depth = -float.MaxValue,
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.Centre
+                    }
+                }
+            });
+
+            objEditor.ToggleVisibility();
+
             AddRangeInternal(new Drawable[]
             {
                 background = new Box
@@ -108,6 +130,7 @@ namespace GDE.App.Main.Screens.Edit
                     RelativeSizeAxes = Axes.Both,
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre,
+                    //AbleToDrag = false, // TEMPORARY
                     Children = new Drawable[]
                     {
                         grid = new Grid
@@ -145,21 +168,20 @@ namespace GDE.App.Main.Screens.Edit
                 return false;
         }
 
-        protected override bool OnDrag(DragEvent e)
-        {
-            foreach (var child in camera.Children)
-            {
-                child.Position += e.Delta;
-            }
-
-            return base.OnDrag(e);
-        }
-
         private void SaveAndExit()
         {
             Save();
             this.Exit();
         }
         private void Save() => editor.Save(database, i);
+
+        public enum Types
+        {
+            one,
+            two,
+            three,
+            four,
+            five
+        }
     }
 }
