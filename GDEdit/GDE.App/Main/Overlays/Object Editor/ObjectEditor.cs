@@ -39,6 +39,8 @@ using GDEdit.Utilities.Objects.GeometryDash;
 using GDEdit.Application;
 using GDE.App.Main.Graphics;
 using osu.Framework.Graphics.UserInterface;
+using osu.Framework.Graphics.Effects;
+using osu.Framework.Extensions.Color4Extensions;
 
 namespace GDE.App.Main.Overlays.ObjectEditor
 {
@@ -51,7 +53,14 @@ namespace GDE.App.Main.Overlays.ObjectEditor
         private int i;
 
         // Bindables
-        private Bindable<string> objectName = new Bindable<string>();
+        private BindableBool deltaMode = new BindableBool();
+        private BindableBool flippedH = new BindableBool();
+        private BindableBool flippedV = new BindableBool();
+        private BindableBool glow = new BindableBool();
+        private BindableBool dontFade = new BindableBool();
+        private BindableBool dontEnter = new BindableBool();
+        private BindableBool groupParent = new BindableBool();
+        private BindableBool highDetail = new BindableBool();
 
         //public override bool BlockScreenWideMouse => true;
 
@@ -59,6 +68,15 @@ namespace GDE.App.Main.Overlays.ObjectEditor
         {
             generalObject = obj;
             this.i = i;
+
+            //Bindables
+            flippedH.Value = obj.FlippedHorizontally;
+            flippedV.Value = obj.FlippedVertically;
+            glow.Value = !obj.DisableGlow;
+            dontFade.Value = obj.DontFade;
+            dontEnter.Value = obj.DontEnter;
+            groupParent.Value = obj.GroupParent;
+            highDetail.Value = obj.HighDetail;
         }
 
         [BackgroundDependencyLoader]
@@ -103,11 +121,19 @@ namespace GDE.App.Main.Overlays.ObjectEditor
                     },
                     Children = new Drawable[]
                     {
+                        new EditableCheckboxFlipped
+                        {
+                            LabelText = "Delta Mode",
+                            Anchor = Anchor.TopRight,
+                            Origin = Anchor.TopRight,
+                            Bindable = deltaMode,
+                        },
                         new FillFlowContainer
                         {
                             RelativeSizeAxes = Axes.X,
                             Height = 50,
                             Direction = FillDirection.Horizontal,
+                            Name = "Top Row",
                             Children = new Drawable[]
                             {
                                 drawableObject = new ObjectBase(generalObject)
@@ -123,6 +149,7 @@ namespace GDE.App.Main.Overlays.ObjectEditor
                         },
                         new FillFlowContainer
                         {
+                            Name = "Bottom Row",
                             Direction = FillDirection.Horizontal,
                             Spacing = new Vector2(10, 0),
                             Anchor = Anchor.BottomLeft,
@@ -142,15 +169,18 @@ namespace GDE.App.Main.Overlays.ObjectEditor
                                     {
                                         new EditableCheckbox
                                         {
-                                            LabelText = "Flipped Horizontally"
+                                            LabelText = "Flipped Horizontally",
+                                            Bindable = flippedH
                                         },
                                         new EditableCheckbox
                                         {
-                                            LabelText = "Flipped Vertically"
+                                            LabelText = "Flipped Vertically",
+                                            Bindable = flippedV
                                         },
                                         new EditableCheckbox
                                         {
-                                            LabelText = "Glow"
+                                            LabelText = "Glow",
+                                            Bindable = glow
                                         }
                                     }
                                 },
@@ -165,15 +195,18 @@ namespace GDE.App.Main.Overlays.ObjectEditor
                                     {
                                         new EditableCheckbox
                                         {
-                                            LabelText = "Don't Fade"
+                                            LabelText = "Don't Fade",
+                                            Bindable = dontFade
                                         },
                                         new EditableCheckbox
                                         {
-                                            LabelText = "Don't Enter"
+                                            LabelText = "Don't Enter",
+                                            Bindable = dontEnter
                                         },
                                         new EditableCheckbox
                                         {
-                                            LabelText = "Group Parent"
+                                            LabelText = "Group Parent",
+                                            Bindable = groupParent
                                         }
                                     }
                                 },
@@ -188,10 +221,11 @@ namespace GDE.App.Main.Overlays.ObjectEditor
                                     {
                                         new EditableCheckbox
                                         {
-                                            LabelText = "High Detail"
+                                            LabelText = "High Detail",
+                                            Bindable = highDetail
                                         }
                                     }
-                                },
+                                }
                             }
                         }
                     }

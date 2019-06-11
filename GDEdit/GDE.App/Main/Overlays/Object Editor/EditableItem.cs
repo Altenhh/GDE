@@ -64,7 +64,6 @@ namespace GDE.App.Main.Overlays.ObjectEditor
                 {
                     AutoSizeAxes = Axes.Both,
                     Direction = FillFlowDirection,
-                    Padding = new MarginPadding { Left = 10 },
                     Child = Control = CreateControl()
                 },
             };
