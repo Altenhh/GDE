@@ -147,6 +147,43 @@ namespace GDE.App.Main.Overlays.ObjectEditor
                                 }
                             }
                         },
+                        new Container
+                        {
+                            RelativeSizeAxes = Axes.Both,
+                            Name = "Main Content",
+                            Padding = new MarginPadding
+                            {
+                                Top = 60,
+                                Bottom = 111
+                            },
+                            Children = new Drawable[]
+                            {
+                                //Two containers cause CornerRadius doesnt count the Padding
+                                new Container
+                                {
+                                    RelativeSizeAxes = Axes.Both,
+                                    CornerRadius = 10,
+                                    Masking = true,
+                                    EdgeEffect = new EdgeEffectParameters
+                                    {
+                                        Colour = GDEColors.FromHex("141414").Opacity(0.25f),
+                                        Type = EdgeEffectType.Shadow,
+                                        Offset = new Vector2(0, 1),
+                                        Roundness = 10,
+                                        Radius = 1,
+                                    },
+                                    Children = new Drawable[]
+                                    {
+                                        new Box
+                                        {
+                                            RelativeSizeAxes = Axes.Both,
+                                            Colour = GDEColors.FromHex("262626")
+                                        },
+                                        //TODO: Figure out how to layout elements appropriately (see https://alten.s-ul.eu/8XCwXo1r.png)
+                                    }
+                                }
+                            }
+                        },
                         new FillFlowContainer
                         {
                             Name = "Bottom Row",
