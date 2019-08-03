@@ -1,9 +1,7 @@
 ﻿using GDE.App.Main.Colors;
 using osu.Framework.Bindables;
-using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Effects;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
@@ -24,7 +22,7 @@ namespace GDE.App.Main.UI.FileDialogComponents
         private string itemName = "";
         private ItemType type;
 
-        private BindableBool selected = new BindableBool(false);
+        private readonly BindableBool selected = new BindableBool(false);
 
         private Color4 selectedForegroundColor = GDEColors.FromHex("66ccff");
         private Color4 deselectedForegroundColor = Color4.White;
@@ -32,9 +30,9 @@ namespace GDE.App.Main.UI.FileDialogComponents
         private Color4 hoveredBackgroundColor = GDEColors.FromHex("404040");
         private Color4 deselectedBackgroundColor = new Color4(0, 0, 0, 0);
 
-        private Box background;
-        private SpriteText text;
-        private SpriteIcon icon;
+        private readonly Box background;
+        private readonly SpriteText text;
+        private readonly SpriteIcon icon;
 
         public Action<DrawableItem> OnDoubleClicked;
         public Action<DrawableItem> OnClicked;
@@ -128,7 +126,7 @@ namespace GDE.App.Main.UI.FileDialogComponents
 
         private void HandleSelectionChanged(ValueChangedEvent<bool> value)
         {
-            var newForegroundColor = value.NewValue ? selectedForegroundColor : deselectedForegroundColor;
+            Color4 newForegroundColor = value.NewValue ? selectedForegroundColor : deselectedForegroundColor;
             icon.FadeColour(newForegroundColor, 200);
             text.FadeColour(newForegroundColor, 200);
             background.FadeColour(value.NewValue ? selectedBackgroundColor : GetHoverColor(), 200);

@@ -1,6 +1,6 @@
-﻿using System;
-using DiscordRPC;
+﻿using DiscordRPC;
 using osu.Framework.Logging;
+using System;
 
 namespace GDE.App.Main.Tools
 {

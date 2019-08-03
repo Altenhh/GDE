@@ -13,12 +13,10 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
-using osu.Framework.Input.Bindings;
 using osu.Framework.Input.Events;
 using osuTK;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,16 +29,16 @@ namespace GDE.App.Main.Screens.Edit.Components
         public const float CardMargin = 2;
         public const float CardHeight = 25;
 
-        private FadeSearchContainer stepList;
-        private TextBox searchQuery;
-        private FillFlowContainer noSteps;
-        private GDEButton addNewStep;
+        private readonly FadeSearchContainer stepList;
+        private readonly TextBox searchQuery;
+        private readonly FillFlowContainer noSteps;
+        private readonly GDEButton addNewStep;
 
         private IDMigrationStepCard lastClickedBeforeShift;
 
         private List<SourceTargetRange> clipboard;
 
-        private Editor editor;
+        private readonly Editor editor;
 
         public readonly IDMigrationMode IDMigrationMode;
 
@@ -175,7 +173,7 @@ namespace GDE.App.Main.Screens.Edit.Components
 
         private void IDMigrationOperationInitialized()
         {
-            foreach (var c in Cards)
+            foreach (IDMigrationStepCard c in Cards)
                 c.IndicateStepPendingRunning();
         }
         private void IDMigrationProgressReported(int current, int total)
@@ -186,7 +184,7 @@ namespace GDE.App.Main.Screens.Edit.Components
         }
         private void IDMigrationOperationCompleted()
         {
-            foreach (var c in Cards)
+            foreach (IDMigrationStepCard c in Cards)
                 c.ResetStepRunningStateIndicators();
         }
 
@@ -202,9 +200,9 @@ namespace GDE.App.Main.Screens.Edit.Components
 
             if (TabRanges.Count > 0)
             {
-                for (var i = 0; i < TabRanges.Count; i++)
+                for (int i = 0; i < TabRanges.Count; i++)
                 {
-                    var card = CreateIDMigrationStepCard(TabRanges[i], i);
+                    IDMigrationStepCard card = CreateIDMigrationStepCard(TabRanges[i], i);
 
                     stepList.Add(card);
                     Cards.Add(card);
@@ -235,7 +233,7 @@ namespace GDE.App.Main.Screens.Edit.Components
 
         public void AddStep(SourceTargetRange range, bool addToEditor = true, int? newIndex = null)
         {
-            var newCard = CreateIDMigrationStepCard(range, newIndex ?? TabRanges.Count);
+            IDMigrationStepCard newCard = CreateIDMigrationStepCard(range, newIndex ?? TabRanges.Count);
             Cards.Add(newCard);
             stepList.Add(newCard);
             if (addToEditor)
@@ -245,12 +243,12 @@ namespace GDE.App.Main.Screens.Edit.Components
         public void CreateNewStep() => AddStep(new SourceTargetRange(1, 10, 11));
         public void CloneSelectedSteps()
         {
-            var oldSelection = SelectedStepIndices;
+            SortedSet<int> oldSelection = SelectedStepIndices;
             InitializeSelectedSteps();
-            foreach (var i in oldSelection)
+            foreach (int i in oldSelection)
             {
-                var newIndex = Cards.Count; // Hacky way in foreach loop to avoid using extra variable
-                var card = Cards[i];
+                int newIndex = Cards.Count; // Hacky way in foreach loop to avoid using extra variable
+                IDMigrationStepCard card = Cards[i];
                 card.Deselect();
                 AddStep(card.StepRange.Clone());
                 AddSelectedStep(newIndex);
@@ -292,15 +290,15 @@ namespace GDE.App.Main.Screens.Edit.Components
             int[] indices = new int[SelectedStepIndices.Count];
             SelectedStepIndices.CopyTo(indices);
             clipboard = new List<SourceTargetRange>(indices.Length);
-            foreach (var i in indices)
+            foreach (int i in indices)
                 clipboard.Add(Cards[i].StepRange);
         }
         public void PasteSteps()
         {
             InitializeSelectedSteps();
-            foreach (var s in clipboard)
+            foreach (SourceTargetRange s in clipboard)
             {
-                var newIndex = Cards.Count; // Hacky way in foreach loop to avoid using extra variable
+                int newIndex = Cards.Count; // Hacky way in foreach loop to avoid using extra variable
                 AddStep(s);
                 AddSelectedStep(newIndex);
                 Cards[newIndex].Select();
@@ -318,7 +316,7 @@ namespace GDE.App.Main.Screens.Edit.Components
         public void SelectAll(bool triggerEvent = true)
         {
             SelectedSteps.Clear();
-            foreach (var c in Cards)
+            foreach (IDMigrationStepCard c in Cards)
             {
                 c.Select();
                 SelectedSteps.Add(c.StepRange);
@@ -331,7 +329,7 @@ namespace GDE.App.Main.Screens.Edit.Components
         public void DeselectAll(bool triggerEvent = true)
         {
             ClearSelectedSteps();
-            foreach (var c in Cards)
+            foreach (IDMigrationStepCard c in Cards)
                 c.Deselect();
             if (triggerEvent)
                 OnSelectionChanged();
@@ -348,9 +346,9 @@ namespace GDE.App.Main.Screens.Edit.Components
         {
             if (!appendToSelection)
             {
-                var oldSelection = SelectedStepIndices;
+                SortedSet<int> oldSelection = SelectedStepIndices;
                 InitializeSelectedSteps();
-                foreach (var i in oldSelection)
+                foreach (int i in oldSelection)
                     Cards[i].Deselect();
             }
             Cards[index].Select();
@@ -372,7 +370,7 @@ namespace GDE.App.Main.Screens.Edit.Components
 
         private void OnStepSelected(IDMigrationStepCard card)
         {
-            var commonSteps = new List<SourceTargetRange> { card.StepRange };
+            List<SourceTargetRange> commonSteps = new List<SourceTargetRange> { card.StepRange };
             if (CommonIDMigrationStep.Value != null)
                 commonSteps.Add(CommonIDMigrationStep.Value);
             CommonIDMigrationStep.Value = GetCommon(commonSteps); // Additive logic works
@@ -396,7 +394,7 @@ namespace GDE.App.Main.Screens.Edit.Components
         private void OnLoadFile(string fileName)
         {
             editor.LoadIDMigrationSteps(fileName);
-            var steps = editor.CurrentlySelectedIDMigrationSteps;
+            List<SourceTargetRange> steps = editor.CurrentlySelectedIDMigrationSteps;
 
             // Update steps after loading them
             RemoveAllSteps();
@@ -479,7 +477,7 @@ namespace GDE.App.Main.Screens.Edit.Components
                     ToggleStepSelection(c.Index, true);
                 else
                 {
-                    var otherSelectedSteps = SelectedStepIndices.Clone();
+                    SortedSet<int> otherSelectedSteps = SelectedStepIndices.Clone();
                     otherSelectedSteps.Remove(c.Index);
                     if (otherSelectedSteps.Count == 0)
                         ToggleStepSelection(c.Index);

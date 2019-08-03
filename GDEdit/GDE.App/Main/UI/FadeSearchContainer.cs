@@ -1,10 +1,5 @@
 ﻿using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace GDE.App.Main.UI
 {
@@ -14,7 +9,7 @@ namespace GDE.App.Main.UI
         {
             // I don't like the way the drawables enter the container, something must be done here too
             // The fade is barely noticeable because of this effect
-            var finalAlpha = drawable.Alpha;
+            float finalAlpha = drawable.Alpha;
             drawable.Alpha = 0;
             base.Add(drawable);
             drawable.FadeTo(finalAlpha, 100, Easing.OutQuint);

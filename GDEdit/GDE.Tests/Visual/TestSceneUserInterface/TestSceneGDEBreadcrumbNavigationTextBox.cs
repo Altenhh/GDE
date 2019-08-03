@@ -8,7 +8,7 @@ namespace GDE.Tests.Visual.TestSceneUserInterface
 {
     public class TestSceneGDEBreadcrumbNavigationTextBox : TestScene
     {
-        private GDEBreadcrumbNavigationTextBox textBox;
+        private readonly GDEBreadcrumbNavigationTextBox textBox;
 
         public TestSceneGDEBreadcrumbNavigationTextBox()
         {

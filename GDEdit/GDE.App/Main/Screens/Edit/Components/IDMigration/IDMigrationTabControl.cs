@@ -1,5 +1,4 @@
-﻿using GDEdit.Application.Editor;
-using GDEdit.Utilities.Enumerations;
+﻿using GDEdit.Utilities.Enumerations;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osuTK;
@@ -11,10 +10,10 @@ namespace GDE.App.Main.Screens.Edit.Components.IDMigration
     {
         public const int DefaultHeight = 32;
 
-        private IDMigrationTabItem[] tabItems = new IDMigrationTabItem[4];
+        private readonly IDMigrationTabItem[] tabItems = new IDMigrationTabItem[4];
         private IDMigrationTabItem currentTab;
 
-        private FillFlowContainer itemsContainer;
+        private readonly FillFlowContainer itemsContainer;
 
         public event Action<IDMigrationMode> TabSelected;
 

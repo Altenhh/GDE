@@ -10,7 +10,7 @@ namespace GDE.Tests.Visual.TestSceneLevel
 {
     public class TestSceneObject : TestScene
     {
-        private ObjectBase obj;
+        private readonly ObjectBase obj;
 
         public TestSceneObject()
         {

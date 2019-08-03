@@ -7,7 +7,7 @@ namespace GDE.Tests.Visual.TestSceneUserInterface
 {
     public class TestSceneLevelCard : TestScene
     {
-        private LevelCard card;
+        private readonly LevelCard card;
 
         public TestSceneLevelCard()
         {

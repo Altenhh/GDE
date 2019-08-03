@@ -7,7 +7,7 @@ namespace GDE.Tests.Visual.TestCaseUserInterface
 {
     public class TestScenePanel : TestScene
     {
-        private Panel panel;
+        private readonly Panel panel;
 
         public TestScenePanel()
         {

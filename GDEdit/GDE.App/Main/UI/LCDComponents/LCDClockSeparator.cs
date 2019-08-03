@@ -8,7 +8,7 @@ namespace GDE.App.Main.UI.LCDComponents
 {
     public class LCDClockSeparator : Container
     {
-        private Circle top, bottom;
+        private readonly Circle top, bottom;
         private bool active;
 
         public bool Active

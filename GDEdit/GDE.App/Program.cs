@@ -1,6 +1,6 @@
-﻿using osu.Framework;
+﻿using GDE.App.Main;
+using osu.Framework;
 using osu.Framework.Platform;
-using GDE.App.Main;
 
 namespace GDE.App
 {

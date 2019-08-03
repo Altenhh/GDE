@@ -1,5 +1,4 @@
-﻿using GDE.App.Main.Screens.Menu.Components;
-using GDE.App.Main.UI.FileDialogComponents;
+﻿using GDE.App.Main.UI.FileDialogComponents;
 using osu.Framework.Graphics;
 using osu.Framework.Testing;
 using osuTK;
@@ -8,7 +7,7 @@ namespace GDE.Tests.Visual.TestSceneUserInterface
 {
     public class TestSceneFileDialog : TestScene
     {
-        private OpenFileDialog openFileDialog;
+        private readonly OpenFileDialog openFileDialog;
 
         public TestSceneFileDialog()
         {

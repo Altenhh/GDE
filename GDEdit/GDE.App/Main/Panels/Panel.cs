@@ -10,8 +10,8 @@ namespace GDE.App.Main.Panels
 {
     public class Panel : FocusedOverlayContainer
     {
-        private SpriteText text;
-        private PinButton pin;
+        private readonly SpriteText text;
+        private readonly PinButton pin;
 
         public bool AllowDrag = true;
         public bool LockDrag = false;

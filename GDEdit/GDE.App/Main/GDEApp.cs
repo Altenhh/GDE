@@ -1,5 +1,4 @@
-﻿using GDE.App.Main.Containers;
-using GDE.App.Main.Containers.KeyBindingContainers;
+﻿using GDE.App.Main.Containers.KeyBindingContainers;
 using GDE.App.Main.Screens.Menu;
 using GDE.App.Main.Toasts;
 using GDE.App.Main.Tools;
@@ -31,7 +30,7 @@ namespace GDE.App.Main
                         {
                             RelativeSizeAxes = Axes.Both
                         },
-                    }   
+                    }
                 },
                 notification = new ToastNotification
                 {

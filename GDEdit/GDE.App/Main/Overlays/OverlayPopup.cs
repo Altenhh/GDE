@@ -1,22 +1,21 @@
 ﻿using GDE.App.Main.Colors;
+using GDE.App.Main.UI;
+using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Graphics.UserInterface;
-using osu.Framework.Graphics;
 using osuTK;
 using osuTK.Graphics;
 using System;
-using GDE.App.Main.UI;
 
 namespace GDE.App.Main.Overlays
 {
     public class OverlayPopup : FocusedOverlayContainer
     {
-        private SpriteText header;
-        private SpriteText body;
-        private GDEButton button1;
-        private GDEButton button2;
+        private readonly SpriteText header;
+        private readonly SpriteText body;
+        private readonly GDEButton button1;
+        private readonly GDEButton button2;
 
         public string HeaderText
         {

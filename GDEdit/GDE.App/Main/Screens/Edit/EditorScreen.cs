@@ -14,7 +14,6 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.Graphics.UserInterface;
@@ -28,18 +27,18 @@ namespace GDE.App.Main.Screens.Edit
     public class EditorScreen : Screen
     {
         private TextureStore texStore;
-        private Sprite background;
-        private int i;
+        private readonly Sprite background;
+        private readonly int i;
 
         private Database database;
-        private LevelPreview preview;
+        private readonly LevelPreview preview;
         private Level level => database.UserLevels[i];
 
-        private Grid grid;
-        private Camera camera;
-        private EditorTools tools;
+        private readonly Grid grid;
+        private readonly Camera camera;
+        private readonly EditorTools tools;
 
-        private IDMigrationPanel IDMigrationPanel;
+        private readonly IDMigrationPanel IDMigrationPanel;
 
         public readonly Bindable<OpenFileDialog> OpenFileDialogBindable = new Bindable<OpenFileDialog>();
         public readonly Bindable<SaveFileDialog> SaveFileDialogBindable = new Bindable<SaveFileDialog>();
@@ -64,18 +63,18 @@ namespace GDE.App.Main.Screens.Edit
         {
             EditorMenuBar menuBar;
 
-            var fileMenuItems = new List<MenuItem>
+            List<MenuItem> fileMenuItems = new List<MenuItem>
             {
                 new EditorMenuItem("Save", Save, MenuItemType.Highlighted),
                 new EditorMenuItem("Save & Exit", SaveAndExit, MenuItemType.Standard),
                 new EditorMenuItemSpacer(),
                 new EditorMenuItem("Exit", this.Exit, MenuItemType.Destructive),
             };
-            var editMenuItems = new List<MenuItem>
+            List<MenuItem> editMenuItems = new List<MenuItem>
             {
                 // Undo, redo
             };
-            var macrosMenuItems = new List<MenuItem>
+            List<MenuItem> macrosMenuItems = new List<MenuItem>
             {
                 new EditorMenuItem("Migrate IDs", IDMigrationPanel.ToggleVisibility, MenuItemType.Standard),
             };
@@ -189,7 +188,7 @@ namespace GDE.App.Main.Screens.Edit
         {
             if (tools.AbleToPlaceBlock.Value)
             {
-                var cloned = camera.GetClonedGhostObjectLevelObject();
+                GDEdit.Utilities.Objects.GeometryDash.LevelObjects.GeneralObject cloned = camera.GetClonedGhostObjectLevelObject();
                 Editor.AddObject(cloned);
                 preview.Add(new ObjectBase(cloned));
                 return true;
@@ -200,7 +199,7 @@ namespace GDE.App.Main.Screens.Edit
 
         protected override bool OnDrag(DragEvent e)
         {
-            foreach (var child in camera.Children)
+            foreach (Drawable child in camera.Children)
             {
                 child.Position += e.Delta;
             }

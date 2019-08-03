@@ -3,7 +3,6 @@ using GDE.App.Main.UI;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Screens;
 using osuTK;
 
@@ -11,10 +10,10 @@ namespace GDE.App.Main.Screens
 {
     public class Lords : Screen
     {
-        private SpriteText AlFas;
-        private SpriteText Alten;
-        private FillFlowContainer container;
-        private GDEButton exitButton;
+        private readonly SpriteText AlFas;
+        private readonly SpriteText Alten;
+        private readonly FillFlowContainer container;
+        private readonly GDEButton exitButton;
 
         public Lords()
         {
@@ -56,7 +55,7 @@ namespace GDE.App.Main.Screens
                 }
             };
         }
-        
+
         public override void OnEntering(IScreen last)
         {
             SpriteText welc;

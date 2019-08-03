@@ -2,7 +2,6 @@
 using osu.Framework.Input.Bindings;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace GDE.App.Main.UI.Containers
 {
@@ -21,7 +20,7 @@ namespace GDE.App.Main.UI.Containers
 
         public bool OnPressed(TAction action)
         {
-            bool found = Actions.TryGetValue(action, out var del);
+            bool found = Actions.TryGetValue(action, out Action del);
             if (found)
                 del.Invoke();
             return found;

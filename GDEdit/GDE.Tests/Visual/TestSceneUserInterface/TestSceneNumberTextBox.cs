@@ -7,7 +7,7 @@ namespace GDE.Tests.Visual.TestCaseUserInterface
 {
     public class TestSceneNumberTextBox : TestScene
     {
-        private NumberTextBox textBox;
+        private readonly NumberTextBox textBox;
 
         public TestSceneNumberTextBox()
         {

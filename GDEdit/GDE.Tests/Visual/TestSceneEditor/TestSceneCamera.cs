@@ -1,7 +1,7 @@
 ﻿using GDE.App.Main.Screens.Edit.Components;
 using osu.Framework.Graphics;
-using osu.Framework.Testing;
 using osu.Framework.Graphics.Shapes;
+using osu.Framework.Testing;
 using osuTK;
 
 namespace GDE.Tests.Visual.TestSceneEditor

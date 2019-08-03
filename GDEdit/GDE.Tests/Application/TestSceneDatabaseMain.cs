@@ -13,7 +13,7 @@ namespace GDE.Tests.Application
     {
         private Database database;
         private LevelCollection levels;
-        private SpriteText name, description, revision, version, objectCount, length;
+        private readonly SpriteText name, description, revision, version, objectCount, length;
         private bool finishedLoading;
 
         public TestSceneDatabaseMain()
@@ -74,7 +74,7 @@ namespace GDE.Tests.Application
             {
                 if ((levels = database.UserLevels).Count > 0)
                 {
-                    var level = levels[0];
+                    Level level = levels[0];
                     name.Text = $"Name: {level.Name}";
                     description.Text = $"Description: {level.Description}";
                     revision.Text = $"Revision: {level.Revision}";

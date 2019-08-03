@@ -1,7 +1,5 @@
-﻿using osu.Framework.Allocation;
-using osu.Framework.Audio;
-using osu.Framework.Audio.Sample;
-using osuTK.Graphics;
+﻿using GDE.App.Main.Colors;
+using GDE.App.Main.UI.Containers;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -9,8 +7,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
 using osuTK;
-using GDE.App.Main.Colors;
-using GDE.App.Main.UI.Containers;
+using osuTK.Graphics;
 
 namespace GDE.App.Main.UI
 {

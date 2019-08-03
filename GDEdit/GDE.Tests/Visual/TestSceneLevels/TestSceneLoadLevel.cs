@@ -11,7 +11,7 @@ namespace GDE.Tests.Visual.TestSceneLevel
     public class TestSceneLoadLevel : TestScene
     {
         private Database database;
-        private SpriteText levelName;
+        private readonly SpriteText levelName;
         private LevelCollection levels;
         private bool finishedLoading;
 

@@ -7,8 +7,8 @@ namespace GDE.App.Main.UI.LCDComponents
 {
     public class LCDClock : FillFlowContainer
     {
-        private LCDNumber h, m, s;
-        private LCDClockSeparator left, right;
+        private readonly LCDNumber h, m, s;
+        private readonly LCDClockSeparator left, right;
 
         public LCDClock()
         {
@@ -30,7 +30,7 @@ namespace GDE.App.Main.UI.LCDComponents
 
         protected override void Update()
         {
-            var now = DateTime.Now;
+            DateTime now = DateTime.Now;
             h.Value = now.Hour;
             left.Active = !(m.DeactivateTrailingZeroes = h.Value == 0);
             m.Value = now.Minute;

@@ -1,33 +1,12 @@
 ﻿using GDE.App.Main.Colors;
-using GDE.App.Main.Containers;
 using GDE.App.Main.Objects;
-using GDE.App.Main.Overlays;
 using GDE.App.Main.Panels;
-using GDE.App.Main.Screens.Menu.Components;
-using GDE.App.Main.Tools;
-using GDE.App.Main.UI;
-using GDEdit.Application;
-using GDEdit.Application.Editor;
-using GDEdit.Utilities.Objects.GeometryDash;
 using GDEdit.Utilities.Objects.GeometryDash.LevelObjects;
-using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.Colour;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Shapes;
-using osu.Framework.Graphics.Sprites;
-using osu.Framework.Graphics.Transforms;
 using osu.Framework.Graphics.UserInterface;
-using osu.Framework.Input.Bindings;
-using osu.Framework.Input.Events;
-using osu.Framework.Logging;
-using osu.Framework.Screens;
 using osuTK;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace GDE.App.Main.Screens.Edit.Components
 {
@@ -36,8 +15,8 @@ namespace GDE.App.Main.Screens.Edit.Components
         protected override string Name => "Object Addition";
 
         private ObjectButton currentlyActiveButton;
-        private FillFlowContainer container;
-        private Camera camera;
+        private readonly FillFlowContainer container;
+        private readonly Camera camera;
 
         public int SelectedObjectID { get; private set; }
 
@@ -59,7 +38,7 @@ namespace GDE.App.Main.Screens.Edit.Components
                 },
             });
 
-            for (var i = 1; i < 10; i++)
+            for (int i = 1; i < 10; i++)
             {
                 ObjectButton objectButton;
 

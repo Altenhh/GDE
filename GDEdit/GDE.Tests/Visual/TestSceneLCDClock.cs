@@ -10,9 +10,9 @@ namespace GDE.Tests.Visual
     {
         public override IReadOnlyList<Type> RequiredTypes => new[] { typeof(LCDClock), typeof(LCDDigitBar), typeof(LCDDigit), typeof(LCDNumber) };
 
-        private Random r = new Random();
-        private LCDNumber number;
-        private LCDClock clock;
+        private readonly Random r = new Random();
+        private readonly LCDNumber number;
+        private readonly LCDClock clock;
 
         public TestSceneLCDClock()
         {

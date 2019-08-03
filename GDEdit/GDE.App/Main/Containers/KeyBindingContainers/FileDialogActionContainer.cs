@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using osu.Framework.Input.Bindings;
+using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using osu.Framework.Graphics;
-using osu.Framework.Input;
-using osu.Framework.Input.Bindings;
 using static osu.Framework.Input.Bindings.KeyCombinationMatchingMode;
 using static osu.Framework.Input.Bindings.SimultaneousBindingMode;
 

@@ -1,9 +1,6 @@
 ﻿using GDE.App.Main;
-using osu.Framework.Graphics;
-using osu.Framework.Graphics.Shapes;
 using osu.Framework.Platform;
 using osu.Framework.Testing;
-using osuTK.Graphics;
 
 namespace GDE.Tests
 {

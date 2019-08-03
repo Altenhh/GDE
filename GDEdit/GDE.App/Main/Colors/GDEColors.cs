@@ -1,5 +1,5 @@
-﻿using System;
-using osuTK.Graphics;
+﻿using osuTK.Graphics;
+using System;
 using static System.Convert;
 
 namespace GDE.App.Main.Colors

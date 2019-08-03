@@ -1,5 +1,4 @@
 ﻿using GDE.App.Main.Colors;
-using GDE.App.Main.UI;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -10,10 +9,10 @@ namespace GDE.App.Main.Toasts
 {
     public class ToastNotification : FocusedOverlayContainer
     {
-        private SpriteText text;
-        private SpriteIcon toastIcon;
-        private Box toastBody;
-        private CircularContainer container;
+        private readonly SpriteText text;
+        private readonly SpriteIcon toastIcon;
+        private readonly Box toastBody;
+        private readonly CircularContainer container;
 
         public string Text
         {

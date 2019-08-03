@@ -8,7 +8,7 @@ namespace GDE.Tests.Visual.TestSceneEditor
 {
     public class TestSceneLevelOverview : TestScene
     {
-        private LevelPreview lvlOverview;
+        private readonly LevelPreview lvlOverview;
 
         public TestSceneLevelOverview()
         {

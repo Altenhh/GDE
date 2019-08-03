@@ -1,16 +1,12 @@
 ﻿using GDE.App.Main.Containers.KeyBindingContainers;
 using GDE.App.Main.Panels;
-using GDE.App.Main.UI.Containers;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
-using osu.Framework.Input.Bindings;
-using osu.Framework.Input.Events;
 using osuTK;
-using osuTK.Input;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,10 +25,10 @@ namespace GDE.App.Main.UI.FileDialogComponents
     {
         public const float ItemSpacing = 2.5f;
 
-        private GDEBreadcrumbNavigationTextBox filePathBreadcrumbs;
-        private TextBox search;
+        private readonly GDEBreadcrumbNavigationTextBox filePathBreadcrumbs;
+        private readonly TextBox search;
 
-        private DirectoryItemContainer itemContainer;
+        private readonly DirectoryItemContainer itemContainer;
 
         protected abstract bool AllowInexistentFileNames { get; }
         protected virtual string FileDialogActionName { get; set; }
@@ -226,7 +222,7 @@ namespace GDE.App.Main.UI.FileDialogComponents
 
         public void UpdatePath(string newPath)
         {
-            var replaced = FixPath(newPath);
+            string replaced = FixPath(newPath);
             search.Text = replaced;
             CurrentDirectory = GetDirectoryName(replaced) ?? GetDirectoryRoot(replaced);
         }
@@ -267,7 +263,7 @@ namespace GDE.App.Main.UI.FileDialogComponents
 
         private void UpdateBreadcrumbs()
         {
-            var dirs = AnalyzePath(CurrentDirectory);
+            string[] dirs = AnalyzePath(CurrentDirectory);
             filePathBreadcrumbs.Items.Clear();
             filePathBreadcrumbs.Items.AddRange(dirs);
         }
@@ -278,7 +274,7 @@ namespace GDE.App.Main.UI.FileDialogComponents
         private static string FixPath(string dirPath) => dirPath.Replace('/', '\\');
         private static string FixDirectoryPath(string dirPath)
         {
-            var result = FixPath(dirPath);
+            string result = FixPath(dirPath);
             if (!result.EndsWith('\\'))
                 result += '\\';
             return result;
@@ -291,9 +287,9 @@ namespace GDE.App.Main.UI.FileDialogComponents
 
         private static string GetCommonDirectory(string pathA, string pathB)
         {
-            var splitA = AnalyzePath(pathA);
-            var splitB = AnalyzePath(pathB);
-            var result = new List<string>();
+            string[] splitA = AnalyzePath(pathA);
+            string[] splitB = AnalyzePath(pathB);
+            List<string> result = new List<string>();
             int min = Min(splitA.Length, splitB.Length);
             for (int i = 0; i < min; i++)
                 if (splitA[i] == splitB[i])
@@ -302,8 +298,8 @@ namespace GDE.App.Main.UI.FileDialogComponents
         }
         private static string GetPreviousPathDirectoryInNewPath(string previousPath, string newPath)
         {
-            var splitPrevious = AnalyzePath(previousPath);
-            var splitNew = AnalyzePath(newPath);
+            string[] splitPrevious = AnalyzePath(previousPath);
+            string[] splitNew = AnalyzePath(newPath);
             if (splitNew.Length >= splitPrevious.Length)
                 return null;
 

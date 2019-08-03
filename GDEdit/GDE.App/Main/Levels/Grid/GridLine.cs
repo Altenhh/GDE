@@ -1,9 +1,6 @@
 ﻿using osu.Framework.Graphics.Shapes;
 using osuTK;
 using osuTK.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GDE.App.Main.Levels
 {

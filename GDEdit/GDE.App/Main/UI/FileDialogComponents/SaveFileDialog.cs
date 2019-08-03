@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace GDE.App.Main.UI.FileDialogComponents
+﻿namespace GDE.App.Main.UI.FileDialogComponents
 {
     public class SaveFileDialog : FileDialog
     {

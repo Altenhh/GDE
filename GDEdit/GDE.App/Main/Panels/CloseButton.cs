@@ -1,7 +1,6 @@
 ﻿using GDE.App.Main.UI;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Graphics.UserInterface;
 
 namespace GDE.App.Main.Panels
 {

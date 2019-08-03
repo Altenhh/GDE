@@ -1,5 +1,5 @@
-﻿using System;
-using osu.Framework.Graphics.UserInterface;
+﻿using osu.Framework.Graphics.UserInterface;
+using System;
 
 namespace GDE.App.Main.UI.Toolbar
 {

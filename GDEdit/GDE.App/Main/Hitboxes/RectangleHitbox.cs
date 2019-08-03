@@ -1,10 +1,8 @@
 ﻿using GDEdit.Utilities.Objects.General;
 using GDEdit.Utilities.Objects.General.Shapes;
 using GDEdit.Utilities.Objects.GeometryDash.ObjectHitboxes;
-using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
-using osu.Framework.Graphics.Textures;
 using osuTK;
 using osuTK.Graphics;
 
@@ -14,8 +12,8 @@ namespace GDE.App.Main.Hitboxes
     ///<summary>A drawable <seealso cref="Rectangle"/>.</summary>
     public class RectangleHitbox : Box
     {
-        private Rectangle rectangle;
-        private Hitbox h;
+        private readonly Rectangle rectangle;
+        private readonly Hitbox h;
 
         #region Rectangle Variables
         ///<summary>The position of the hitbox.</summary>

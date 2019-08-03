@@ -7,9 +7,7 @@ using osu.Framework.Development;
 using osu.Framework.IO.Stores;
 using osu.Framework.Logging;
 using osu.Framework.Platform;
-using osuTK;
 using System;
-using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,7 +20,7 @@ namespace GDE.App.Main
         private static int allowableExceptions = DebugUtils.IsDebugBuild ? 0 : 1;
 
         private DependencyContainer dependencies;
-        private Storage storage;
+        private readonly Storage storage;
 
         protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent) =>
             dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
@@ -48,7 +46,7 @@ namespace GDE.App.Main
         {
             base.SetHost(host);
 
-            var config = new FrameworkConfigManager(storage);
+            FrameworkConfigManager config = new FrameworkConfigManager(storage);
 
             Window.Title = @"GD Edit";
 

@@ -1,18 +1,14 @@
-﻿using GDEdit.Application;
+﻿using GDEdit.Application.Editor;
+using GDEdit.Utilities.Objects.General;
 using GDEdit.Utilities.Objects.GeometryDash;
 using GDEdit.Utilities.Objects.GeometryDash.LevelObjects;
-using GDEdit.Utilities.Objects.GeometryDash.LevelObjects.Triggers;
-using GDEdit.Utilities.Objects.GeometryDash.LevelObjects.Triggers.ColorTriggers;
 using GDEdit.Utilities.Objects.GeometryDash.LevelObjects.SpecialObjects;
-using osu.Framework.Allocation;
+using GDEdit.Utilities.Objects.GeometryDash.LevelObjects.Triggers;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Testing;
-using System.Threading.Tasks;
-using System.Linq;
-using GDEdit.Application.Editor;
-using GDEdit.Utilities.Objects.General;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GDE.Tests.Visual.TestSceneLevels
 {
@@ -31,14 +27,14 @@ namespace GDE.Tests.Visual.TestSceneLevels
                 }
             };
 
-            var normalBlocks = new GeneralObject[5];
-            var moveTriggers = new MoveTrigger[5];
-            var pickupItems = new PickupItem[5];
-            var pickupTriggers = new PickupTrigger[5];
-            var colorTriggers = new ColorTrigger[5];
-            var instantCountTriggers = new InstantCountTrigger[5];
-            var collisionBlocks = new CollisionBlock[5];
-            var collisionTriggers = new CollisionTrigger[5];
+            GeneralObject[] normalBlocks = new GeneralObject[5];
+            MoveTrigger[] moveTriggers = new MoveTrigger[5];
+            PickupItem[] pickupItems = new PickupItem[5];
+            PickupTrigger[] pickupTriggers = new PickupTrigger[5];
+            ColorTrigger[] colorTriggers = new ColorTrigger[5];
+            InstantCountTrigger[] instantCountTriggers = new InstantCountTrigger[5];
+            CollisionBlock[] collisionBlocks = new CollisionBlock[5];
+            CollisionTrigger[] collisionTriggers = new CollisionTrigger[5];
 
             for (int i = 0; i < 5; i++)
                 normalBlocks[i] = new GeneralObject(1)
@@ -71,21 +67,21 @@ namespace GDE.Tests.Visual.TestSceneLevels
             for (int i = 0; i < 5; i++)
                 collisionTriggers[i] = new CollisionTrigger(i + 1, i + 21, i + 1);
 
-            var allObjects = new LevelObjectCollection(normalBlocks.Concat(moveTriggers).Concat(pickupItems).Concat(pickupTriggers).Concat(colorTriggers).Concat(instantCountTriggers).Concat(collisionBlocks).Concat(collisionTriggers).ToList());
+            LevelObjectCollection allObjects = new LevelObjectCollection(normalBlocks.Concat(moveTriggers).Concat(pickupItems).Concat(pickupTriggers).Concat(colorTriggers).Concat(instantCountTriggers).Concat(collisionBlocks).Concat(collisionTriggers).ToList());
 
-            var level = new Level
+            Level level = new Level
             {
                 Name = "ID Migration Test Level",
                 Description = "This is a test level to help testing the ID migration feature in the backend",
                 LevelObjects = allObjects,
             };
 
-            var editor = new Editor(level);
+            Editor editor = new Editor(level);
 
-            var step0 = new SourceTargetRange(1, 5, 6);
-            var step1 = new SourceTargetRange(21, 25, 46);
-            var step2 = new SourceTargetRange(1, 25, 26);
-            var step3 = new SourceTargetRange(8, 8, 10);
+            SourceTargetRange step0 = new SourceTargetRange(1, 5, 6);
+            SourceTargetRange step1 = new SourceTargetRange(21, 25, 46);
+            SourceTargetRange step2 = new SourceTargetRange(1, 25, 26);
+            SourceTargetRange step3 = new SourceTargetRange(8, 8, 10);
 
             AddStep("Perform Group ID migration 1-5 > 6-10", () => editor.PerformGroupIDMigration(new List<SourceTargetRange> { step0 }));
             AddAssert("Verify Group ID migration", () => VerifyGroupIDMigration(step0.TargetFrom));

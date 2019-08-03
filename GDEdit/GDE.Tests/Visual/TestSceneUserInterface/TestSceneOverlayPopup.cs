@@ -8,7 +8,7 @@ namespace GDE.Tests.Visual.TestCaseUserInterface
 {
     public class TestSceneOverlayPopup : TestScene
     {
-        private OverlayPopup popup;
+        private readonly OverlayPopup popup;
 
         public TestSceneOverlayPopup()
         {

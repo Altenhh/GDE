@@ -1,23 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using GDE.App.Main.Screens.Edit;
-using GDE.App.Main.Screens.Edit.Components;
-using GDEdit.Application.Editor;
+﻿using GDE.App.Main.Screens.Edit.Components;
 using GDEdit.Utilities.Objects.General;
-using GDEdit.Utilities.Objects.GeometryDash;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
-using osu.Framework.Screens;
 using osu.Framework.Testing;
-using osuTK;
-using static GDE.App.Main.Screens.Edit.Components.IDMigrationStepList;
+using System;
+using System.Collections.Generic;
 
 namespace GDE.Tests.Visual.TestSceneEditor
 {
     public class TestSceneIDMigrationStepCard : TestScene
     {
-        private IDMigrationStepCard card;
+        private readonly IDMigrationStepCard card;
 
         public override IReadOnlyList<Type> RequiredTypes => new Type[] { typeof(IDMigrationStepCard) };
 

@@ -1,14 +1,11 @@
-﻿using osu.Framework.Graphics.Containers;
+﻿using GDE.App.Main.Colors;
 using osu.Framework.Graphics;
-using osu.Framework.Graphics.UserInterface;
-using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Colour;
+using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Testing;
-using osuTK;
-using osuTK.Graphics;
-using GDE.App.Main.Colors;
 using osu.Framework.Input.Events;
+using osuTK;
 using System;
 
 namespace GDE.App.Main.UI.Tabs
@@ -19,8 +16,8 @@ namespace GDE.App.Main.UI.Tabs
         public Action clickAction;
 
         private ColourInfo colours;
-        private Box tab;
-        private Box hoverLayer;
+        private readonly Box tab;
+        private readonly Box hoverLayer;
 
         public LevelTab()
         {

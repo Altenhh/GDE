@@ -10,7 +10,7 @@ namespace GDE.App.Main.UI.LCDComponents
         private int v;
         private bool deactivateTrailingZeroes;
 
-        private LCDDigit[] digits;
+        private readonly LCDDigit[] digits;
 
         public int Value
         {

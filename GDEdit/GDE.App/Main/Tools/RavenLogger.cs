@@ -1,10 +1,10 @@
-﻿using System;
+﻿using osu.Framework.Logging;
+using SharpRaven;
+using SharpRaven.Data;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using osu.Framework.Logging;
-using SharpRaven;
-using SharpRaven.Data;
 
 namespace GDE.App.Main.Tools
 {
@@ -26,7 +26,7 @@ namespace GDE.App.Main.Tools
                 if (entry.Level < LogLevel.Verbose)
                     return;
 
-                var exception = entry.Exception;
+                Exception exception = entry.Exception;
 
                 if (exception != null)
                 {

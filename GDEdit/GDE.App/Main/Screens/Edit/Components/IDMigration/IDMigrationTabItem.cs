@@ -1,11 +1,9 @@
 ﻿using GDE.App.Main.Colors;
-using GDEdit.Application.Editor;
 using GDEdit.Utilities.Enumerations;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
 using osuTK;
 using osuTK.Graphics;
@@ -19,7 +17,7 @@ namespace GDE.App.Main.Screens.Edit.Components.IDMigration
         private static Color4 hoveredBackgroundColor = GDEColors.FromHex("484848");
         private static Color4 backgroundColor = GDEColors.FromHex("303030");
 
-        private Box background;
+        private readonly Box background;
 
         private bool selected;
 

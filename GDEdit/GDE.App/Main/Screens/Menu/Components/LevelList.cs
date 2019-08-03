@@ -1,23 +1,15 @@
 ﻿using GDE.App.Main.Colors;
-using GDE.App.Main.Containers;
-using GDE.App.Main.Overlays;
-using GDE.App.Main.Screens.Menu.Components;
-using GDE.App.Main.Tools;
 using GDE.App.Main.UI;
 using GDE.App.Main.UI.Containers;
 using GDEdit.Application;
 using GDEdit.Utilities.Functions.Extensions;
 using GDEdit.Utilities.Objects.GeometryDash;
 using osu.Framework.Allocation;
-using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
-using osu.Framework.Input.Bindings;
 using osu.Framework.Logging;
-using osu.Framework.Screens;
 using osuTK;
 using System;
 using System.Collections.Generic;
@@ -27,10 +19,10 @@ namespace GDE.App.Main.Screens.Menu.Components
 {
     public class LevelList : SearchContainer
     {
-        private FillFlowContainer levelList;
+        private readonly FillFlowContainer levelList;
         private Database database;
         private LevelCollection levels;
-        private TextBox searchQuery;
+        private readonly TextBox searchQuery;
         private bool finishedLoading;
         private bool alreadyRun;
 
@@ -78,7 +70,7 @@ namespace GDE.App.Main.Screens.Menu.Components
             searchQuery.Current.ValueChanged += obj =>
             {
                 Console.WriteLine(obj.NewValue);
-                foreach (var c in Cards)
+                foreach (LevelCard c in Cards)
                     if (obj.NewValue.MatchesSearchCriteria(c.Level.Value.LevelNameWithRevision))
                         c.Show();
                     else
@@ -136,7 +128,7 @@ namespace GDE.App.Main.Screens.Menu.Components
                 }
                 else if (!alreadyRun)
                 {
-                    for (var i = 0; i < database.UserLevels.Count; i++)
+                    for (int i = 0; i < database.UserLevels.Count; i++)
                     {
                         Cards.Add(new LevelCard
                         {
@@ -153,14 +145,14 @@ namespace GDE.App.Main.Screens.Menu.Components
                         Logger.Log($"Loaded: {database.UserLevels[i].LevelNameWithRevision}.");
                     }
 
-                    foreach (var c in Cards)
+                    foreach (LevelCard c in Cards)
                     {
                         levelList.Add(Cards[c.Index]);
 
                         Cards[c.Index].Selected.ValueChanged += obj =>
                         {
                             if (obj.NewValue)
-                                foreach (var j in Cards)
+                                foreach (LevelCard j in Cards)
                                     if (j != Cards[c.Index] && j.Selected.Value)
                                         j.Selected.Value = false;
                             LevelIndex = obj.NewValue ? c.Index : -1;

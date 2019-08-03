@@ -1,5 +1,4 @@
-﻿using GDE.App.Main.Containers;
-using GDE.App.Main.Containers.KeyBindingContainers;
+﻿using GDE.App.Main.Containers.KeyBindingContainers;
 using GDE.App.Main.Objects;
 using GDE.App.Main.Screens.Edit;
 using GDE.App.Main.Screens.Edit.Components;
@@ -17,7 +16,7 @@ namespace GDE.App.Main.Levels
 {
     public class LevelPreview : Container<ObjectBase>, IKeyBindingHandler<GlobalAction>, IDraggable
     {
-        private EditorScreen editorScreen;
+        private readonly EditorScreen editorScreen;
 
         private readonly int i;
 
@@ -44,15 +43,15 @@ namespace GDE.App.Main.Levels
         {
             database = databases[0];
 
-            foreach (var o in Level.LevelObjects)
+            foreach (GDEdit.Utilities.Objects.GeometryDash.LevelObjects.GeneralObject o in Level.LevelObjects)
                 Add(new ObjectBase(o));
         }
 
         public bool OnPressed(GlobalAction action)
         {
-            var val = modifier ? Editor.SmallMovementStep : Editor.NormalMovementStep;
+            double val = modifier ? Editor.SmallMovementStep : Editor.NormalMovementStep;
 
-            foreach (var i in Objects)
+            foreach (ObjectBase i in Objects)
             {
                 if (i.State == SelectionState.Selected)
                     switch (action)

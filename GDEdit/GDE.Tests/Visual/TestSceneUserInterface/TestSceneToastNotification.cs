@@ -7,7 +7,7 @@ namespace GDE.Tests.Visual.TestSceneUserInterface
 {
     public class TestSceneToastNotification : TestScene
     {
-        private ToastNotification toast;
+        private readonly ToastNotification toast;
 
         public TestSceneToastNotification()
         {

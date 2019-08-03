@@ -16,7 +16,6 @@ using osu.Framework.Graphics.Sprites;
 using osuTK;
 using osuTK.Graphics;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using static GDE.App.Main.Colors.GDEColors;
 using static GDEdit.Utilities.Objects.General.SourceTargetRange;
@@ -29,29 +28,29 @@ namespace GDE.App.Main.Screens.Edit
         private static Color4 redEnabledColor = FromHex("6c2424");
         private static Color4 grayEnabledColor = FromHex("242424");
 
-        private ToastNotification notification;
+        private readonly ToastNotification notification;
 
-        private NumberTextBox sourceFrom;
-        private NumberTextBox sourceTo;
-        private NumberTextBox targetFrom;
-        private NumberTextBox targetTo;
+        private readonly NumberTextBox sourceFrom;
+        private readonly NumberTextBox sourceTo;
+        private readonly NumberTextBox targetFrom;
+        private readonly NumberTextBox targetTo;
 
-        private FadeButton performMigration;
-        private FadeButton createStep;
-        private FadeButton removeSteps;
-        private FadeButton cloneSteps;
-        private FadeButton selectAll;
-        private FadeButton deselectAll;
-        private FadeButton loadSteps;
-        private FadeButton saveSteps;
-        private FadeButton saveStepsAs;
+        private readonly FadeButton performMigration;
+        private readonly FadeButton createStep;
+        private readonly FadeButton removeSteps;
+        private readonly FadeButton cloneSteps;
+        private readonly FadeButton selectAll;
+        private readonly FadeButton deselectAll;
+        private readonly FadeButton loadSteps;
+        private readonly FadeButton saveSteps;
+        private readonly FadeButton saveStepsAs;
 
-        private Container stepListContainer;
+        private readonly Container stepListContainer;
 
-        private IDMigrationStepList[] stepLists = new IDMigrationStepList[4];
+        private readonly IDMigrationStepList[] stepLists = new IDMigrationStepList[4];
         private IDMigrationStepList currentStepList;
 
-        private EditorScreen editorScreen;
+        private readonly EditorScreen editorScreen;
 
         public Editor Editor => editorScreen.Editor;
 
@@ -68,7 +67,7 @@ namespace GDE.App.Main.Screens.Edit
             get => currentStepList;
             set
             {
-                var previous = currentStepList;
+                IDMigrationStepList previous = currentStepList;
 
                 previous.TabSelected = false;
 
@@ -239,7 +238,7 @@ namespace GDE.App.Main.Screens.Edit
 
         private void CommonIDMigrationStepChanged(ValueChangedEvent<SourceTargetRange> v)
         {
-            var newStep = v.NewValue;
+            SourceTargetRange newStep = v.NewValue;
             if (newStep != null)
             {
                 newStep.SourceTargetRangeChanged += (sf, st, tf, tt) =>
@@ -259,7 +258,7 @@ namespace GDE.App.Main.Screens.Edit
 
         private void HandleStepChanged(SourceTargetRange newStep)
         {
-            foreach (var s in CurrentStepList.SelectedSteps)
+            foreach (SourceTargetRange s in CurrentStepList.SelectedSteps)
             {
                 if (newStep.SourceFrom > 0)
                     s.SourceFrom = newStep.SourceFrom;

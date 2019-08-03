@@ -1,11 +1,9 @@
-﻿using osu.Framework.Extensions.Color4Extensions;
-using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Shapes;
+﻿using GDE.App.Main.Screens.Edit.Components;
+using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
-using osuTK.Graphics;
+using osu.Framework.Graphics.Containers;
 using osuTK;
-using GDE.App.Main.Screens.Edit.Components;
-using GDEdit.Utilities.Objects.GeometryDash;
+using osuTK.Graphics;
 
 namespace GDE.App.Main.Levels
 {
@@ -14,7 +12,7 @@ namespace GDE.App.Main.Levels
         private double zoom;
         private Vector2 position;
 
-        private Container gridContainer;
+        private readonly Container gridContainer;
         private Drawable[] gridLineDrawables;
 
         public bool Draggable => true;
@@ -58,7 +56,7 @@ namespace GDE.App.Main.Levels
 
         private void UpdateGridLines()
         {
-            var gridLines = new Drawable[200];
+            Drawable[] gridLines = new Drawable[200];
 
             for (int i = 0; i < 100; i++)
                 gridLines[i] = new HorizontalGridLine(30 * (i - 50))

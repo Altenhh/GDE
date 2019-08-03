@@ -10,14 +10,13 @@ using osu.Framework.Graphics.Cursor;
 using osu.Framework.Input;
 using osu.Framework.Input.Events;
 using osuTK;
-using System;
 
 namespace GDE.App.Main.Screens.Edit.Components
 {
     public class Camera : Container
     {
-        private Editor editor;
-        private Bindable<Vector2> cameraOffsetBindable = new Bindable<Vector2>();
+        private readonly Editor editor;
+        private readonly Bindable<Vector2> cameraOffsetBindable = new Bindable<Vector2>();
         private GridSnappedCursorContainer snappedCursorContainer;
 
         public Camera(Editor Editor)
@@ -40,8 +39,8 @@ namespace GDE.App.Main.Screens.Edit.Components
         protected override bool OnDrag(DragEvent e)
         {
             cameraOffsetBindable.Value += e.Delta;
-            
-            foreach (var child in Children)
+
+            foreach (Drawable child in Children)
             {
                 if (child is IDraggable draggable)
                     if (draggable.Draggable)
@@ -128,7 +127,7 @@ namespace GDE.App.Main.Screens.Edit.Components
 
             protected override bool OnMouseMove(MouseMoveEvent e)
             {
-                foreach (var child in Children)
+                foreach (Drawable child in Children)
                     child.Position = ConvertMousePositionToEditor(e.ScreenSpaceMousePosition - AnchorPosition - CameraOffset.Value);
 
                 return base.OnMouseMove(e);

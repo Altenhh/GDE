@@ -15,11 +15,11 @@ namespace GDE.Tests.Visual.TestSceneLevel
 {
     public class TestSceneHitbox : TestScene
     {
-        private Hitbox hitbox;
-        private RectangleHitbox rectangle;
-        private SpriteText angle;
-        private SpriteText radius;
-        private SpriteText mousePosition;
+        private readonly Hitbox hitbox;
+        private readonly RectangleHitbox rectangle;
+        private readonly SpriteText angle;
+        private readonly SpriteText radius;
+        private readonly SpriteText mousePosition;
 
         public TestSceneHitbox()
         {
@@ -60,17 +60,17 @@ namespace GDE.Tests.Visual.TestSceneLevel
                     },
                 },
             };
-            
+
             AddSliderStep("Rotation", 0d, 360d, 0d, v => rectangle.HitboxRotation = v);
         }
 
         protected override bool OnMouseMove(MouseMoveEvent e)
         {
             // What the actual fuck is this?
-            var planePosition = e.MousePosition - rectangle.ToParentSpace(rectangle.OriginPosition + rectangle.DrawPosition);
-            var p = new Point(planePosition.X - 80, -planePosition.Y);
+            osuTK.Vector2 planePosition = e.MousePosition - rectangle.ToParentSpace(rectangle.OriginPosition + rectangle.DrawPosition);
+            Point p = new Point(planePosition.X - 80, -planePosition.Y);
             mousePosition.Text = $"Mouse position: {p}";
-            var deg = rectangle.HitboxPosition.GetAngle(p) * 180 / Math.PI;
+            double deg = rectangle.HitboxPosition.GetAngle(p) * 180 / Math.PI;
             angle.Text = $"Angle: {deg}";
             radius.Text = $"Radius: {hitbox.GetRadiusAtRotation(deg)}";
             return base.OnMouseMove(e);

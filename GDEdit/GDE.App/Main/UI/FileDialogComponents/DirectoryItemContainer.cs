@@ -1,16 +1,10 @@
 ﻿using GDE.App.Main.Containers.KeyBindingContainers;
-using GDE.App.Main.Panels;
 using GDE.App.Main.UI.Containers;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
-using osu.Framework.Graphics.Sprites;
-using osu.Framework.Graphics.UserInterface;
-using osu.Framework.Input.Bindings;
-using osu.Framework.Input.Events;
 using osuTK;
-using osuTK.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,11 +23,11 @@ namespace GDE.App.Main.UI.FileDialogComponents
         private int? currentSelectionIndex;
         private string currentlyLoadedDirectory;
 
-        private GDEScrollContainer scrollContainer;
-        private FadeSearchContainer fileContainer;
-        private FillFlowContainer fileFillFlowContainer;
+        private readonly GDEScrollContainer scrollContainer;
+        private readonly FadeSearchContainer fileContainer;
+        private readonly FillFlowContainer fileFillFlowContainer;
 
-        private DrawableItem currentSelection;
+        private readonly DrawableItem currentSelection;
 
         /// <summary>The button that performs the file dialog's action.</summary>
         protected GDEButton ActionButton;
@@ -126,7 +120,7 @@ namespace GDE.App.Main.UI.FileDialogComponents
         public void NavigateToEnd() => NavigateTo(fileFillFlowContainer.Count - 1);
         public void NavigateToPreviousDirectory()
         {
-            var dirs = AnalyzePath(CurrentDirectory);
+            string[] dirs = AnalyzePath(CurrentDirectory);
             if (dirs.Length < 3)
                 return;
 
@@ -148,7 +142,7 @@ namespace GDE.App.Main.UI.FileDialogComponents
         }
         public void HandleItemChanged(ValueChangedEvent<string> value)
         {
-            var newItem = value.NewValue;
+            string newItem = value.NewValue;
 
             if (CurrentlySelectedItem != null && fileFillFlowContainer.Contains(CurrentlySelectedItem) && CurrentlySelectedItem.ItemName == newItem && CurrentlySelectedItem.Selected)
                 return;
@@ -195,14 +189,14 @@ namespace GDE.App.Main.UI.FileDialogComponents
             if (!forceUpdate && currentlyLoadedDirectory == CurrentDirectory)
                 return;
 
-            var directories = GetDirectories(CurrentDirectory);
-            var files = GetFiles(CurrentDirectory);
+            string[] directories = GetDirectories(CurrentDirectory);
+            string[] files = GetFiles(CurrentDirectory);
 
             fileFillFlowContainer.Clear();
 
-            foreach (var d in directories)
+            foreach (string d in directories)
                 fileFillFlowContainer.Add(GetNewDrawableItem(GetIndividualItemName(d), ItemType.Directory));
-            foreach (var f in files)
+            foreach (string f in files)
                 fileFillFlowContainer.Add(GetNewDrawableItem(GetIndividualItemName(f), ItemType.File));
 
             currentlyLoadedDirectory = CurrentDirectory;
@@ -260,7 +254,7 @@ namespace GDE.App.Main.UI.FileDialogComponents
 
         private static string FixDirectoryPath(string dirPath)
         {
-            var result = dirPath.Replace('/', '\\');
+            string result = dirPath.Replace('/', '\\');
             if (!result.EndsWith('\\'))
                 result += '\\';
             return result;
@@ -268,9 +262,9 @@ namespace GDE.App.Main.UI.FileDialogComponents
 
         private static string GetCommonDirectory(string pathA, string pathB)
         {
-            var splitA = AnalyzePath(pathA);
-            var splitB = AnalyzePath(pathB);
-            var result = new List<string>();
+            string[] splitA = AnalyzePath(pathA);
+            string[] splitB = AnalyzePath(pathB);
+            List<string> result = new List<string>();
             int min = Min(splitA.Length, splitB.Length);
             for (int i = 0; i < min; i++)
                 if (splitA[i] == splitB[i])
@@ -279,11 +273,11 @@ namespace GDE.App.Main.UI.FileDialogComponents
         }
         private static string GetPreviousPathDirectoryInNewPath(string previousPath, string newPath)
         {
-            var splitPrevious = AnalyzePath(previousPath);
-            var splitNew = AnalyzePath(newPath);
+            string[] splitPrevious = AnalyzePath(previousPath);
+            string[] splitNew = AnalyzePath(newPath);
             if (splitNew.Length >= splitPrevious.Length)
                 return null;
-            var result = new List<string>();
+            List<string> result = new List<string>();
             int index = -1;
             while (++index < splitNew.Length)
                 if (splitPrevious[index] != splitNew[index])

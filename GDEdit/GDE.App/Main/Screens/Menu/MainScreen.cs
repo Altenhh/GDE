@@ -1,13 +1,10 @@
 ﻿using DiscordRPC;
 using GDE.App.Main.Colors;
-using GDE.App.Main.Containers;
 using GDE.App.Main.Containers.KeyBindingContainers;
 using GDE.App.Main.Overlays;
 using GDE.App.Main.Screens.Menu.Components;
 using GDE.App.Main.Tools;
-using GDE.App.Main.UI;
 using GDEdit.Application;
-using GDEdit.Application.Editor;
 using GDEdit.Utilities.Objects.GeometryDash;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -15,14 +12,12 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
-using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Bindings;
 using osu.Framework.Logging;
 using osu.Framework.Screens;
 using osuTK;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace GDE.App.Main.Screens.Menu
 {
@@ -30,12 +25,12 @@ namespace GDE.App.Main.Screens.Menu
     {
         private Database database;
 
-        private SpriteText loadWarning;
-        private LevelList levelList;
-        private Toolbar toolbar;
-        private OverlayPopup popUp;
-        private Bindable<Level> level = new Bindable<Level>();
-        private List<LevelCard> cards = new List<LevelCard>();
+        private readonly SpriteText loadWarning;
+        private readonly LevelList levelList;
+        private readonly Toolbar toolbar;
+        private readonly OverlayPopup popUp;
+        private readonly Bindable<Level> level = new Bindable<Level>();
+        private readonly List<LevelCard> cards = new List<LevelCard>();
 
         public MainScreen()
         {
@@ -91,7 +86,7 @@ namespace GDE.App.Main.Screens.Menu
                             Size = new Vector2(750, 270),
                             ConfirmAction = () =>
                             {
-                                var selectedLevel = levelList.LevelIndex > -1 ? levelList.Cards[levelList.LevelIndex].Level.Value : null;
+                                Level selectedLevel = levelList.LevelIndex > -1 ? levelList.Cards[levelList.LevelIndex].Level.Value : null;
 
                                 //if (selectedLevel != null)
                                     //database. delete level here
@@ -115,7 +110,7 @@ namespace GDE.App.Main.Screens.Menu
 
             levelList.LevelSelected = () =>
             {
-                var selectedLevel = levelList.LevelIndex > -1 ? levelList.Cards[levelList.LevelIndex].Level.Value : null;
+                Level selectedLevel = levelList.LevelIndex > -1 ? levelList.Cards[levelList.LevelIndex].Level.Value : null;
                 level.Value = selectedLevel;
                 toolbar.Level.TriggerChange(); // Fuck why is this necessary?
                 toolbar.Edit = levelList.LevelIndex > -1 ? (Action)(() => this.Push(new Edit.EditorScreen(levelList.LevelIndex, selectedLevel))) : null;

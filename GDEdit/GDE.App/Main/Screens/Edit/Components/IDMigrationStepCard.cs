@@ -23,13 +23,13 @@ namespace GDE.App.Main.Screens.Edit.Components
         private bool matchingFilter, filteringActive;
         private int index;
 
-        private Box selectionBar;
-        private Box hoverBox;
-        private Box stepIndexContainerBackground;
-        private Container stepIndexContainer;
-        private DraggableCardContainer stepDragContainer;
-        private SpriteText stepIndex;
-        private SpriteText rightArrow, sourceText, targetText;
+        private readonly Box selectionBar;
+        private readonly Box hoverBox;
+        private readonly Box stepIndexContainerBackground;
+        private readonly Container stepIndexContainer;
+        private readonly DraggableCardContainer stepDragContainer;
+        private readonly SpriteText stepIndex;
+        private readonly SpriteText rightArrow, sourceText, targetText;
 
         public readonly Bindable<bool> Selected = new Bindable<bool>(false);
 

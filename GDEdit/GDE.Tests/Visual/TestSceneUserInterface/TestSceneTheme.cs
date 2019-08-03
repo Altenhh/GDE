@@ -11,9 +11,9 @@ namespace GDE.Tests.Visual.TestSceneUserInterface
 {
     public class TestSceneTheme : TestScene
     {
-        private Bindable<string> hexValue = new Bindable<string>("151515");
-        private TextBox hexBox;
-        private Box themedBox;
+        private readonly Bindable<string> hexValue = new Bindable<string>("151515");
+        private readonly TextBox hexBox;
+        private readonly Box themedBox;
 
         public TestSceneTheme()
         {

@@ -97,7 +97,7 @@ namespace GDE.App.Main.UI.LCDComponents
         private int v;
         private bool active;
 
-        private LCDDigitBar[] bars = new LCDDigitBar[]
+        private readonly LCDDigitBar[] bars = new LCDDigitBar[]
         {
             new LCDDigitHorizontalBar
             {
