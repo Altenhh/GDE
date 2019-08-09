@@ -45,8 +45,6 @@ namespace GDE.App.Main.UI
                 breadcrumb.Selected += HandleBreadcrumbSelected;
                 return breadcrumb;
             }));
-
-            fillFlowContainer.Children.Last().Current.Value = true;
         }
 
         /// <summary>
@@ -82,20 +80,10 @@ namespace GDE.App.Main.UI
                 return;
 
             Items.RemoveRange(newIndex + 1, Items.Count - newIndex - 1);
-
-            fillFlowContainer.Children.Last().Current.Value = true;
         }
 
-        protected abstract class Breadcrumb : CompositeDrawable, IHasCurrentValue<bool>
+        protected abstract class Breadcrumb : CompositeDrawable
         {
-            private readonly Bindable<bool> current = new Bindable<bool>();
-
-            public Bindable<bool> Current
-            {
-                get => current;
-                set => current.BindTo(value);
-            }
-
             public T Value { get; }
 
             public event Action<Breadcrumb> Selected;
