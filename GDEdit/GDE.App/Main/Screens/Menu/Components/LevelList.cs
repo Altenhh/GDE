@@ -1,9 +1,9 @@
 ﻿using GDE.App.Main.Colors;
 using GDE.App.Main.UI;
 using GDE.App.Main.UI.Containers;
-using GDEdit.Application;
-using GDEdit.Utilities.Functions.Extensions;
-using GDEdit.Utilities.Objects.GeometryDash;
+using GDAPI.Application;
+using GDAPI.Utilities.Functions.Extensions;
+using GDAPI.Utilities.Objects.GeometryDash;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;

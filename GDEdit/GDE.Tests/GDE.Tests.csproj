@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -8,8 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GDE.App\GDE.App.csproj" />
-    <ProjectReference Include="..\GDE.Resources\GDE.Resources.csproj" />
-    <ProjectReference Include="..\GDEdit\GDEdit.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿using GDEdit.Utilities.Objects.General;
+﻿using GDAPI.Utilities.Objects.General;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;

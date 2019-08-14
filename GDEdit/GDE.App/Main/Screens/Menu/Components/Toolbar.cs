@@ -1,7 +1,7 @@
 ﻿using GDE.App.Main.Colors;
 using GDE.App.Main.UI;
-using GDEdit.Application;
-using GDEdit.Utilities.Objects.GeometryDash;
+using GDAPI.Application;
+using GDAPI.Utilities.Objects.GeometryDash;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;

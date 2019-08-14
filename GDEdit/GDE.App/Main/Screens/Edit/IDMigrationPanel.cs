@@ -5,9 +5,9 @@ using GDE.App.Main.Screens.Edit.Components.IDMigration;
 using GDE.App.Main.Toasts;
 using GDE.App.Main.UI;
 using GDE.App.Main.UI.FileDialogComponents;
-using GDEdit.Application.Editor;
-using GDEdit.Utilities.Enumerations;
-using GDEdit.Utilities.Objects.General;
+using GDAPI.Application.Editor;
+using GDAPI.Utilities.Enumerations;
+using GDAPI.Utilities.Objects.General;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -18,7 +18,7 @@ using osuTK.Graphics;
 using System;
 using System.Threading.Tasks;
 using static GDE.App.Main.Colors.GDEColors;
-using static GDEdit.Utilities.Objects.General.SourceTargetRange;
+using static GDAPI.Utilities.Objects.General.SourceTargetRange;
 
 namespace GDE.App.Main.Screens.Edit
 {

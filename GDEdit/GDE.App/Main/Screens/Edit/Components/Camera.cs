@@ -1,7 +1,7 @@
 ﻿using GDE.App.Main.Levels;
 using GDE.App.Main.Objects;
-using GDEdit.Application.Editor;
-using GDEdit.Utilities.Objects.GeometryDash.LevelObjects;
+using GDAPI.Application.Editor;
+using GDAPI.Utilities.Objects.GeometryDash.LevelObjects;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;

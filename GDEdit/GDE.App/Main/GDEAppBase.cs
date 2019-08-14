@@ -1,5 +1,5 @@
-﻿using GDEdit.Application;
-using GDEdit.Application.Editor;
+﻿using GDAPI.Application;
+using GDAPI.Application.Editor;
 using osu.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Configuration;

@@ -1,7 +1,7 @@
 ﻿using GDE.App.Main.Colors;
 using GDE.App.Main.Objects;
 using GDE.App.Main.Panels;
-using GDEdit.Utilities.Objects.GeometryDash.LevelObjects;
+using GDAPI.Utilities.Objects.GeometryDash.LevelObjects;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
