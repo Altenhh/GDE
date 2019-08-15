@@ -137,7 +137,7 @@ namespace GDE.App.Main.Screens.Edit.Components
                                     Anchor = Anchor.Centre,
                                     Origin = Anchor.Centre,
                                     Text = Index.ToString(),
-                                    Font = GDEFont.GetFont(Typeface.Digitall, 20),
+                                    Font = new FontUsage(size: 20),
                                 },
                             },
                         },
@@ -158,10 +158,9 @@ namespace GDE.App.Main.Screens.Edit.Components
                             Origin = Anchor.Centre,
                             RelativePositionAxes = Axes.X,
                             X = -0.25f,
-                            Y = 2.5f,
                             Margin = new MarginPadding { Left = 30 },
                             Text = range.SourceToString(),
-                            Font = GDEFont.GetFont(Typeface.Digitall, 20),
+                            Font = new FontUsage(size: 20),
                         },
                         rightArrow = new SpriteIcon
                         {
@@ -177,10 +176,9 @@ namespace GDE.App.Main.Screens.Edit.Components
                             Origin = Anchor.Centre,
                             RelativePositionAxes = Axes.X,
                             X = 0.25f,
-                            Y = 2.5f,
                             Margin = new MarginPadding { Right = 25 },
                             Text = range.TargetToString(),
-                            Font = GDEFont.GetFont(Typeface.Digitall, 20),
+                            Font = new FontUsage(size: 20),
                         },
                     }
                 },
