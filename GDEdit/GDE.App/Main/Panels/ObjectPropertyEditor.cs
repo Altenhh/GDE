@@ -40,6 +40,7 @@ using GDAPI.Application;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Graphics.Effects;
 using osu.Framework.Extensions.Color4Extensions;
+using GDE.App.Main.Panels.Object;
 
 namespace GDE.App.Main.Panels
 {
@@ -67,7 +68,10 @@ namespace GDE.App.Main.Panels
                     Children = new Drawable[]
                     {
                         //tabControl = new PropertyEditorTabControl(),
-                        header = new PropertyEditorHeader(),
+                        header = new PropertyEditorHeader
+                        {
+                            Object = ObjectBindable
+                        },
                         content = new Container()
                     }
                 }
