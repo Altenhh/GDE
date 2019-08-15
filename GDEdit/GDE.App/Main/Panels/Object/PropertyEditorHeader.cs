@@ -12,6 +12,16 @@ namespace GDE.App.Main.Panels.Object
     {
         private ObjectBase drawableObject;
 
+        private Bindable<string> name = new Bindable<string>();
+        private BindableBool deltaMode = new BindableBool();
+        private BindableBool flippedH = new BindableBool();
+        private BindableBool flippedV = new BindableBool();
+        private BindableBool glow = new BindableBool();
+        private BindableBool dontFade = new BindableBool();
+        private BindableBool dontEnter = new BindableBool();
+        private BindableBool groupParent = new BindableBool();
+        private BindableBool highDetail = new BindableBool();
+
         public Bindable<GeneralObject> Object;
 
         public PropertyEditorHeader()
@@ -19,7 +29,7 @@ namespace GDE.App.Main.Panels.Object
             Object = new Bindable<GeneralObject>();
 
             AutoSizeAxes = Axes.Y;
-            RelativeSizeAxes = Axes.X;
+            Width = 500;
         }
 
         [BackgroundDependencyLoader]
@@ -31,6 +41,7 @@ namespace GDE.App.Main.Panels.Object
                 {
                     Direction = FillDirection.Horizontal,
                     AutoSizeAxes = Axes.Both,
+                    Spacing = new Vector2(5, 0),
                     Children = new Drawable[]
                     {
                         drawableObject = new ObjectBase(Object.Value)
@@ -44,7 +55,11 @@ namespace GDE.App.Main.Panels.Object
                         },
                         new FillFlowContainer
                         {
-                            //TODO: Name Textbox
+                            new EditableTextBox
+                            {
+                                LabelText = "Name",
+                                Bindable = name
+                            }
                         }
                     }
                 }

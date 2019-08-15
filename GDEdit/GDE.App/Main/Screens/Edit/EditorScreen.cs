@@ -21,6 +21,8 @@ using osu.Framework.Input.Events;
 using osu.Framework.Screens;
 using osuTK;
 using System.Collections.Generic;
+using GDE.App.Main.Panels;
+using GDAPI.Utilities.Objects.GeometryDash.LevelObjects;
 
 namespace GDE.App.Main.Screens.Edit
 {
@@ -39,7 +41,7 @@ namespace GDE.App.Main.Screens.Edit
         private EditorTools tools;
 
         private IDMigrationPanel IDMigrationPanel;
-
+        private ObjectPropertyEditor objectPropertyEditor;
         public readonly Bindable<OpenFileDialog> OpenFileDialogBindable = new Bindable<OpenFileDialog>();
         public readonly Bindable<SaveFileDialog> SaveFileDialogBindable = new Bindable<SaveFileDialog>();
 
@@ -181,7 +183,14 @@ namespace GDE.App.Main.Screens.Edit
                     Origin = Anchor.Centre,
                     LockDrag = true,
                 },
+                objectPropertyEditor = new ObjectPropertyEditor(new GeneralObject(1))
+                {
+                    Anchor = Anchor.Centre,
+                    Origin = Anchor.Centre
+                }
             });
+
+            objectPropertyEditor.ToggleVisibility();
         }
 
         protected override bool OnClick(ClickEvent e)

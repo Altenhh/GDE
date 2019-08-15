@@ -61,10 +61,16 @@ namespace GDE.App.Main.Panels
 
             Children = new Drawable[]
             {
+                new Box
+                {
+                    RelativeSizeAxes = Axes.Both,
+                    Colour = GDEColors.FromHex("151515")
+                },
                 new FillFlowContainer
                 {
                     Direction = FillDirection.Horizontal,
                     AutoSizeAxes = Axes.Both,
+                    Padding = new MarginPadding(10),
                     Children = new Drawable[]
                     {
                         //tabControl = new PropertyEditorTabControl(),
@@ -74,7 +80,7 @@ namespace GDE.App.Main.Panels
                         },
                         content = new Container()
                     }
-                }
+                },
             };
         }
     }
