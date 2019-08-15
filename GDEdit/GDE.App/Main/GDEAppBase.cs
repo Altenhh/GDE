@@ -58,11 +58,11 @@ namespace GDE.App.Main
             Fonts.AddStore(new GlyphStore(Resources, "Fonts/Purista/Purista-ThinItalic"));
 
             //Noto | To support most Unicodes & Japanese letters
-            /*Fonts.AddStore(new GlyphStore(Resources, "Fonts/Noto/Noto-Basic"));
+            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Noto/Noto-Basic"));
             Fonts.AddStore(new GlyphStore(Resources, "Fonts/Noto/Noto-Hangul"));
 
             Fonts.AddStore(new GlyphStore(Resources, "Fonts/Noto/Noto-CJK-Basic"));
-            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Noto/Noto-CJK-Compatibility"));*/
+            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Noto/Noto-CJK-Compatibility"));
 
             //Digitall | All numbers will be handeled with this font with some few exceptions
             Fonts.AddStore(new GlyphStore(Resources, "Fonts/Digitall/Digitall"));
