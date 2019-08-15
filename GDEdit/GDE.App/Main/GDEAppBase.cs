@@ -42,20 +42,20 @@ namespace GDE.App.Main
             dependencies.CacheAs(new DatabaseCollection());
 
             //Purista | Default font
-            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Purista/Purista"));
-            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Purista/Purista-Italic"));
+            Fonts.AddStore(new GlyphStore(Resources, @"Fonts/Purista/Purista"));
+            //Fonts.AddStore(new GlyphStore(Resources, "Fonts/Purista/Purista-Italic"));
 
-            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Purista/Purista-Bold"));
-            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Purista/Purista-BoldItalic"));
+            //Fonts.AddStore(new GlyphStore(Resources, "Fonts/Purista/Purista-Bold"));
+            //Fonts.AddStore(new GlyphStore(Resources, "Fonts/Purista/Purista-BoldItalic"));
 
-            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Purista/Purista-SemiBold"));
-            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Purista/Purista-SemiBoldItalic"));
+//            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Purista/Purista-SemiBold"));
+//            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Purista/Purista-SemiBoldItalic"));
 
-            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Purista/Purista-Light"));
-            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Purista/Purista-LightItalic"));
+//            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Purista/Purista-Light"));
+//            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Purista/Purista-LightItalic"));
 
-            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Purista/Purista-Thin"));
-            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Purista/Purista-ThinItalic"));
+//            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Purista/Purista-Thin"));
+//            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Purista/Purista-ThinItalic"));
 
             //Noto | To support most Unicodes & Japanese letters
             Fonts.AddStore(new GlyphStore(Resources, "Fonts/Noto/Noto-Basic"));

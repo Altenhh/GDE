@@ -14,13 +14,6 @@ namespace GDE.App.Main.Panels.Object
 
         private Bindable<string> name = new Bindable<string>();
         private BindableBool deltaMode = new BindableBool();
-        private BindableBool flippedH = new BindableBool();
-        private BindableBool flippedV = new BindableBool();
-        private BindableBool glow = new BindableBool();
-        private BindableBool dontFade = new BindableBool();
-        private BindableBool dontEnter = new BindableBool();
-        private BindableBool groupParent = new BindableBool();
-        private BindableBool highDetail = new BindableBool();
 
         public Bindable<GeneralObject> Object;
 
@@ -29,7 +22,7 @@ namespace GDE.App.Main.Panels.Object
             Object = new Bindable<GeneralObject>();
 
             AutoSizeAxes = Axes.Y;
-            Width = 500;
+            Width = 800;
         }
 
         [BackgroundDependencyLoader]
@@ -62,6 +55,13 @@ namespace GDE.App.Main.Panels.Object
                             }
                         }
                     }
+                },
+                new EditableCheckboxFlipped
+                {
+                    Anchor = Anchor.TopRight,
+                    Origin = Anchor.TopRight,
+                    LabelText = "δ Mode",
+                    Bindable = deltaMode
                 }
             });
         }
