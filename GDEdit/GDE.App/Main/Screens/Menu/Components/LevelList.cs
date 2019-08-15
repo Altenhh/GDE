@@ -133,7 +133,7 @@ namespace GDE.App.Main.Screens.Menu.Components
                         Cards.Add(new LevelCard
                         {
                             RelativeSizeAxes = Axes.X,
-                            Size = new Vector2(0.9f, 60),
+                            Size = new Vector2(0.9f, 50),
                             Margin = new MarginPadding(10),
                             Index = i,
                             Level =

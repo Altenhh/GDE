@@ -40,6 +40,32 @@ namespace GDE.App.Main
             dependencies.Cache(this);
             dependencies.CacheAs(new Editor(null));
             dependencies.CacheAs(new DatabaseCollection());
+
+            //Purista | Default font
+            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Purista/Purista"));
+            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Purista/Purista-Italic"));
+
+            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Purista/Purista-Bold"));
+            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Purista/Purista-BoldItalic"));
+
+            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Purista/Purista-SemiBold"));
+            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Purista/Purista-SemiBoldItalic"));
+
+            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Purista/Purista-Light"));
+            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Purista/Purista-LightItalic"));
+
+            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Purista/Purista-Thin"));
+            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Purista/Purista-ThinItalic"));
+
+            //Noto | To support most Unicodes & Japanese letters
+            /*Fonts.AddStore(new GlyphStore(Resources, "Fonts/Noto/Noto-Basic"));
+            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Noto/Noto-Hangul"));
+
+            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Noto/Noto-CJK-Basic"));
+            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Noto/Noto-CJK-Compatibility"));*/
+
+            //Digitall | All numbers will be handeled with this font with some few exceptions
+            Fonts.AddStore(new GlyphStore(Resources, "Fonts/Digitall/Digitall"));
         }
 
         public override void SetHost(GameHost host)

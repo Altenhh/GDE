@@ -1,4 +1,5 @@
 ﻿using GDAPI.Utilities.Objects.General;
+using GDE.App.Main.UI.Graphics;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
@@ -28,8 +29,8 @@ namespace GDE.App.Main.Screens.Edit.Components
         private Box stepIndexContainerBackground;
         private Container stepIndexContainer;
         private DraggableCardContainer stepDragContainer;
-        private SpriteText stepIndex;
-        private SpriteText rightArrow, sourceText, targetText;
+        private SpriteIcon rightArrow;
+        private SpriteText stepIndex, sourceText, targetText;
 
         public readonly Bindable<bool> Selected = new Bindable<bool>(false);
 
@@ -136,7 +137,7 @@ namespace GDE.App.Main.Screens.Edit.Components
                                     Anchor = Anchor.Centre,
                                     Origin = Anchor.Centre,
                                     Text = Index.ToString(),
-                                    Font = new FontUsage(size: 20),
+                                    Font = GDEFont.GetFont(Typeface.Digitall, 20),
                                 },
                             },
                         },
@@ -157,16 +158,17 @@ namespace GDE.App.Main.Screens.Edit.Components
                             Origin = Anchor.Centre,
                             RelativePositionAxes = Axes.X,
                             X = -0.25f,
+                            Y = 2.5f,
                             Margin = new MarginPadding { Left = 30 },
                             Text = range.SourceToString(),
-                            Font = new FontUsage(size: 20),
+                            Font = GDEFont.GetFont(Typeface.Digitall, 20),
                         },
-                        rightArrow = new SpriteText
+                        rightArrow = new SpriteIcon
                         {
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
-                            Text = ">",
-                            Font = new FontUsage(size: 20),
+                            Icon = FontAwesome.Solid.ChevronRight,
+                            Size = new Vector2(10),
                             Alpha = 0.5f,
                         },
                         targetText = new SpriteText
@@ -175,9 +177,10 @@ namespace GDE.App.Main.Screens.Edit.Components
                             Origin = Anchor.Centre,
                             RelativePositionAxes = Axes.X,
                             X = 0.25f,
+                            Y = 2.5f,
                             Margin = new MarginPadding { Right = 25 },
                             Text = range.TargetToString(),
-                            Font = new FontUsage(size: 20),
+                            Font = GDEFont.GetFont(Typeface.Digitall, 20),
                         },
                     }
                 },
@@ -221,7 +224,7 @@ namespace GDE.App.Main.Screens.Edit.Components
         {
             AnimateArrow().Loop(2000);
         }
-        public TransformSequence<SpriteText> AnimateArrow()
+        public TransformSequence<SpriteIcon> AnimateArrow()
         {
             return rightArrow
                 .MoveToOffset(new Vector2(20, 0), 500, Easing.InQuint).FadeTo(0, 500, Easing.InQuint)

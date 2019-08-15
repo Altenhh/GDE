@@ -10,6 +10,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
 using osuTK;
 using static System.Threading.Tasks.TaskStatus;
+using GDE.App.Main.UI.Graphics;
 
 namespace GDE.App.Main.Screens.Menu.Components
 {
@@ -61,9 +62,9 @@ namespace GDE.App.Main.Screens.Menu.Components
                         },
                         levelSong = new SpriteText
                         {
+                            Colour = GDEColors.FromHex("aaaaaa"),
                             Text = "SongAuthor - SongTitle",
-                            TextSize = 20,
-                            Colour = GDEColors.FromHex("aaaaaa")
+                            TextSize = 15, 
                         }
                     }
                 },
@@ -72,8 +73,9 @@ namespace GDE.App.Main.Screens.Menu.Components
                     Anchor = Anchor.BottomRight,
                     Origin = Anchor.BottomRight,
                     Margin = new MarginPadding(5),
+                    Position = new Vector2(0, 4),
                     Text = "Loading...",
-                    TextSize = 20,
+                    TextSize = 16,
                     Colour = GDEColors.FromHex("aaaaaa")
                 }
             };
@@ -123,7 +125,10 @@ namespace GDE.App.Main.Screens.Menu.Components
             }
 
             if (!gottenLength && Level.Value.IsFullyLoaded)
+            {
                 levelLength.Text = Level.Value.TimeLength.ToString(@"m\:ss");
+                levelLength.Font = GDEFont.Numeric;
+            }
             else
                 return;
 
