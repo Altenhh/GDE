@@ -48,6 +48,7 @@ namespace GDE.App.Main.Panels
     {
         private Container content;
         private PropertyEditorHeader header;
+        private PropertyEditorFooter footer;
         //private PropertyEditorTabControl tabControl;
 
         protected override string Name => "Object Property Editor";
@@ -59,29 +60,48 @@ namespace GDE.App.Main.Panels
             AutoSizeAxes = Axes.Both;
             ObjectBindable = new Bindable<GeneralObject>(Object);
 
-            Children = new Drawable[]
+            Add(new Container
             {
-                new Box
+                Padding = new MarginPadding
                 {
-                    RelativeSizeAxes = Axes.Both,
-                    Colour = GDEColors.FromHex("151515")
+                    Top = 20
                 },
-                new FillFlowContainer
+                Children = new Drawable[]
                 {
-                    Direction = FillDirection.Horizontal,
-                    AutoSizeAxes = Axes.Both,
-                    Padding = new MarginPadding(10),
-                    Children = new Drawable[]
+                    new Box
                     {
-                        //tabControl = new PropertyEditorTabControl(),
-                        header = new PropertyEditorHeader
+                        RelativeSizeAxes = Axes.Both,
+                        Colour = GDEColors.FromHex("151515")
+                    },
+                    new FillFlowContainer
+                    {
+                        Direction = FillDirection.Horizontal,
+                        AutoSizeAxes = Axes.Both,
+                        Children = new Drawable[]
                         {
-                            Object = ObjectBindable
-                        },
-                        content = new Container()
-                    }
-                },
-            };
+                            //tabControl = new PropertyEditorTabControl(),
+                            new FillFlowContainer
+                            {
+                                Direction = FillDirection.Vertical,
+                                AutoSizeAxes = Axes.Both,
+                                Padding = new MarginPadding(5),
+                                Children = new Drawable[]
+                                {
+                                    header = new PropertyEditorHeader
+                                    {
+                                        Object = ObjectBindable
+                                    },
+                                    content = new Container(),
+                                    footer = new PropertyEditorFooter
+                                    {
+                                        Object = ObjectBindable
+                                    },
+                                }
+                            }
+                        }
+                    },
+                }
+            });
         }
     }
 }

@@ -48,11 +48,11 @@ namespace GDE.App.Main.Panels.Object
                         },
                         new FillFlowContainer
                         {
-                            new EditableTextBox
+                            /*new EditableTextBox
                             {
                                 LabelText = "Name",
                                 Bindable = name
-                            }
+                            }*/
                         }
                     }
                 },
