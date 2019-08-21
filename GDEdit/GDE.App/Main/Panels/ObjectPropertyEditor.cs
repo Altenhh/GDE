@@ -62,9 +62,10 @@ namespace GDE.App.Main.Panels
 
             Add(new Container
             {
+                AutoSizeAxes = Axes.Both,
                 Padding = new MarginPadding
                 {
-                    Top = 20
+                    Top = 30
                 },
                 Children = new Drawable[]
                 {
