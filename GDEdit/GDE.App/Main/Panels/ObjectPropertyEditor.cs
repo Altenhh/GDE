@@ -41,6 +41,7 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Graphics.Effects;
 using osu.Framework.Extensions.Color4Extensions;
 using GDE.App.Main.Panels.Object;
+using GDE.App.Main.Panels.Tabs;
 
 namespace GDE.App.Main.Panels
 {
@@ -80,7 +81,11 @@ namespace GDE.App.Main.Panels
                         AutoSizeAxes = Axes.Both,
                         Children = new Drawable[]
                         {
-                            tabControl = new PropertyEditorTabControl(),
+                            tabControl = new PropertyEditorTabControl
+                            {
+                                RelativeSizeAxes  = Axes.Y,
+                                Width = 50
+                            },
                             new FillFlowContainer
                             {
                                 Direction = FillDirection.Vertical,
@@ -103,6 +108,27 @@ namespace GDE.App.Main.Panels
                     },
                 }
             });
+
+            var list = new List<PropertyEditorTab>()
+            {
+                new PropertyEditorTab
+                {
+                    Icon = FontAwesome.Solid.ShareSquare
+                },
+                new PropertyEditorTab
+                {
+                    Icon = FontAwesome.Solid.Circle
+                },
+                new PropertyEditorTab
+                {
+                    Icon = FontAwesome.Solid.ExclamationTriangle
+                }
+            };
+
+            foreach (var item in list)
+                tabControl.AddItem(item);
+            
+            tabControl.Current.Value = list.FirstOrDefault();
         }
     }
 }

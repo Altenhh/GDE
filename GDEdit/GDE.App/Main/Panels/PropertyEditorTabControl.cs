@@ -10,44 +10,46 @@ using osuTK;
 
 namespace GDE.App.Main.Panels
 {
-    public class PropertyEditorTabControl : TabControl<IPETab>
+    public class PropertyEditorTabControl : TabControl<PropertyEditorTab>
     {
         //We dont want to handle any dropdown.
-        protected override Dropdown<IPETab> CreateDropdown() => null;
+        protected override Dropdown<PropertyEditorTab> CreateDropdown() => null;
 
-        protected override TabItem<IPETab> CreateTabItem(IPETab value) => new PETabItem(value);
+        protected override TabItem<PropertyEditorTab> CreateTabItem(PropertyEditorTab value) => new PETabItem(value);
 
         public PropertyEditorTabControl()
         {
-            TabContainer.Masking = false;
             TabContainer.Spacing = new Vector2(0, 25);
+            TabContainer.Direction = FillDirection.Vertical;
             
             //Background
             AddInternal(new Box
             {
                 RelativeSizeAxes = Axes.Y,
-                Width = 30,
+                Width = 50,
                 Colour = GDEColors.FromHex("2B2B2B")
             });
         }
 
-        private class PETabItem : TabItem<IPETab>
+        private class PETabItem : TabItem<PropertyEditorTab>
         {
             private readonly SpriteIcon icon;
             private readonly Container container;
             private readonly Box background;
 
-            public PETabItem(IPETab value) 
+            public PETabItem(PropertyEditorTab value) 
                 : base(value)
             {
-                RelativeSizeAxes = Axes.X;
+                Width = 30;
                 AutoSizeAxes = Axes.Y;
                 
                 Children = new Drawable[]
                 {
                     container = new Container()
                     {
-                        Padding = new MarginPadding(10),
+                        RelativeSizeAxes = Axes.X,
+                        AutoSizeAxes = Axes.Y,
+                        Padding = new MarginPadding(5),
                         X = 10,
                         Masking = true,
                         CornerRadius = 5,
@@ -56,6 +58,7 @@ namespace GDE.App.Main.Panels
                           Radius  = 1,
                           Colour = GDEColors.FromHex("1F1F1F"),
                           Type = EdgeEffectType.Shadow,
+                          Hollow = true,
                           Offset = new Vector2(0, 1)
                         },
                         Children = new Drawable[]
@@ -63,7 +66,7 @@ namespace GDE.App.Main.Panels
                             background = new Box
                             {
                                 RelativeSizeAxes = Axes.Both,
-                                Colour = GDEColors.FromHex("333")
+                                Colour = GDEColors.FromHex("333"),
                             },
                             icon = new SpriteIcon
                             {
