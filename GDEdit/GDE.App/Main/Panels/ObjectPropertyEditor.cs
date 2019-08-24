@@ -49,7 +49,7 @@ namespace GDE.App.Main.Panels
         private Container content;
         private PropertyEditorHeader header;
         private PropertyEditorFooter footer;
-        //private PropertyEditorTabControl tabControl;
+        private PropertyEditorTabControl tabControl;
 
         protected override string Name => "Object Property Editor";
 
@@ -80,7 +80,7 @@ namespace GDE.App.Main.Panels
                         AutoSizeAxes = Axes.Both,
                         Children = new Drawable[]
                         {
-                            //tabControl = new PropertyEditorTabControl(),
+                            tabControl = new PropertyEditorTabControl(),
                             new FillFlowContainer
                             {
                                 Direction = FillDirection.Vertical,
