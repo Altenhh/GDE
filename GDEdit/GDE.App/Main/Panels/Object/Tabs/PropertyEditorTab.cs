@@ -1,6 +1,6 @@
 ﻿using osu.Framework.Graphics.Sprites;
 
-namespace GDE.App.Main.Panels.Tabs
+namespace GDE.App.Main.Panels.Object.Tabs
 {
     public class PropertyEditorTab
     {

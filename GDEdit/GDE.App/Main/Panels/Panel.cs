@@ -8,7 +8,7 @@ using osuTK;
 
 namespace GDE.App.Main.Panels
 {
-    public class Panel : FocusedOverlayContainer
+    public class Panel : OverlayContainer
     {
         private SpriteText text;
         private PinButton pin;
@@ -16,7 +16,7 @@ namespace GDE.App.Main.Panels
         public bool AllowDrag = true;
         public bool LockDrag = false;
 
-        protected virtual string Name
+        protected new virtual string Name
         {
             get => (string)text?.Text ?? "";
             set => text.Text = value;
@@ -91,7 +91,7 @@ namespace GDE.App.Main.Panels
                         Horizontal = 5,
                         Vertical = 2
                     }
-                }
+                },
             };
         }
 
@@ -107,14 +107,12 @@ namespace GDE.App.Main.Panels
             ClearTransforms();
 
             this.ScaleTo(new Vector2(1, 1), 500, Easing.OutExpo);
-            base.PopIn();
         }
         protected override void PopOut()
         {
             ClearTransforms();
 
             this.ScaleTo(new Vector2(1, 0), 500, Easing.OutExpo);
-            base.PopIn();
         }
 
         protected override bool OnDrag(DragEvent e)

@@ -41,7 +41,7 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Graphics.Effects;
 using osu.Framework.Extensions.Color4Extensions;
 using GDE.App.Main.Panels.Object;
-using GDE.App.Main.Panels.Tabs;
+using GDE.App.Main.Panels.Object.Tabs;
 
 namespace GDE.App.Main.Panels
 {
@@ -83,8 +83,9 @@ namespace GDE.App.Main.Panels
                         {
                             tabControl = new PropertyEditorTabControl
                             {
-                                RelativeSizeAxes  = Axes.Y,
-                                Width = 50
+                                RelativeSizeAxes = Axes.Y,
+                                Width = 30,
+                                AutoSort = true,
                             },
                             new FillFlowContainer
                             {
@@ -108,7 +109,12 @@ namespace GDE.App.Main.Panels
                     },
                 }
             });
+        }
 
+        protected override void LoadComplete()
+        {
+            base.LoadComplete();
+            
             var list = new List<PropertyEditorTab>()
             {
                 new PropertyEditorTab
@@ -124,11 +130,11 @@ namespace GDE.App.Main.Panels
                     Icon = FontAwesome.Solid.ExclamationTriangle
                 }
             };
-
+            
             foreach (var item in list)
                 tabControl.AddItem(item);
-            
-            tabControl.Current.Value = list.FirstOrDefault();
+
+            tabControl.Current.Value = list.LastOrDefault();
         }
     }
 }
