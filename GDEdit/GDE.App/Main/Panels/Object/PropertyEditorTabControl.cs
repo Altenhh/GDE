@@ -22,6 +22,7 @@ namespace GDE.App.Main.Panels.Object
         {
             TabContainer.Spacing = new Vector2(0, 10);
             TabContainer.Direction = FillDirection.Vertical;
+            TabContainer.AllowMultiline = true;
             
             //Background
             AddInternal(new Box
@@ -86,14 +87,6 @@ namespace GDE.App.Main.Panels.Object
                         }
                     }
                 };
-            }
-
-            protected override void Update()
-            {
-                base.Update();
-                
-                //TODO: Figure out where this opacity property is being changed and prevent it from being changed.
-                Alpha = 1;
             }
 
             protected override void OnActivated()
