@@ -56,6 +56,7 @@ namespace GDE.App.Main.Panels
         protected override string Name => "Object Property Editor";
 
         public Bindable<GeneralObject> ObjectBindable;
+        private FillFlowContainer fillFlow;
 
         public ObjectPropertyEditor(GeneralObject Object)
         {
@@ -88,7 +89,7 @@ namespace GDE.App.Main.Panels
                                 Width = 30,
                                 AutoSort = true,
                             },
-                            new FillFlowContainer
+                            fillFlow = new FillFlowContainer
                             {
                                 Direction = FillDirection.Vertical,
                                 AutoSizeAxes = Axes.Both,
@@ -97,18 +98,6 @@ namespace GDE.App.Main.Panels
                                     Vertical = 5,
                                     Horizontal = 10
                                 },
-                                Children = new Drawable[]
-                                {
-                                    header = new PropertyEditorHeader
-                                    {
-                                        Object = ObjectBindable
-                                    },
-                                    content = new ObjectContent(),
-                                    footer = new PropertyEditorFooter
-                                    {
-                                        Object = ObjectBindable
-                                    },
-                                }
                             }
                         }
                     },
@@ -125,11 +114,13 @@ namespace GDE.App.Main.Panels
                 //TODO: Import custom icons to use
                 new PropertyEditorTab
                 {
-                    Icon = FontAwesome.Regular.Square
+                    Icon = FontAwesome.Regular.Square,
+                    Tab = TabEnumeration.General
                 },
                 new PropertyEditorTab
                 {
-                    Icon = FontAwesome.Solid.Star
+                    Icon = FontAwesome.Solid.Star,
+                    Tab = TabEnumeration.Special
                 }
             };
             
@@ -137,7 +128,55 @@ namespace GDE.App.Main.Panels
                 tabControl.AddItem(item);
 
             tabControl.Current.Value = list.FirstOrDefault();
-            tabControl.Current.ValueChanged += value => { content = new ObjectContent(); };
+            tabControl.Current.ValueChanged += value =>
+            {
+                Console.WriteLine(value.NewValue.Tab.ToString());
+                switch (value.NewValue.Tab)
+                {
+                    case TabEnumeration.General:
+                        fillFlow.Children = new Drawable[]
+                        {
+                            header = new PropertyEditorHeader
+                            {
+                                Object = ObjectBindable
+                            },
+                            content = new ObjectContent(),
+                            footer = new PropertyEditorFooter
+                            {
+                                Object = ObjectBindable
+                            },
+                        };
+                        break;
+                    case TabEnumeration.Special:
+                        fillFlow.Children = new Drawable[]
+                        {
+                            header = new PropertyEditorHeader
+                            {
+                                Object = ObjectBindable
+                            },
+                            content = new SpecialContent(),
+                            footer = new PropertyEditorFooter
+                            {
+                                Object = ObjectBindable
+                            },
+                        };
+                        break;
+                    default:
+                        fillFlow.Children = new Drawable[]
+                        {
+                            header = new PropertyEditorHeader
+                            {
+                                Object = ObjectBindable
+                            },
+                            content = new ObjectContent(),
+                            footer = new PropertyEditorFooter
+                            {
+                                Object = ObjectBindable
+                            },
+                        };
+                        break;
+                }
+            };
             tabControl.Current.TriggerChange();
         }
     }
