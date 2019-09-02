@@ -117,24 +117,21 @@ namespace GDE.App.Main.Panels
             
             var list = new List<PropertyEditorTab>()
             {
+                //TODO: Import custom icons to use
                 new PropertyEditorTab
                 {
-                    Icon = FontAwesome.Solid.ShareSquare
+                    Icon = FontAwesome.Regular.Square
                 },
                 new PropertyEditorTab
                 {
-                    Icon = FontAwesome.Solid.Circle
-                },
-                new PropertyEditorTab
-                {
-                    Icon = FontAwesome.Solid.ExclamationTriangle
+                    Icon = FontAwesome.Solid.Star
                 }
             };
             
             foreach (var item in list)
                 tabControl.AddItem(item);
 
-            tabControl.Current.Value = list.LastOrDefault();
+            tabControl.Current.Value = list.FirstOrDefault();
         }
     }
 }
