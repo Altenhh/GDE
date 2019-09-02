@@ -41,13 +41,14 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Graphics.Effects;
 using osu.Framework.Extensions.Color4Extensions;
 using GDE.App.Main.Panels.Object;
+using GDE.App.Main.Panels.Object.Content;
 using GDE.App.Main.Panels.Object.Tabs;
 
 namespace GDE.App.Main.Panels
 {
     public class ObjectPropertyEditor : Panel
     {
-        private Container content;
+        private CompositeDrawable content;
         private PropertyEditorHeader header;
         private PropertyEditorFooter footer;
         private PropertyEditorTabControl tabControl;
@@ -66,7 +67,7 @@ namespace GDE.App.Main.Panels
                 AutoSizeAxes = Axes.Both,
                 Padding = new MarginPadding
                 {
-                    Top = 30
+                    Top = 30,
                 },
                 Children = new Drawable[]
                 {
@@ -91,14 +92,18 @@ namespace GDE.App.Main.Panels
                             {
                                 Direction = FillDirection.Vertical,
                                 AutoSizeAxes = Axes.Both,
-                                Padding = new MarginPadding(5),
+                                Padding = new MarginPadding()
+                                {
+                                    Vertical = 5,
+                                    Horizontal = 10
+                                },
                                 Children = new Drawable[]
                                 {
                                     header = new PropertyEditorHeader
                                     {
                                         Object = ObjectBindable
                                     },
-                                    content = new Container(),
+                                    content = new ObjectContent(),
                                     footer = new PropertyEditorFooter
                                     {
                                         Object = ObjectBindable
@@ -132,6 +137,8 @@ namespace GDE.App.Main.Panels
                 tabControl.AddItem(item);
 
             tabControl.Current.Value = list.FirstOrDefault();
+            tabControl.Current.ValueChanged += value => { content = new ObjectContent(); };
+            tabControl.Current.TriggerChange();
         }
     }
 }
