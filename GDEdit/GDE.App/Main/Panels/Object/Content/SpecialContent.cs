@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using GDE.App.Main.UI;
 using GDE.App.Main.UI.Shadowed;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
@@ -24,11 +25,12 @@ namespace GDE.App.Main.Panels.Object.Content
             return content;
         }
 
-        private class Cell : SpriteText
+        private class Cell : GDENumberTextBox
         {
-            public Cell(int index)
+            public Cell(float index)
+                : base(index)
             {
-                Text = $"Special Cell {index}";
+                
             }
         }
     }
