@@ -30,7 +30,7 @@ namespace GDE.App.Main.Panels.Object.Content
             public Cell(float index)
                 : base(index)
             {
-                
+                RelativeSizeAxes = Axes.X;
             }
         }
     }

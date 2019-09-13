@@ -20,20 +20,21 @@ namespace GDE.App.Main.UI
         public GDENumberTextBox(float defaultValue = 0)
         {
             Value = new BindableFloat(defaultValue);
-            AutoSizeAxes = Axes.Both;
+            AutoSizeAxes = Axes.Y;
             
             Add(new FillFlowContainer
             {
                 Direction = FillDirection.Horizontal,
                 Spacing = new Vector2(-3, 0),
-                AutoSizeAxes = Axes.Both,
+                AutoSizeAxes = Axes.Y,
+                RelativeSizeAxes = Axes.X,
                 Children = new Drawable[]
                 {
                     new ArrowButton(Value, true),
                     textBox = new NumberedTextBox
                     {
                         Height = 20,
-                        Width = 120,
+                        RelativeSizeAxes = Axes.X,
                         Text = Value.Value.ToString(),
                         Depth = -1
                     },
@@ -82,8 +83,8 @@ namespace GDE.App.Main.UI
             {
                 Text = Flipped ? "<" : ">";
                 BackgroundColour = GDEColors.FromHex("333333");
-                Width = 20;
                 Height = 20;
+                Width = 20;
 
                 Action = () => { Value.Value += Flipped ? -threshold : threshold; };
             }
@@ -113,7 +114,7 @@ namespace GDE.App.Main.UI
 
         private class NumberedTextBox : ShadowedTextBox
         {
-            //protected override bool CanAddCharacter(char character) => char.IsNumber(character) || char.IsLetter(character);
+            protected override bool CanAddCharacter(char character) => char.IsNumber(character) || character == '.';
 
             public NumberedTextBox()
             {

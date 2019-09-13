@@ -34,9 +34,9 @@ namespace GDE.App.Main.Panels.Object.Content
             {
                 new TableColumn("name", Anchor.CentreLeft, new Dimension()),
                 new TableColumn("extra name", Anchor.CentreRight, new Dimension()),
-                new TableColumn("value", Anchor.CentreLeft, new Dimension(minSize:100)),
+                new TableColumn("value", Anchor.CentreLeft, new Dimension(minSize:50, maxSize:100)),
                 new TableColumn("extra name", Anchor.CentreRight, new Dimension()),
-                new TableColumn("value", Anchor.CentreLeft, new Dimension(minSize:100)),
+                new TableColumn("value", Anchor.CentreLeft, new Dimension(minSize:50, maxSize:100)),
             };
             
             return columns.ToArray();
