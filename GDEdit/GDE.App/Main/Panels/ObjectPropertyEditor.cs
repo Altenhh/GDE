@@ -75,7 +75,7 @@ namespace GDE.App.Main.Panels
                     new Box
                     {
                         RelativeSizeAxes = Axes.Both,
-                        Colour = GDEColors.FromHex("151515")
+                        Colour = GDEColors.FromHex("202020")
                     },
                     new FillFlowContainer
                     {
@@ -93,7 +93,7 @@ namespace GDE.App.Main.Panels
                             {
                                 Direction = FillDirection.Vertical,
                                 AutoSizeAxes = Axes.Both,
-                                Padding = new MarginPadding()
+                                Padding = new MarginPadding
                                 {
                                     Vertical = 5,
                                     Horizontal = 10
@@ -104,7 +104,6 @@ namespace GDE.App.Main.Panels
                 }
             });
         }
-
         protected override void LoadComplete()
         {
             base.LoadComplete();
@@ -116,11 +115,6 @@ namespace GDE.App.Main.Panels
                 {
                     Icon = FontAwesome.Regular.Square,
                     Tab = TabEnumeration.General
-                },
-                new PropertyEditorTab
-                {
-                    Icon = FontAwesome.Solid.Star,
-                    Tab = TabEnumeration.Special
                 }
             };
             
@@ -140,35 +134,7 @@ namespace GDE.App.Main.Panels
                             {
                                 Object = ObjectBindable
                             },
-                            content = new ObjectContent(),
-                            footer = new PropertyEditorFooter
-                            {
-                                Object = ObjectBindable
-                            },
-                        };
-                        break;
-                    case TabEnumeration.Special:
-                        fillFlow.Children = new Drawable[]
-                        {
-                            header = new PropertyEditorHeader
-                            {
-                                Object = ObjectBindable
-                            },
-                            content = new SpecialContent(),
-                            footer = new PropertyEditorFooter
-                            {
-                                Object = ObjectBindable
-                            },
-                        };
-                        break;
-                    default:
-                        fillFlow.Children = new Drawable[]
-                        {
-                            header = new PropertyEditorHeader
-                            {
-                                Object = ObjectBindable
-                            },
-                            content = new ObjectContent(),
+                            content = new ObjectContent(ObjectBindable.Value),
                             footer = new PropertyEditorFooter
                             {
                                 Object = ObjectBindable

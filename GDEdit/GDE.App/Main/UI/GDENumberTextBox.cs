@@ -1,9 +1,12 @@
-﻿using GDE.App.Main.Colors;
+﻿using System.Globalization;
+using GDE.App.Main.Colors;
+using GDE.App.Main.UI.Graphics;
 using GDE.App.Main.UI.Shadowed;
 using JetBrains.Annotations;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
 using osuTK;
 using osuTK.Input;
@@ -13,13 +16,13 @@ namespace GDE.App.Main.UI
     public class GDENumberTextBox : Container
     {
         private float threshold = 1;
-        private readonly NumberedTextBox textBox;
 
-        public BindableFloat Value;
+        public BindableDouble Bindable;
 
         public GDENumberTextBox(float defaultValue = 0)
         {
-            Value = new BindableFloat(defaultValue);
+            NumberedTextBox textBox;
+            Bindable = new BindableDouble(defaultValue);
             AutoSizeAxes = Axes.Y;
             
             Add(new FillFlowContainer
@@ -30,26 +33,38 @@ namespace GDE.App.Main.UI
                 RelativeSizeAxes = Axes.X,
                 Children = new Drawable[]
                 {
-                    new ArrowButton(Value, true),
+                    new ArrowButton(Bindable, true),
                     textBox = new NumberedTextBox
                     {
                         Height = 20,
                         RelativeSizeAxes = Axes.X,
-                        Text = Value.Value.ToString(),
+                        Text = Bindable.Value.ToString(),
                         Depth = -1
                     },
-                    new ArrowButton(Value)
+                    new ArrowButton(Bindable)
                 }
             });
 
-            Value.ValueChanged += text => { textBox.Text = text.NewValue.ToString(); };
+            textBox.OnCommit += (sender, text) =>
+            {
+                double.TryParse(sender.Text, NumberStyles.Currency, null, out double numValue);
+
+                if (numValue < Bindable.MaxValue || numValue > Bindable.MinValue)
+                    Bindable.Value = numValue;
+                else
+                    Bindable.TriggerChange();
+            };
+            
+            Bindable.ValueChanged += text => { textBox.Text = text.NewValue.ToString(); };
+            
+            Bindable.TriggerChange();
         }
 
         protected override bool OnScroll(ScrollEvent e)
         {
             bool isReversed = e.ScrollDelta.Y < 0;
 
-            Value.Value += isReversed ? -threshold : threshold;
+            Bindable.Value += isReversed ? -threshold : threshold;
             return base.OnScroll(e);
         }
         
@@ -79,14 +94,24 @@ namespace GDE.App.Main.UI
         {
             private float threshold = 1;
             
-            public ArrowButton([NotNull] BindableFloat Value, bool Flipped = false)
+            public ArrowButton([NotNull] BindableDouble Value, bool Flipped = false)
             {
                 Text = Flipped ? "<" : ">";
                 BackgroundColour = GDEColors.FromHex("333333");
                 Height = 20;
                 Width = 20;
 
-                Action = () => { Value.Value += Flipped ? -threshold : threshold; };
+                Action = () =>
+                {
+                    var newValue = Value.Value += Flipped ? -threshold : threshold;
+                    if (newValue < Value.MaxValue || newValue > Value.MinValue)
+                        Value.Value = newValue;
+                    else
+                    {
+                        Value.TriggerChange();
+                        SpriteText.Colour = GDEColors.FromHex("595959");
+                    }
+                };
             }
 
             protected override bool OnKeyDown(KeyDownEvent e)
@@ -114,7 +139,8 @@ namespace GDE.App.Main.UI
 
         private class NumberedTextBox : ShadowedTextBox
         {
-            protected override bool CanAddCharacter(char character) => char.IsNumber(character) || character == '.';
+            protected override bool CanAddCharacter(char character) =>
+                char.IsNumber(character) || character == '.' || character == '-';
 
             public NumberedTextBox()
             {
@@ -123,6 +149,12 @@ namespace GDE.App.Main.UI
                 BackgroundCommit = GDEColors.FromHex("404040");
                 CornerRadius = 0;
             }
+
+            protected override Drawable GetDrawableCharacter(char c) => new SpriteText
+            {
+                Text = c.ToString(),
+                Font = GDEFont.GetFont(Typeface.Digitall, CalculatedTextSize),
+            };
         }
     }
 }
