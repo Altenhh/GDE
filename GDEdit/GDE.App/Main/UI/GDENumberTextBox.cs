@@ -3,12 +3,14 @@ using GDE.App.Main.Colors;
 using GDE.App.Main.UI.Graphics;
 using GDE.App.Main.UI.Shadowed;
 using JetBrains.Annotations;
+using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
 using osuTK;
+using osuTK.Graphics;
 using osuTK.Input;
 
 namespace GDE.App.Main.UI
@@ -19,11 +21,17 @@ namespace GDE.App.Main.UI
 
         public BindableDouble Bindable;
 
-        public GDENumberTextBox(float defaultValue = 0)
+        [BackgroundDependencyLoader]
+        private void load()
         {
+            if (Bindable == null)
+                Bindable = new BindableDouble();
+            
             NumberedTextBox textBox;
-            Bindable = new BindableDouble(defaultValue);
             AutoSizeAxes = Axes.Y;
+
+            ArrowButton arrowLeft;
+            ArrowButton arrowRight;
             
             Add(new FillFlowContainer
             {
@@ -33,7 +41,7 @@ namespace GDE.App.Main.UI
                 RelativeSizeAxes = Axes.X,
                 Children = new Drawable[]
                 {
-                    new ArrowButton(Bindable, true),
+                    arrowLeft = new ArrowButton(Bindable, true),
                     textBox = new NumberedTextBox
                     {
                         Height = 20,
@@ -41,16 +49,20 @@ namespace GDE.App.Main.UI
                         Text = Bindable.Value.ToString(),
                         Depth = -1
                     },
-                    new ArrowButton(Bindable)
+                    arrowRight = new ArrowButton(Bindable)
                 }
             });
 
             textBox.OnCommit += (sender, text) =>
             {
-                double.TryParse(sender.Text, NumberStyles.Currency, null, out double numValue);
+                double.TryParse(sender.Text, NumberStyles.Any, null, out double numValue);
 
-                if (numValue < Bindable.MaxValue || numValue > Bindable.MinValue)
+                if (numValue <= Bindable.MaxValue || numValue >= Bindable.MinValue)
+                {
+                    arrowLeft.Value.Value = numValue;
+                    arrowRight.Value.Value = numValue;
                     Bindable.Value = numValue;
+                }
                 else
                     Bindable.TriggerChange();
             };
@@ -92,6 +104,7 @@ namespace GDE.App.Main.UI
 
         private class ArrowButton : GDEButton
         {
+            public BindableDouble Value = new BindableDouble();
             private float threshold = 1;
             
             public ArrowButton([NotNull] BindableDouble Value, bool Flipped = false)
@@ -100,14 +113,40 @@ namespace GDE.App.Main.UI
                 BackgroundColour = GDEColors.FromHex("333333");
                 Height = 20;
                 Width = 20;
+                
+                this.Value.BindTo(Value);
+
+                Value.ValueChanged += val =>
+                {
+                    // there was an attempt
+                    var newValue = val.NewValue;
+                    
+                    bool onMax;
+                    bool onMin;
+
+                    onMax = newValue + 1 > Value.MaxValue;
+                    onMin = newValue - 1 < Value.MinValue;
+
+                    if (Flipped && onMax)
+                        SpriteText.Colour = GDEColors.FromHex("595959");
+                    else if (onMin)
+                        SpriteText.Colour = GDEColors.FromHex("595959");
+                    else
+                        SpriteText.Colour = Color4.White;
+                };
 
                 Action = () =>
                 {
-                    var newValue = Value.Value += Flipped ? -threshold : threshold;
+                    var newValue = this.Value.Value += Flipped ? -threshold : threshold;
+
                     if (newValue < Value.MaxValue || newValue > Value.MinValue)
+                    {
                         Value.Value = newValue;
+                        this.Value.Value = newValue;
+                    }
                     else
                     {
+                        this.Value.TriggerChange();
                         Value.TriggerChange();
                         SpriteText.Colour = GDEColors.FromHex("595959");
                     }

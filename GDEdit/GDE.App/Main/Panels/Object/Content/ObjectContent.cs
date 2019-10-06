@@ -26,15 +26,28 @@ namespace GDE.App.Main.Panels.Object.Content
 
             int cellIndex = 0;
 
-            var position = CreateDrawable(Name = "Position", "X", new BindableDouble(obj?.X ?? 0), "Y", new BindableDouble(obj?.Y ?? 0));
-            var rotation = CreateDrawable(Name = "Rotation", null, new BindableDouble(obj?.Rotation ?? 0) { MinValue = 0, MaxValue = 360 });
-            var scale = CreateDrawable(Name = "Scale", null, new BindableDouble(obj?.Scaling ?? 0));
-            var zOrder = CreateDrawable(Name = "Z Order", null, new BindableDouble(obj?.ZOrder ?? 0) { MinValue = 0, MaxValue = double.MaxValue });
+            var posXBind = new BindableDouble(obj?.X ?? 0);
+            var posYBind = new BindableDouble(obj?.Y ?? 0);
+
+            var rotBind = new BindableDouble(obj?.Rotation ?? 0) { MinValue = 0, MaxValue = 360 };
+            var scaBind = new BindableDouble(obj?.Scaling ?? 0);
+            
+            var zOrdBind = new BindableDouble(obj?.ZOrder ?? 0) { MinValue = 0, MaxValue = double.MaxValue };
+            var zLayBind = new BindableDouble(obj?.ZLayer ?? 0) { MinValue = 0, MaxValue = double.MaxValue };
+            
+            var ed1Bind = new BindableDouble(obj?.EL1 ?? 0) { MinValue = 0, MaxValue = double.MaxValue };
+            var ed2Bind = new BindableDouble(obj?.EL2 ?? 0) { MinValue = 0, MaxValue = double.MaxValue };
+            
+            var lgiBind = new BindableDouble(obj?.LinkedGroupID ?? 0);
+
+            var position = CreateDrawable(Name = "Position", "X", posXBind, "Y", posYBind);
+            var rotation = CreateDrawable(Name = "Rotation", null, rotBind);
+            var scale = CreateDrawable(Name = "Scale", null, scaBind);
+            var zOrder = CreateDrawable(Name = "Z Order", null, zOrdBind);
             // This one will require the Drawable change
-            var zLayer = CreateDrawable(Name = "Z Layer", null, new BindableDouble(obj?.ZLayer ?? 0) { MinValue = 0, MaxValue = double.MaxValue });
-            var editorLayer = CreateDrawable(Name = "Editor Layer", "1", new BindableDouble(obj?.EL1 ?? 0) { MinValue = 0, MaxValue = double.MaxValue },
-                "2", new BindableDouble(obj?.EL2 ?? 0) { MinValue = 0, MaxValue = double.MaxValue });
-            var linkedGroupID = CreateDrawable(Name = "Linked Group ID", null, new BindableDouble(obj?.LinkedGroupID ?? 0));
+            var zLayer = CreateDrawable(Name = "Z Layer", null, zLayBind);
+            var editorLayer = CreateDrawable(Name = "Editor Layer", "1", ed1Bind,"2", ed2Bind);
+            var linkedGroupID = CreateDrawable(Name = "Linked Group ID", null, lgiBind);
             // This one will be something else ENTIRELY
             //var groupIDs
 
@@ -62,7 +75,7 @@ namespace GDE.App.Main.Panels.Object.Content
             drawables.Add(new SpriteText { Text = extra1, Anchor = Anchor.CentreRight, Origin = Anchor.CentreRight });
             drawables.Add(new GDENumberTextBox { Bindable = value, Anchor = Anchor.CentreLeft, Origin = Anchor.CentreLeft, X = 20, Width = 125});
             drawables.Add(new SpriteText { Text = extra2, Anchor = Anchor.CentreRight, Origin = Anchor.CentreRight });
-            drawables.Add(extra1 != null ? new GDENumberTextBox { Bindable = value, Anchor = Anchor.CentreLeft, Origin = Anchor.CentreLeft, X = 20, Width = 125 } : null);
+            drawables.Add(extra1 != null ? new GDENumberTextBox { Bindable = value1, Anchor = Anchor.CentreLeft, Origin = Anchor.CentreLeft, X = 20, Width = 125 } : null);
 
             return drawables.ToArray();
         }
