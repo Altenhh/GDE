@@ -5,6 +5,7 @@ using GDE.App.Main.UI;
 using GDAPI.Application;
 using GDAPI.Application.Editor;
 using GDAPI.Utilities.Objects.GeometryDash;
+using GDE.App.Main.Panels;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -35,7 +36,7 @@ namespace GDE.App.Main.Screens.Edit.Components
             database = databases[0];
         }
 
-        public EditorTools(LevelPreview level, Camera camera)
+        public EditorTools(LevelPreview level, Camera camera, ObjectPropertyEditor propertyEditor)
         {
             Children = new Drawable[]
             {
@@ -88,6 +89,19 @@ namespace GDE.App.Main.Screens.Edit.Components
                                 editor?.DeselectAll();
                             },
                             Text = "Delete Selected Objects",
+                            BackgroundColour = GDEColors.FromHex("2f2f2f"),
+                            RelativeSizeAxes = Axes.X,
+                        },
+                        //TODO: Make this into a context menu instead.
+                        new GDEButton
+                        {
+                            Action = () =>
+                            {
+                                propertyEditor.ToggleVisibility();
+                                propertyEditor.ObjectBindable.Value = ObjectBase.DrawableSelectedObjects[0].LevelObject;
+                                propertyEditor.ObjectBindable.TriggerChange();
+                            },
+                            Text = "Edit Object",
                             BackgroundColour = GDEColors.FromHex("2f2f2f"),
                             RelativeSizeAxes = Axes.X,
                         }

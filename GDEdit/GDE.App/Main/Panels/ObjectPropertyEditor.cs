@@ -63,46 +63,67 @@ namespace GDE.App.Main.Panels
             AutoSizeAxes = Axes.Both;
             ObjectBindable = new Bindable<GeneralObject>(Object);
 
-            Add(new Container
+            ObjectBindable.ValueChanged += o =>
             {
-                AutoSizeAxes = Axes.Both,
-                Padding = new MarginPadding
-                {
-                    Top = 30,
-                },
                 Children = new Drawable[]
                 {
-                    new Box
+                    new Container
                     {
-                        RelativeSizeAxes = Axes.Both,
-                        Colour = GDEColors.FromHex("202020")
-                    },
-                    new FillFlowContainer
-                    {
-                        Direction = FillDirection.Horizontal,
                         AutoSizeAxes = Axes.Both,
+                        Padding = new MarginPadding
+                        {
+                            Top = 30,
+                        },
                         Children = new Drawable[]
                         {
-                            tabControl = new PropertyEditorTabControl
+                            new Box
                             {
-                                RelativeSizeAxes = Axes.Y,
-                                Width = 30,
-                                AutoSort = true,
+                                RelativeSizeAxes = Axes.Both,
+                                Colour = GDEColors.FromHex("202020")
                             },
-                            fillFlow = new FillFlowContainer
+                            new FillFlowContainer
                             {
-                                Direction = FillDirection.Vertical,
+                                Direction = FillDirection.Horizontal,
                                 AutoSizeAxes = Axes.Both,
-                                Padding = new MarginPadding
+                                Children = new Drawable[]
                                 {
-                                    Vertical = 5,
-                                    Horizontal = 10
-                                },
-                            }
+                                    tabControl = new PropertyEditorTabControl
+                                    {
+                                        RelativeSizeAxes = Axes.Y,
+                                        Width = 30,
+                                        AutoSort = true,
+                                    },
+                                    fillFlow = new FillFlowContainer
+                                    {
+                                        Direction = FillDirection.Vertical,
+                                        AutoSizeAxes = Axes.Both,
+                                        Padding = new MarginPadding
+                                        {
+                                            Vertical = 5,
+                                            Horizontal = 10
+                                        },
+                                    }
+                                }
+                            },
                         }
+                    }
+                };
+                
+                fillFlow.Children = new Drawable[]
+                {
+                    header = new PropertyEditorHeader
+                    {
+                        Object = ObjectBindable
                     },
-                }
-            });
+                    content = new ObjectContent(ObjectBindable.Value),
+                    footer = new PropertyEditorFooter
+                    {
+                        Object = ObjectBindable
+                    },
+                };
+            };
+            
+            ObjectBindable.TriggerChange();
         }
         protected override void LoadComplete()
         {
@@ -143,7 +164,6 @@ namespace GDE.App.Main.Panels
                         break;
                 }
             };
-            tabControl.Current.TriggerChange();
         }
     }
 }

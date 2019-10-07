@@ -155,12 +155,6 @@ namespace GDE.App.Main.Screens.Edit
                         },
                     }
                 },
-                tools = new EditorTools(preview, camera)
-                {
-                    Size = new Vector2(150, 300),
-                    Anchor = Anchor.CentreLeft,
-                    Origin = Anchor.CentreLeft
-                },
                 OpenFileDialogBindable.Value = new OpenFileDialog
                 {
                     RelativeSizeAxes = Axes.Both,
@@ -183,14 +177,18 @@ namespace GDE.App.Main.Screens.Edit
                     Origin = Anchor.Centre,
                     LockDrag = true,
                 },
-                objectPropertyEditor = new ObjectPropertyEditor(new GeneralObject(1))
+                objectPropertyEditor = new ObjectPropertyEditor(new GeneralObject(0))
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre
-                }
+                },
+                tools = new EditorTools(preview, camera, objectPropertyEditor)
+                {
+                    Size = new Vector2(150, 300),
+                    Anchor = Anchor.CentreLeft,
+                    Origin = Anchor.CentreLeft
+                },
             });
-
-            objectPropertyEditor.ToggleVisibility();
         }
 
         protected override bool OnClick(ClickEvent e)
