@@ -9,4 +9,8 @@
       <ProjectReference Include="..\GDEdit.Resources\GDEdit.Resources.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="ppy.osu.Framework" Version="2019.930.0" />
+    </ItemGroup>
+
 </Project>
