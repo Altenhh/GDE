@@ -1,12 +1,14 @@
-﻿using System;
+﻿using osu.Framework;
+using osu.Framework.Platform;
 
 namespace GDEdit.Tests
 {
-    class Program
+    public static class Program
     {
-        static void Main(string[] args)
+        public static void Main()
         {
-            Console.WriteLine("Hello World!");
+            using (DesktopGameHost host = Host.GetSuitableHost("GDE Tests", true))
+                host.Run(new GDETestBrowser());
         }
     }
 }
