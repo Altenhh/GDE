@@ -1,12 +1,15 @@
-﻿using System;
+﻿using osu.Framework;
+using osu.Framework.Platform;
 
 namespace GDEdit.App
 {
-    class Program
+    public static class Program
     {
-        static void Main(string[] args)
+        public static void Main()
         {
-            Console.WriteLine("Hello World!");
+            using GameHost host = Host.GetSuitableHost(@"GDEdit");
+            using Game game = new GDEMain();
+                host.Run(game);
         }
     }
 }
