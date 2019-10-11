@@ -3,8 +3,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using osu.Framework;
 using osu.Framework.Allocation;
+using osu.Framework.Configuration;
 using osu.Framework.Development;
-using osu.Framework.Graphics.Textures;
 using osu.Framework.IO.Stores;
 using osu.Framework.Logging;
 using osu.Framework.Platform;
@@ -15,8 +15,6 @@ namespace GDEdit.App
     public class GDEBase : Game
     {
         private DependencyContainer dependencies;
-
-        private LargeTextureStore largeStore;
         private readonly Storage storage;
         
         private int allowableExceptions = DebugUtils.IsDebugBuild ? 0 : 1;
@@ -27,24 +25,23 @@ namespace GDEdit.App
             storage = new NativeStorage("GD Edit");
         }
         
-        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
-            => dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
+        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent) =>
+            dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
         
         [BackgroundDependencyLoader]
         private void Load()
         {
             Resources.AddStore(new DllResourceStore("GDEdit.Resources.dll"));
-
-            largeStore = new LargeTextureStore(Host.CreateTextureLoaderStore(new NamespacedResourceStore<byte[]>(Resources, @"GDEdit")));
             
             dependencies.Cache(this);
-            dependencies.Cache(largeStore);
-            dependencies.Cache(storage);
+            dependencies.CacheAs(storage);
         }
         
         public override void SetHost(GameHost host)
         {
             base.SetHost(host);
+            
+            var config = new FrameworkConfigManager(storage);
 
             Window.Title = @"GD Edit";
 

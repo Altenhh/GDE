@@ -1,26 +1,32 @@
-﻿using GDAPI.Utilities.Objects.GeometryDash.LevelObjects;
-using GDEdit.App.Level.Object;
+﻿using GDEdit.App.Level.Object;
 using osu.Framework.Graphics;
+using osu.Framework.Graphics.Sprites;
+using osu.Framework.Graphics.Textures;
 
 namespace GDEdit.App.Level
 {
     public static class ObjectManager
     {
-        public static IGDObject[] ObjectClasses = 
+        private static readonly IGDObject[] objectClasses = 
         {
             new GDObject()
         };
             
-        public static Drawable GetAppropriateObject(GeneralObject obj)
+        public static Drawable GetAppropriateObject(int id, TextureStore store)
         {
-            foreach (var objClass in ObjectClasses)
+            foreach (var objClass in objectClasses)
             {
-                if (obj.ObjectID == objClass.ID)
+                if (id == objClass.ID)
                     return objClass.CreateDrawable();
             }
             
             // Defaults to the normal 30x30 square texture
-            return new GDObject().CreateDrawable();
+            var texture = store.Get($"Objects/{id}.png");
+            
+            return new Sprite
+                   {
+                       Texture = texture
+                   };
         }
     }
 }
