@@ -5,11 +5,14 @@ using GDE.App.Main.Colors;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Graphics.Effects;
 using osu.Framework.Extensions.Color4Extensions;
+using osuTK.Graphics;
 
 namespace GDE.App.Main.UI.Shadowed
 {
     public class ShadowedTextBox : TextBox
     {
+        private static readonly Color4 edgeEffectColor = GDEColors.FromHex("141414").Opacity(0.25f);
+
         public ShadowedTextBox()
         {
             BackgroundUnfocused = GDEColors.FromHex("262626");
@@ -18,42 +21,31 @@ namespace GDE.App.Main.UI.Shadowed
 
             CornerRadius = 5;
 
-            EdgeEffect = new EdgeEffectParameters
-            {
-                Colour = GDEColors.FromHex("141414").Opacity(0.25f),
-                Type = EdgeEffectType.Shadow,
-                Offset = new Vector2(0, 0.5f),
-                Roundness = 5,
-                Radius = 1f,
-            };
+            EdgeEffect = GetEdgeEffectParameters(0.5f, 1);
         }
 
         protected override bool OnHover(HoverEvent e)
         {
-            TweenEdgeEffectTo(new EdgeEffectParameters
-            {
-                Colour = GDEColors.FromHex("141414").Opacity(0.25f),
-                Type = EdgeEffectType.Shadow,
-                Offset = new Vector2(0, 1f),
-                Roundness = 5,
-                Radius = 2f,
-            }, 200, Easing.OutExpo);
-
+            TweenEdgeEffectTo(GetEdgeEffectParameters(1, 2), 200, Easing.OutExpo);
             return base.OnHover(e);
         }
-
         protected override void OnHoverLost(HoverLostEvent e)
         {
             base.OnHoverLost(e);
+            TweenEdgeEffectTo(GetEdgeEffectParameters(0.5f, 1), 200, Easing.OutExpo);
+        }
 
-            TweenEdgeEffectTo(new EdgeEffectParameters
+        // Abstraction is not bad; copying code around gets annoying
+        private static EdgeEffectParameters GetEdgeEffectParameters(float offsetY, float radius)
+        {
+            return new EdgeEffectParameters
             {
-                Colour = GDEColors.FromHex("141414").Opacity(0.25f),
+                Colour = edgeEffectColor,
                 Type = EdgeEffectType.Shadow,
-                Offset = new Vector2(0, 0.5f),
+                Offset = new Vector2(0, offsetY),
                 Roundness = 5,
-                Radius = 1f,
-            }, 200, Easing.OutExpo);
+                Radius = radius,
+            };
         }
     }
 }

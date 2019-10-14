@@ -46,7 +46,7 @@ namespace GDE.App.Main.Panels.Object.Content
             var zOrder = CreateDrawable(Name = "Z Order", null, zOrdBind);
             // This one will require the Drawable change
             var zLayer = CreateDrawable(Name = "Z Layer", null, zLayBind);
-            var editorLayer = CreateDrawable(Name = "Editor Layer", "1", ed1Bind,"2", ed2Bind);
+            var editorLayer = CreateDrawable(Name = "Editor Layer", "1", ed1Bind, "2", ed2Bind);
             var linkedGroupID = CreateDrawable(Name = "Linked Group ID", null, lgiBind);
             // This one will be something else ENTIRELY
             //var groupIDs
@@ -65,17 +65,17 @@ namespace GDE.App.Main.Panels.Object.Content
             return content;
         }
 
-        private Drawable[] CreateDrawable(string title, [CanBeNull] string extra1, [CanBeNull] BindableDouble value, string extra2 = null, 
-            BindableDouble value1 = null)
+        private Drawable[] CreateDrawable(string title, string extra1, BindableDouble value, string extra2 = null, BindableDouble value1 = null)
         {
-            List<Drawable> drawables;
-            drawables = new List<Drawable>();
-
-            drawables.Add(new SpriteText { Text = title, Anchor = Anchor.CentreRight, Origin = Anchor.CentreRight});
-            drawables.Add(new SpriteText { Text = extra1, Anchor = Anchor.CentreRight, Origin = Anchor.CentreRight });
-            drawables.Add(new GDENumberTextBox { Bindable = value, Anchor = Anchor.CentreLeft, Origin = Anchor.CentreLeft, X = 20, Width = 125});
-            drawables.Add(new SpriteText { Text = extra2, Anchor = Anchor.CentreRight, Origin = Anchor.CentreRight });
-            drawables.Add(extra1 != null ? new GDENumberTextBox { Bindable = value1, Anchor = Anchor.CentreLeft, Origin = Anchor.CentreLeft, X = 20, Width = 125 } : null);
+            var drawables = new List<Drawable>
+            {
+                new SpriteText { Text = title, Anchor = Anchor.CentreRight, Origin = Anchor.CentreRight },
+                new SpriteText { Text = extra1, Anchor = Anchor.CentreRight, Origin = Anchor.CentreRight },
+                new GDENumberTextBox { Bindable = value, Anchor = Anchor.CentreLeft, Origin = Anchor.CentreLeft, X = 20, Width = 125 },
+                new SpriteText { Text = extra2, Anchor = Anchor.CentreRight, Origin = Anchor.CentreRight }
+            };
+            if (extra1 != null)
+                drawables.Add(new GDENumberTextBox { Bindable = value1, Anchor = Anchor.CentreLeft, Origin = Anchor.CentreLeft, X = 20, Width = 125 });
 
             return drawables.ToArray();
         }
@@ -90,9 +90,9 @@ namespace GDE.App.Main.Panels.Object.Content
             drawables.Add(title);
             drawables.Add(new GDENumberTextBox { Bindable = value });
             drawables.Add(extra1);
-            drawables.Add(extra1 != null ? new GDENumberTextBox { Bindable = value } : null);
+            drawables.Add(extra1 != null ? new GDENumberTextBox { Bindable = value1 } : null);
             drawables.Add(extra2);
-            drawables.Add(extra2 != null ? new GDENumberTextBox { Bindable = value } : null);
+            drawables.Add(extra2 != null ? new GDENumberTextBox { Bindable = value2 } : null);
 
             return drawables.ToArray();
         }

@@ -16,7 +16,7 @@ namespace GDE.App.Main.Panels.Object
         //We dont want to handle any dropdown.
         protected override Dropdown<PropertyEditorTab> CreateDropdown() => null;
 
-        protected override TabItem<PropertyEditorTab> CreateTabItem(PropertyEditorTab value) => new PETabItem(value);
+        protected override TabItem<PropertyEditorTab> CreateTabItem(PropertyEditorTab value) => new PropertyEditorTabItem(value);
 
         public PropertyEditorTabControl()
         {
@@ -33,13 +33,13 @@ namespace GDE.App.Main.Panels.Object
             });
         }
 
-        private class PETabItem : TabItem<PropertyEditorTab>
+        private class PropertyEditorTabItem : TabItem<PropertyEditorTab>
         {
             private readonly SpriteIcon icon;
             private readonly Container container;
             private readonly Box background;
 
-            public PETabItem(PropertyEditorTab value) 
+            public PropertyEditorTabItem(PropertyEditorTab value) 
                 : base(value)
             {
                 AutoSizeAxes = Axes.Both;
@@ -55,11 +55,11 @@ namespace GDE.App.Main.Panels.Object
                         CornerRadius = 5,
                         EdgeEffect = new EdgeEffectParameters
                         {
-                          Radius  = 1,
-                          Colour = GDEColors.FromHex("1F1F1F"),
-                          Type = EdgeEffectType.Shadow,
-                          Hollow = true,
-                          Offset = new Vector2(0, 1)
+                            Radius  = 1,
+                            Colour = GDEColors.FromHex("1F1F1F"),
+                            Type = EdgeEffectType.Shadow,
+                            Hollow = true,
+                            Offset = new Vector2(0, 1)
                         },
                         Children = new Drawable[]
                         {
@@ -89,34 +89,28 @@ namespace GDE.App.Main.Panels.Object
                 };
             }
 
-            protected override void OnActivated()
-            {
-                container.MoveToX(5, 500, Easing.OutExpo);
-                container.TweenEdgeEffectTo(new EdgeEffectParameters
-                {
-                    Radius = 2,
-                    Colour = GDEColors.FromHex("1F1F1F"),
-                    Type = EdgeEffectType.Shadow,
-                    Offset = new Vector2(0, 2)
-                }, 500, Easing.OutExpo);
+            protected override void OnActivated() => OnActivatedProcedure(5, 2, "3D3D3D", 25);
+            protected override void OnDeactivated() => OnActivatedProcedure(10, 1, "333", 15);
 
-                background.FadeColour(GDEColors.FromHex("3D3D3D"), 500, Easing.OutExpo);
-                icon.ResizeTo(25, 500, Easing.OutExpo);
+            private void OnActivatedProcedure(float x, float radius, string colorHex, float resize)
+            {
+                container.MoveToX(x, 500, Easing.OutExpo);
+                container.TweenEdgeEffectTo(GetEdgeEffectParameters(radius), 500, Easing.OutExpo);
+
+                background.FadeColour(GDEColors.FromHex(colorHex), 500, Easing.OutExpo);
+                icon.ResizeTo(resize, 500, Easing.OutExpo);
             }
-
-            protected override void OnDeactivated()
+            // See, that's the kind of shit that pisses me off
+            private static EdgeEffectParameters GetEdgeEffectParameters(float radius)
             {
-                container.MoveToX(10, 500, Easing.OutExpo);
-                container.TweenEdgeEffectTo(new EdgeEffectParameters
+                return new EdgeEffectParameters
                 {
-                    Radius = 1,
                     Colour = GDEColors.FromHex("1F1F1F"),
                     Type = EdgeEffectType.Shadow,
-                    Offset = new Vector2(0, 1)
-                }, 500, Easing.OutExpo);
-
-                background.FadeColour(GDEColors.FromHex("333"), 500, Easing.OutExpo);
-                icon.ResizeTo(15, 500, Easing.OutExpo);
+                    Offset = new Vector2(0, radius),
+                    Roundness = 5,
+                    Radius = radius,
+                };
             }
         }
     }
