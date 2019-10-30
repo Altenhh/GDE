@@ -1,6 +1,6 @@
-﻿using GDE.App.Main.Colors;
-using GDAPI.Application;
-using GDAPI.Utilities.Objects.GeometryDash;
+﻿using GDAPI.Application;
+using GDAPI.Objects.GeometryDash.General;
+using GDE.App.Main.Colors;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -15,19 +15,20 @@ namespace GDE.App.Main.Screens.Menu.Components
 {
     public class LevelCard : ClickableContainer
     {
+        private readonly Box hoverBox;
+        private readonly SpriteText levelLength;
+        private readonly SpriteText levelName;
+        private readonly SpriteText levelSong;
+
+        private readonly Box selectionBar;
+        private Database database;
         private bool gottenLength;
         private bool gottenSongMetadata;
-
-        private Database database;
-
-        private Box selectionBar;
-        private Box hoverBox;
-        private SpriteText levelName, levelSong, levelLength;
+        public int Index;
 
         public Bindable<Level> Level = new Bindable<Level>();
 
-        public Bindable<bool> Selected = new Bindable<bool>(false);
-        public int Index;
+        public Bindable<bool> Selected = new Bindable<bool>();
 
         public LevelCard()
         {
@@ -88,7 +89,10 @@ namespace GDE.App.Main.Screens.Menu.Components
             database = databases[0];
         }
 
-        private void OnSelected(ValueChangedEvent<bool> value) => selectionBar.FadeColour(GDEColors.FromHex(value.OldValue ? "202020" : "00bc5c"), 200);
+        private void OnSelected(ValueChangedEvent<bool> value)
+        {
+            selectionBar.FadeColour(GDEColors.FromHex(value.OldValue ? "202020" : "00bc5c"), 200);
+        }
 
         private void OnLevelChange(ValueChangedEvent<Level> value)
         {
@@ -100,6 +104,7 @@ namespace GDE.App.Main.Screens.Menu.Components
             hoverBox.FadeColour(GDEColors.FromHex("1c1c1c"), 500);
             return base.OnHover(e);
         }
+
         protected override void OnHoverLost(HoverLostEvent e)
         {
             hoverBox.FadeColour(GDEColors.FromHex("161616"), 500);
@@ -119,7 +124,9 @@ namespace GDE.App.Main.Screens.Menu.Components
                 SongMetadata metadata = null;
                 if (gottenSongMetadata = database != null && database.GetSongMetadataStatus >= RanToCompletion)
                     metadata = Level.Value.GetSongMetadata(database.SongMetadataInformation);
-                levelSong.Text = metadata != null ? $"{metadata.Artist} - {metadata.Title}" : "Song information unavailable";
+                levelSong.Text = metadata != null
+                    ? $"{metadata.Artist} - {metadata.Title}"
+                    : "Song information unavailable";
             }
 
             if (!gottenLength && Level.Value.IsFullyLoaded)

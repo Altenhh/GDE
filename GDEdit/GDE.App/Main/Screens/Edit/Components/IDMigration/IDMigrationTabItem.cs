@@ -1,5 +1,6 @@
-﻿using GDE.App.Main.Colors;
-using GDAPI.Utilities.Enumerations;
+﻿using System;
+using GDAPI.Enumerations;
+using GDE.App.Main.Colors;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -7,38 +8,22 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
 using osuTK;
 using osuTK.Graphics;
-using System;
 
 namespace GDE.App.Main.Screens.Edit.Components.IDMigration
 {
     public class IDMigrationTabItem : Container
     {
-        private static Color4 selectedBackgroundColor = GDEColors.FromHex("606060");
-        private static Color4 hoveredBackgroundColor = GDEColors.FromHex("484848");
-        private static Color4 backgroundColor = GDEColors.FromHex("303030");
+        private static readonly Color4 selectedBackgroundColor = GDEColors.FromHex("606060");
+        private static readonly Color4 hoveredBackgroundColor = GDEColors.FromHex("484848");
+        private static readonly Color4 backgroundColor = GDEColors.FromHex("303030");
 
-        private Box background;
-
-        private bool selected;
-
-        public bool Selected
-        {
-            get => selected;
-            set
-            {
-                bool old = selected;
-                background.FadeColour((selected = value) ? selectedBackgroundColor : (IsHovered ? hoveredBackgroundColor : backgroundColor), 200);
-                if (!old && value)
-                    TabSelected?.Invoke(Mode);
-            }
-        }
+        private readonly Box background;
 
         public readonly IDMigrationMode Mode;
 
-        public event Action<IDMigrationMode> TabSelected;
+        private bool selected;
 
         public IDMigrationTabItem(IDMigrationMode mode)
-            : base()
         {
             Mode = mode;
 
@@ -56,19 +41,35 @@ namespace GDE.App.Main.Screens.Edit.Components.IDMigration
                 background = new Box
                 {
                     RelativeSizeAxes = Axes.Both,
-                    Colour = backgroundColor,
+                    Colour = backgroundColor
                 },
                 new SpriteText
                 {
                     // Set this to Top = 3 once Y positioning of the tab items works
-                    Margin = new MarginPadding { Top = 1 },
+                    Margin = new MarginPadding {Top = 1},
                     Anchor = Anchor.TopCentre,
                     Origin = Anchor.TopCentre,
                     Font = new FontUsage(size: 20),
-                    Text = mode.ToString(),
-                },
+                    Text = mode.ToString()
+                }
             };
         }
+
+        public bool Selected
+        {
+            get => selected;
+            set
+            {
+                var old = selected;
+                background.FadeColour(
+                    (selected = value) ? selectedBackgroundColor : IsHovered ? hoveredBackgroundColor : backgroundColor,
+                    200);
+                if (!old && value)
+                    TabSelected?.Invoke(Mode);
+            }
+        }
+
+        public event Action<IDMigrationMode> TabSelected;
 
         protected override bool OnHover(HoverEvent e)
         {
@@ -77,6 +78,7 @@ namespace GDE.App.Main.Screens.Edit.Components.IDMigration
 
             return base.OnHover(e);
         }
+
         protected override void OnHoverLost(HoverLostEvent e)
         {
             if (!Selected)

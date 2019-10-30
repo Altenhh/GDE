@@ -1,29 +1,29 @@
-﻿using GDE.App.Main.Colors;
-using GDE.App.Main.UI;
+﻿using System;
 using GDAPI.Application;
-using GDAPI.Utilities.Objects.GeometryDash;
+using GDAPI.Objects.GeometryDash.General;
+using GDE.App.Main.Colors;
+using GDE.App.Main.UI;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
-using System;
 using static System.Threading.Tasks.TaskStatus;
 
 namespace GDE.App.Main.Screens.Menu.Components
 {
     public class Toolbar : Container
     {
-        private bool gottenSongMetadata;
         private Database database;
+        public Action Delete;
 
-        public SpriteText LevelName, SongName;
+        public Action Edit;
+        private bool gottenSongMetadata;
 
         public Bindable<Level> Level = new Bindable<Level>();
 
-        public Action Edit;
-        public Action Delete;
+        public SpriteText LevelName, SongName;
 
         public Toolbar()
         {
@@ -52,7 +52,7 @@ namespace GDE.App.Main.Screens.Menu.Components
                             Origin = Anchor.BottomLeft,
                             Margin = new MarginPadding(5),
                             Colour = GDEColors.FromHex("666666"),
-                            TextSize = 25,
+                            TextSize = 25
                         }
                     }
                 },
@@ -112,10 +112,14 @@ namespace GDE.App.Main.Screens.Menu.Components
                     SongMetadata metadata = null;
                     if (gottenSongMetadata = database != null && database.GetSongMetadataStatus >= RanToCompletion)
                         metadata = Level.Value.GetSongMetadata(database.SongMetadataInformation);
-                    SongName.Text = metadata != null ? $"{metadata.Artist} - {metadata.Title}" : "Song information unavailable";
+                    SongName.Text = metadata != null
+                        ? $"{metadata.Artist} - {metadata.Title}"
+                        : "Song information unavailable";
                 }
                 else
+                {
                     SongName.Text = null;
+                }
         }
     }
 }

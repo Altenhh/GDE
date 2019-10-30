@@ -1,9 +1,12 @@
-﻿using GDE.App.Main.Colors;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using GDAPI.Application;
+using GDAPI.Functions.Extensions;
+using GDAPI.Objects.GeometryDash.General;
+using GDE.App.Main.Colors;
 using GDE.App.Main.UI;
 using GDE.App.Main.UI.Containers;
-using GDAPI.Application;
-using GDAPI.Utilities.Functions.Extensions;
-using GDAPI.Utilities.Objects.GeometryDash;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -11,25 +14,22 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Logging;
 using osuTK;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace GDE.App.Main.Screens.Menu.Components
 {
     public class LevelList : SearchContainer
     {
-        private FillFlowContainer levelList;
-        private Database database;
-        private LevelCollection levels;
-        private TextBox searchQuery;
-        private bool finishedLoading;
+        private readonly FillFlowContainer levelList;
+        private readonly TextBox searchQuery;
         private bool alreadyRun;
+        public List<LevelCard> Cards;
+        public Action CompletedLoading;
+        private Database database;
+        private bool finishedLoading;
 
         public int LevelIndex;
+        private LevelCollection levels;
         public Action LevelSelected;
-        public Action CompletedLoading;
-        public List<LevelCard> Cards;
 
         public LevelList()
         {
@@ -49,7 +49,7 @@ namespace GDE.App.Main.Screens.Menu.Components
                     RelativeSizeAxes = Axes.Both,
                     Margin = new MarginPadding
                     {
-                        Top = 5,
+                        Top = 5
                     },
                     Children = new Drawable[]
                     {
@@ -63,7 +63,7 @@ namespace GDE.App.Main.Screens.Menu.Components
                             Padding = new MarginPadding(5)
                         }
                     }
-                },
+                }
             };
 
             Cards = new List<LevelCard>();

@@ -1,12 +1,11 @@
 ﻿//Code copied from https://github.com/ppy/osu-framework/pull/2255
 
-using osu.Framework.Bindables;
-using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.UserInterface;
-using osu.Framework.Input.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using osu.Framework.Bindables;
+using osu.Framework.Graphics.Containers;
+using osu.Framework.Input.Events;
 
 namespace GDE.App.Main.UI
 {
@@ -14,6 +13,14 @@ namespace GDE.App.Main.UI
     {
         private readonly FillFlowContainer<Breadcrumb> fillFlowContainer;
         private readonly BindableList<T> items = new BindableList<T>();
+
+        protected BreadcrumbNavigation()
+        {
+            fillFlowContainer = CreateAndAddFillFlowContainer();
+
+            items.ItemsAdded += ItemsChanged;
+            items.ItemsRemoved += ItemsChanged;
+        }
 
         /// <summary>The items displayed in the breadcrumb navigation.</summary>
         public BindableList<T> Items
@@ -23,14 +30,6 @@ namespace GDE.App.Main.UI
         }
 
         public event Action<T> BreadcrumbClicked;
-
-        protected BreadcrumbNavigation()
-        {
-            fillFlowContainer = CreateAndAddFillFlowContainer();
-
-            items.ItemsAdded += ItemsChanged;
-            items.ItemsRemoved += ItemsChanged;
-        }
 
         protected virtual void ItemsChanged(IEnumerable<T> changeset)
         {
@@ -48,9 +47,9 @@ namespace GDE.App.Main.UI
         }
 
         /// <summary>
-        /// Override this method for customising the design of the breadcrumb.
-        /// remember to set
-        /// <code>
+        ///     Override this method for customising the design of the breadcrumb.
+        ///     remember to set
+        ///     <code>
         ///    AutoSizeAxes = Axes.X,
         ///    RelativeSizeAxes = Axes.Y,
         /// </code>
@@ -84,11 +83,14 @@ namespace GDE.App.Main.UI
 
         protected abstract class Breadcrumb : CompositeDrawable
         {
+            protected Breadcrumb(T value)
+            {
+                Value = value;
+            }
+
             public T Value { get; }
 
             public event Action<Breadcrumb> Selected;
-
-            protected Breadcrumb(T value) => Value = value;
 
             protected override bool OnClick(ClickEvent e)
             {

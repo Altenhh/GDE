@@ -1,10 +1,10 @@
-﻿using GDE.App.Main.Colors;
+﻿using GDAPI.Application;
+using GDAPI.Application.Editors;
+using GDAPI.Objects.GeometryDash.General;
+using GDE.App.Main.Colors;
 using GDE.App.Main.Levels;
 using GDE.App.Main.Objects;
 using GDE.App.Main.UI;
-using GDAPI.Application;
-using GDAPI.Application.Editor;
-using GDAPI.Utilities.Objects.GeometryDash;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -17,23 +17,12 @@ namespace GDE.App.Main.Screens.Edit.Components
 {
     public class EditorTools : Container
     {
-        [Resolved]
-        private Editor editor { get; set; }
+        public readonly BindableBool AbleToPlaceBlock = new BindableBool();
+        private readonly ObjectAdditionPanel panel;
 
         private GDEButton addObject;
-        private GDEButton deleteSelectedObjects;
-        private ObjectAdditionPanel panel;
         private Database database;
-        private Level level => database.UserLevels[0];
-
-        public int CurrentSelectedObjectID => panel.SelectedObjectID;
-        public readonly BindableBool AbleToPlaceBlock = new BindableBool();
-
-        [BackgroundDependencyLoader]
-        private void load(DatabaseCollection databases)
-        {
-            database = databases[0];
-        }
+        private GDEButton deleteSelectedObjects;
 
         public EditorTools(LevelPreview level, Camera camera)
         {
@@ -54,11 +43,11 @@ namespace GDE.App.Main.Screens.Edit.Components
                         new Box
                         {
                             RelativeSizeAxes = Axes.Both,
-                            Colour = GDEColors.FromHex("1f1f1f"),
-                        },
+                            Colour = GDEColors.FromHex("1f1f1f")
+                        }
                     }
                 },
-                new FillFlowContainer()
+                new FillFlowContainer
                 {
                     Direction = FillDirection.Vertical,
                     RelativeSizeAxes = Axes.Both,
@@ -71,7 +60,7 @@ namespace GDE.App.Main.Screens.Edit.Components
                             Action = panel.ToggleVisibility,
                             Text = "Add Object",
                             BackgroundColour = GDEColors.FromHex("2f2f2f"),
-                            RelativeSizeAxes = Axes.X,
+                            RelativeSizeAxes = Axes.X
                         },
                         deleteSelectedObjects = new GDEButton
                         {
@@ -79,23 +68,33 @@ namespace GDE.App.Main.Screens.Edit.Components
                             {
                                 //Always defaults to 0, so fix that
                                 foreach (var o in ObjectBase.DrawableSelectedObjects)
-                                {
                                     //Hide it for now
                                     o.Hide();
-                                }
 
                                 ObjectBase.DrawableSelectedObjects.Clear();
                                 editor?.DeselectAll();
                             },
                             Text = "Delete Selected Objects",
                             BackgroundColour = GDEColors.FromHex("2f2f2f"),
-                            RelativeSizeAxes = Axes.X,
+                            RelativeSizeAxes = Axes.X
                         }
                     }
                 }
             };
 
             AbleToPlaceBlock.BindTo(panel.AbleToPlace);
+        }
+
+        [Resolved] private Editor editor { get; set; }
+
+        private Level level => database.UserLevels[0];
+
+        public int CurrentSelectedObjectID => panel.SelectedObjectID;
+
+        [BackgroundDependencyLoader]
+        private void load(DatabaseCollection databases)
+        {
+            database = databases[0];
         }
     }
 }

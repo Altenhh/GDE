@@ -1,7 +1,6 @@
-﻿using GDE.App.Main.Hitboxes;
-using GDEdit.Utilities.Objects.General;
-using GDEdit.Utilities.Objects.General.Shapes;
-using GDEdit.Utilities.Objects.GeometryDash.ObjectHitboxes;
+﻿using System;
+using GDAPI.Objects.GeometryDash.ObjectHitboxes;
+using GDE.App.Main.Hitboxes;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -9,17 +8,16 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
 using osu.Framework.Testing;
 using osuTK.Graphics;
-using System;
 
 namespace GDE.Tests.Visual.TestSceneLevel
 {
     public class TestSceneHitbox : TestScene
     {
-        private Hitbox hitbox;
-        private RectangleHitbox rectangle;
-        private SpriteText angle;
-        private SpriteText radius;
-        private SpriteText mousePosition;
+        private readonly Hitbox hitbox;
+        private readonly RectangleHitbox rectangle;
+        private readonly SpriteText angle;
+        private readonly SpriteText radius;
+        private readonly SpriteText mousePosition;
 
         public TestSceneHitbox()
         {
@@ -35,7 +33,7 @@ namespace GDE.Tests.Visual.TestSceneLevel
                 rectangle = new RectangleHitbox(hitbox)
                 {
                     Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre,
+                    Origin = Anchor.Centre
                 },
                 new FillFlowContainer
                 {
@@ -47,18 +45,18 @@ namespace GDE.Tests.Visual.TestSceneLevel
                     {
                         angle = new SpriteText
                         {
-                            Font = new FontUsage(size: 25),
+                            Font = new FontUsage(size: 25)
                         },
                         radius = new SpriteText
                         {
-                            Font = new FontUsage(size: 25),
+                            Font = new FontUsage(size: 25)
                         },
                         mousePosition = new SpriteText
                         {
-                            Font = new FontUsage(size: 25),
-                        },
-                    },
-                },
+                            Font = new FontUsage(size: 25)
+                        }
+                    }
+                }
             };
 
             AddSliderStep("Rotation", 0d, 360d, 0d, v => rectangle.HitboxRotation = v);
@@ -67,7 +65,8 @@ namespace GDE.Tests.Visual.TestSceneLevel
         protected override bool OnMouseMove(MouseMoveEvent e)
         {
             // What the actual fuck is this?
-            var planePosition = e.MousePosition - rectangle.ToParentSpace(rectangle.OriginPosition + rectangle.DrawPosition);
+            var planePosition = e.MousePosition -
+                                rectangle.ToParentSpace(rectangle.OriginPosition + rectangle.DrawPosition);
             var p = new Point(planePosition.X - 80, -planePosition.Y);
             mousePosition.Text = $"Mouse position: {p}";
             var deg = rectangle.HitboxPosition.GetAngle(p) * 180 / Math.PI;
