@@ -1,5 +1,8 @@
-﻿using GDAPI.Application;
-using GDAPI.Application.Editor;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using GDAPI.Application;
+using GDAPI.Application.Editors;
 using osu.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Configuration;
@@ -7,9 +10,6 @@ using osu.Framework.Development;
 using osu.Framework.IO.Stores;
 using osu.Framework.Logging;
 using osu.Framework.Platform;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace GDE.App.Main
 {
@@ -18,16 +18,18 @@ namespace GDE.App.Main
         private const string mainResourceFile = "GDE.Resources.dll";
 
         private static int allowableExceptions = DebugUtils.IsDebugBuild ? 0 : 1;
+        private readonly Storage storage;
 
         private DependencyContainer dependencies;
-        private Storage storage;
-
-        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent) =>
-            dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
 
         public GDEAppBase()
         {
             storage = new NativeStorage("GD Edit");
+        }
+
+        protected override IReadOnlyDependencyContainer CreateChildDependencies(IReadOnlyDependencyContainer parent)
+        {
+            return dependencies = new DependencyContainer(base.CreateChildDependencies(parent));
         }
 
         [BackgroundDependencyLoader]
@@ -55,9 +57,10 @@ namespace GDE.App.Main
 
         protected virtual bool ExceptionHandler(Exception arg)
         {
-            bool continueExecution = Interlocked.Decrement(ref allowableExceptions) >= 0;
+            var continueExecution = Interlocked.Decrement(ref allowableExceptions) >= 0;
 
-            Logger.Log($"Unhandled exception has been {(continueExecution ? $"allowed with {allowableExceptions} more allowable exceptions" : "denied")}.");
+            Logger.Log(
+                $"Unhandled exception has been {(continueExecution ? $"allowed with {allowableExceptions} more allowable exceptions" : "denied")}.");
             Task.Delay(1000).ContinueWith(_ => Interlocked.Increment(ref allowableExceptions));
 
             return continueExecution;

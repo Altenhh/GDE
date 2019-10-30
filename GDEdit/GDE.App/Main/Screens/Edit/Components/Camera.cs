@@ -1,7 +1,7 @@
-﻿using GDE.App.Main.Levels;
+﻿using GDAPI.Application.Editors;
+using GDAPI.Objects.GeometryDash.LevelObjects;
+using GDE.App.Main.Levels;
 using GDE.App.Main.Objects;
-using GDAPI.Application.Editor;
-using GDAPI.Utilities.Objects.GeometryDash.LevelObjects;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -15,8 +15,8 @@ namespace GDE.App.Main.Screens.Edit.Components
 {
     public class Camera : Container
     {
-        private Editor editor;
-        private Bindable<Vector2> cameraOffsetBindable = new Bindable<Vector2>();
+        private readonly Bindable<Vector2> cameraOffsetBindable = new Bindable<Vector2>();
+        private readonly Editor editor;
         private GridSnappedCursorContainer snappedCursorContainer;
 
         public Camera(Editor Editor)
@@ -29,12 +29,19 @@ namespace GDE.App.Main.Screens.Edit.Components
         [BackgroundDependencyLoader]
         private void load()
         {
-            Add(snappedCursorContainer = new GridSnappedCursorContainer(cameraOffsetBindable) { Anchor = Anchor.Centre, Origin = Anchor.Centre });
+            Add(snappedCursorContainer = new GridSnappedCursorContainer(cameraOffsetBindable)
+                {Anchor = Anchor.Centre, Origin = Anchor.Centre});
         }
 
-        public Vector2 ConvertMousePositionToEditor(Vector2 mousePosition) => snappedCursorContainer.ConvertMousePositionToEditor(mousePosition);
+        public Vector2 ConvertMousePositionToEditor(Vector2 mousePosition)
+        {
+            return snappedCursorContainer.ConvertMousePositionToEditor(mousePosition);
+        }
 
-        public GeneralObject GetClonedGhostObjectLevelObject() => snappedCursorContainer.GhostObject.GetObject().Clone();
+        public GeneralObject GetClonedGhostObjectLevelObject()
+        {
+            return snappedCursorContainer.GhostObject.GetObject().Clone();
+        }
 
         protected override bool OnDrag(DragEvent e)
         {
@@ -47,18 +54,23 @@ namespace GDE.App.Main.Screens.Edit.Components
                         child.Position += e.Delta;
 
                 if (child is Grid grid)
-                {
                     grid.Position = new Vector2(
                         -GetCoordinate(cameraOffsetBindable.Value.X) + cameraOffsetBindable.Value.X,
                         -GetCoordinate(cameraOffsetBindable.Value.Y) + cameraOffsetBindable.Value.Y);
-                }
             }
 
             return true;
         }
 
-        protected override bool OnDragEnd(DragEndEvent e) => true;
-        protected override bool OnDragStart(DragStartEvent e) => true;
+        protected override bool OnDragEnd(DragEndEvent e)
+        {
+            return true;
+        }
+
+        protected override bool OnDragStart(DragStartEvent e)
+        {
+            return true;
+        }
 
         protected override bool OnKeyDown(KeyDownEvent e)
         {
@@ -68,6 +80,7 @@ namespace GDE.App.Main.Screens.Edit.Components
 
             return base.OnKeyDown(e);
         }
+
         protected override bool OnKeyUp(KeyUpEvent e)
         {
             if (e.ShiftPressed)
@@ -77,13 +90,24 @@ namespace GDE.App.Main.Screens.Edit.Components
             return base.OnKeyUp(e);
         }
 
-        public void SetGhostObjectID(int id) => snappedCursorContainer.GhostObjectID = id;
-        public void HideGhostObject() => snappedCursorContainer.HideGhostObject();
-        public void ShowGhostObject() => snappedCursorContainer.ShowGhostObject();
+        public void SetGhostObjectID(int id)
+        {
+            snappedCursorContainer.GhostObjectID = id;
+        }
+
+        public void HideGhostObject()
+        {
+            snappedCursorContainer.HideGhostObject();
+        }
+
+        public void ShowGhostObject()
+        {
+            snappedCursorContainer.ShowGhostObject();
+        }
 
         private static float GetCoordinate(float c)
         {
-            float r = c;
+            var r = c;
             if (r < 0)
                 r -= 30;
             return r -= r % 30;
@@ -92,10 +116,30 @@ namespace GDE.App.Main.Screens.Edit.Components
         // TODO: This should be its own seperate class
         private class GridSnappedCursorContainer : CursorContainer, IRequireHighFrequencyMousePosition, IDraggable
         {
+            public static readonly Bindable<Vector2> CameraOffset = new Bindable<Vector2>();
             public readonly GhostObject GhostObject;
-            public bool Draggable => false;
 
-            public int SnapResolution { get; set; }
+            public GridSnappedCursorContainer(Bindable<Vector2> cameraOffsetBindable, int ghostObjectID = 0,
+                int snapResolution = 30)
+            {
+                Anchor = Anchor.Centre;
+                Origin = Anchor.Centre;
+                RelativeSizeAxes = Axes.Both;
+                AlwaysPresent = true;
+                Children = new Drawable[]
+                {
+                    GhostObject = new GhostObject
+                    {
+                        Anchor = Anchor.Centre,
+                        Origin = Anchor.TopLeft
+                    }
+                };
+                CameraOffset.BindTo(cameraOffsetBindable);
+                GhostObjectID = ghostObjectID;
+                SnapResolution = snapResolution;
+            }
+
+            public int SnapResolution { get; }
 
             public int GhostObjectID
             {
@@ -107,47 +151,37 @@ namespace GDE.App.Main.Screens.Edit.Components
                 }
             }
 
-            public static readonly Bindable<Vector2> CameraOffset = new Bindable<Vector2>();
-
-            public GridSnappedCursorContainer(Bindable<Vector2> cameraOffsetBindable, int ghostObjectID = 0, int snapResolution = 30)
-            {
-                Anchor = Anchor.Centre;
-                Origin = Anchor.Centre;
-                RelativeSizeAxes = Axes.Both;
-                AlwaysPresent = true;
-                Children = new Drawable[] { GhostObject = new GhostObject
-                {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.TopLeft
-                }};
-                CameraOffset.BindTo(cameraOffsetBindable);
-                GhostObjectID = ghostObjectID;
-                SnapResolution = snapResolution;
-            }
+            public bool Draggable => false;
 
             protected override bool OnMouseMove(MouseMoveEvent e)
             {
                 foreach (var child in Children)
-                    child.Position = ConvertMousePositionToEditor(e.ScreenSpaceMousePosition - AnchorPosition - CameraOffset.Value);
+                    child.Position =
+                        ConvertMousePositionToEditor(e.ScreenSpaceMousePosition - AnchorPosition - CameraOffset.Value);
 
                 return base.OnMouseMove(e);
             }
 
             public Vector2 ConvertMousePositionToEditor(Vector2 mousePosition)
             {
-                float x = GetCoordinate(mousePosition.X);
-                float y = GetCoordinate(mousePosition.Y);
+                var x = GetCoordinate(mousePosition.X);
+                var y = GetCoordinate(mousePosition.Y);
                 return new Vector2(x, y) + CameraOffset.Value;
             }
 
-            public void HideGhostObject() => GhostObject.Hide();
-            public void ShowGhostObject() => GhostObject.Show();
+            public void HideGhostObject()
+            {
+                GhostObject.Hide();
+            }
+
+            public void ShowGhostObject()
+            {
+                GhostObject.Show();
+            }
         }
 
         private class GhostObject : ObjectBase
         {
-            public int SnapResolution { get; set; } = 30;
-
             private readonly Bindable<Vector2> cameraOffset = new Bindable<Vector2>();
 
             public GhostObject(GeneralObject o)
@@ -163,6 +197,8 @@ namespace GDE.App.Main.Screens.Edit.Components
                 cameraOffset.BindTo(GridSnappedCursorContainer.CameraOffset);
                 Selectable = false;
             }
+
+            public int SnapResolution { get; } = 30;
 
             public GeneralObject GetObject()
             {

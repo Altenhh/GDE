@@ -1,11 +1,14 @@
-﻿using DiscordRPC;
+﻿using System;
+using System.Collections.Generic;
+using DiscordRPC;
+using GDAPI.Application;
+using GDAPI.Objects.GeometryDash.General;
 using GDE.App.Main.Colors;
 using GDE.App.Main.Containers.KeyBindingContainers;
 using GDE.App.Main.Overlays;
+using GDE.App.Main.Screens.Edit;
 using GDE.App.Main.Screens.Menu.Components;
 using GDE.App.Main.Tools;
-using GDAPI.Application;
-using GDAPI.Utilities.Objects.GeometryDash;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -16,21 +19,19 @@ using osu.Framework.Input.Bindings;
 using osu.Framework.Logging;
 using osu.Framework.Screens;
 using osuTK;
-using System;
-using System.Collections.Generic;
 
 namespace GDE.App.Main.Screens.Menu
 {
     public class MainScreen : Screen, IKeyBindingHandler<GlobalAction>
     {
-        private Database database;
+        private readonly Bindable<Level> level = new Bindable<Level>();
+        private readonly LevelList levelList;
 
-        private SpriteText loadWarning;
-        private LevelList levelList;
-        private Toolbar toolbar;
-        private OverlayPopup popUp;
-        private Bindable<Level> level = new Bindable<Level>();
+        private readonly SpriteText loadWarning;
+        private readonly OverlayPopup popUp;
+        private readonly Toolbar toolbar;
         private List<LevelCard> cards = new List<LevelCard>();
+        private Database database;
 
         public MainScreen()
         {
@@ -52,7 +53,7 @@ namespace GDE.App.Main.Screens.Menu
                         {
                             RelativeSizeAxes = Axes.X,
                             Size = new Vector2(1f, 40),
-                            Delete = () => popUp.ToggleVisibility(),
+                            Delete = () => popUp.ToggleVisibility()
                         },
                         new Box
                         {
@@ -62,7 +63,7 @@ namespace GDE.App.Main.Screens.Menu
                             Margin = new MarginPadding
                             {
                                 Top = 40
-                            },
+                            }
                         },
                         levelList = new LevelList
                         {
@@ -86,10 +87,12 @@ namespace GDE.App.Main.Screens.Menu
                             Size = new Vector2(750, 270),
                             ConfirmAction = () =>
                             {
-                                var selectedLevel = levelList.LevelIndex > -1 ? levelList.Cards[levelList.LevelIndex].Level.Value : null;
+                                var selectedLevel = levelList.LevelIndex > -1
+                                    ? levelList.Cards[levelList.LevelIndex].Level.Value
+                                    : null;
 
                                 //if (selectedLevel != null)
-                                    //database. delete level here
+                                //database. delete level here
 
                                 levelList.Remove(levelList.Cards[levelList.LevelIndex]);
                             }
@@ -110,25 +113,17 @@ namespace GDE.App.Main.Screens.Menu
 
             levelList.LevelSelected = () =>
             {
-                var selectedLevel = levelList.LevelIndex > -1 ? levelList.Cards[levelList.LevelIndex].Level.Value : null;
+                var selectedLevel =
+                    levelList.LevelIndex > -1 ? levelList.Cards[levelList.LevelIndex].Level.Value : null;
                 level.Value = selectedLevel;
                 toolbar.Level.TriggerChange(); // Fuck why is this necessary?
-                toolbar.Edit = levelList.LevelIndex > -1 ? (Action)(() => this.Push(new Edit.EditorScreen(levelList.LevelIndex, selectedLevel))) : null;
+                toolbar.Edit = levelList.LevelIndex > -1
+                    ? (Action) (() => this.Push(new EditorScreen(levelList.LevelIndex, selectedLevel)))
+                    : null;
                 popUp.ConfirmAction = () => database.UserLevels.Remove(selectedLevel);
             };
 
             levelList.CompletedLoading = () => loadWarning.Text = null;
-        }
-
-        private void ChangeLevel(ValueChangedEvent<Level> obj)
-        {
-            Logger.Log($"Changed level to: {obj.NewValue?.LevelNameWithRevision ?? "null"}.");
-        }
-
-        [BackgroundDependencyLoader]
-        private void load(DatabaseCollection databases)
-        {
-            database = databases[0];
         }
 
         public bool OnPressed(GlobalAction action)
@@ -143,6 +138,20 @@ namespace GDE.App.Main.Screens.Menu
             return true;
         }
 
-        public bool OnReleased(GlobalAction action) => true;
+        public bool OnReleased(GlobalAction action)
+        {
+            return true;
+        }
+
+        private void ChangeLevel(ValueChangedEvent<Level> obj)
+        {
+            Logger.Log($"Changed level to: {obj.NewValue?.LevelNameWithRevision ?? "null"}.");
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(DatabaseCollection databases)
+        {
+            database = databases[0];
+        }
     }
 }

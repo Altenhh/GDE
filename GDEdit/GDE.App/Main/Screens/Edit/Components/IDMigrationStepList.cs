@@ -1,12 +1,17 @@
-﻿using GDE.App.Main.Colors;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using GDAPI.Application.Editors;
+using GDAPI.Enumerations;
+using GDAPI.Functions.Extensions;
+using GDAPI.Objects.General;
+using GDE.App.Main.Colors;
 using GDE.App.Main.Containers.KeyBindingContainers;
 using GDE.App.Main.UI;
 using GDE.App.Main.UI.Containers;
 using GDE.App.Main.UI.FileDialogComponents;
-using GDAPI.Application.Editor;
-using GDAPI.Utilities.Enumerations;
-using GDAPI.Utilities.Functions.Extensions;
-using GDAPI.Utilities.Objects.General;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -15,12 +20,6 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
 using osuTK;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using static GDAPI.Utilities.Objects.General.SourceTargetRange;
 
 namespace GDE.App.Main.Screens.Edit.Components
 {
@@ -28,58 +27,36 @@ namespace GDE.App.Main.Screens.Edit.Components
     {
         public const float CardMargin = 2;
         public const float CardHeight = 25;
+        private readonly GDEButton addNewStep;
 
-        private FadeSearchContainer stepList;
-        private TextBox searchQuery;
-        private FillFlowContainer noSteps;
-        private GDEButton addNewStep;
+        /// <summary>The common <seealso cref="SourceTargetRange" /> of the currently selected ID migration steps.</summary>
+        public readonly Bindable<SourceTargetRange> CommonIDMigrationStep = new Bindable<SourceTargetRange>();
 
-        private IDMigrationStepCard lastClickedBeforeShift;
-
-        private List<SourceTargetRange> clipboard;
-
-        private Editor editor;
+        private readonly Editor editor;
 
         public readonly IDMigrationMode IDMigrationMode;
-
-        public List<SourceTargetRange> TabRanges => editor.GetIDMigrationSteps(IDMigrationMode);
-
-        public SortedSet<int> SelectedStepIndices { get; private set; } = new SortedSet<int>();
-        public List<SourceTargetRange> SelectedSteps { get; private set; } = new List<SourceTargetRange>();
-
-        /// <summary>The common <seealso cref="SourceTargetRange"/> of the currently selected ID migration steps.</summary>
-        public readonly Bindable<SourceTargetRange> CommonIDMigrationStep = new Bindable<SourceTargetRange>();
+        private readonly FillFlowContainer noSteps;
 
         public readonly Bindable<OpenFileDialog> OpenFileDialogBindable = new Bindable<OpenFileDialog>();
         public readonly Bindable<SaveFileDialog> SaveFileDialogBindable = new Bindable<SaveFileDialog>();
+        private readonly TextBox searchQuery;
 
-        /// <summary>The action to invoke when a step has been selected.</summary>
-        public Action<IDMigrationStepCard> StepSelected;
-        /// <summary>The action to invoke when a step has been deselected.</summary>
-        public Action<IDMigrationStepCard> StepDeselected;
-        /// <summary>The action to invoke when the selection has been changed more complexly.</summary>
-        public Action SelectionChanged;
+        private readonly FadeSearchContainer stepList;
 
         public List<IDMigrationStepCard> Cards = new List<IDMigrationStepCard>();
 
-        public bool TabSelected
-        {
-            set
-            {
-                if (value)
-                {
-                    editor.IDMigrationOperationInitialized += IDMigrationOperationInitialized;
-                    editor.IDMigrationProgressReported += IDMigrationProgressReported;
-                    editor.IDMigrationOperationCompleted += IDMigrationOperationCompleted;
-                }
-                else
-                {
-                    editor.IDMigrationOperationInitialized -= IDMigrationOperationInitialized;
-                    editor.IDMigrationProgressReported -= IDMigrationProgressReported;
-                    editor.IDMigrationOperationCompleted -= IDMigrationOperationCompleted;
-                }
-            }
-        }
+        private List<SourceTargetRange> clipboard;
+
+        private IDMigrationStepCard lastClickedBeforeShift;
+
+        /// <summary>The action to invoke when the selection has been changed more complexly.</summary>
+        public Action SelectionChanged;
+
+        /// <summary>The action to invoke when a step has been deselected.</summary>
+        public Action<IDMigrationStepCard> StepDeselected;
+
+        /// <summary>The action to invoke when a step has been selected.</summary>
+        public Action<IDMigrationStepCard> StepSelected;
 
         public IDMigrationStepList(Editor e, IDMigrationMode mode)
         {
@@ -107,13 +84,13 @@ namespace GDE.App.Main.Screens.Edit.Components
                         Anchor = Anchor.TopLeft,
                         Origin = Anchor.TopLeft,
                         Height = 30,
-                        RelativeSizeAxes = Axes.X,
+                        RelativeSizeAxes = Axes.X
                     },
                     new Container
                     {
                         RelativeSizeAxes = Axes.Both,
-                        Margin = new MarginPadding { Top = 10 },
-                        Padding = new MarginPadding { Bottom = 40 },
+                        Margin = new MarginPadding {Top = 10},
+                        Padding = new MarginPadding {Bottom = 40},
                         Children = new Drawable[]
                         {
                             new GDEScrollContainer
@@ -125,8 +102,8 @@ namespace GDE.App.Main.Screens.Edit.Components
                                     LayoutEasing = Easing.Out,
                                     Spacing = new Vector2(0, 2),
                                     RelativeSizeAxes = Axes.X,
-                                    AutoSizeAxes = Axes.Y,
-                                },
+                                    AutoSizeAxes = Axes.Y
+                                }
                             },
                             noSteps = new FillFlowContainer
                             {
@@ -161,14 +138,38 @@ namespace GDE.App.Main.Screens.Edit.Components
                                         BackgroundColour = GDEColors.FromHex("242424")
                                     }
                                 },
-                                Alpha = 0,
+                                Alpha = 0
                             }
                         }
-                    },
+                    }
                 }
             };
 
             UpdateCurrentTabRanges();
+        }
+
+        public List<SourceTargetRange> TabRanges => editor.GetIDMigrationSteps(IDMigrationMode);
+
+        public SortedSet<int> SelectedStepIndices { get; private set; } = new SortedSet<int>();
+        public List<SourceTargetRange> SelectedSteps { get; private set; } = new List<SourceTargetRange>();
+
+        public bool TabSelected
+        {
+            set
+            {
+                if (value)
+                {
+                    editor.IDMigrationOperationInitialized += IDMigrationOperationInitialized;
+                    editor.IDMigrationProgressReported += IDMigrationProgressReported;
+                    editor.IDMigrationOperationCompleted += IDMigrationOperationCompleted;
+                }
+                else
+                {
+                    editor.IDMigrationOperationInitialized -= IDMigrationOperationInitialized;
+                    editor.IDMigrationProgressReported -= IDMigrationProgressReported;
+                    editor.IDMigrationOperationCompleted -= IDMigrationOperationCompleted;
+                }
+            }
         }
 
         private void IDMigrationOperationInitialized()
@@ -176,12 +177,14 @@ namespace GDE.App.Main.Screens.Edit.Components
             foreach (var c in Cards)
                 c.IndicateStepPendingRunning();
         }
+
         private void IDMigrationProgressReported(int current, int total)
         {
             Cards[current - 1].IndicateStepFinishedRunning();
             if (current < total)
                 Cards[current].IndicateStepRunning();
         }
+
         private void IDMigrationOperationCompleted()
         {
             foreach (var c in Cards)
@@ -199,7 +202,6 @@ namespace GDE.App.Main.Screens.Edit.Components
             UpdateNoStepDialogVisibility(TabRanges);
 
             if (TabRanges.Count > 0)
-            {
                 for (var i = 0; i < TabRanges.Count; i++)
                 {
                     var card = CreateIDMigrationStepCard(TabRanges[i], i);
@@ -207,29 +209,38 @@ namespace GDE.App.Main.Screens.Edit.Components
                     stepList.Add(card);
                     Cards.Add(card);
                 }
-            }
 
             searchQuery.Current.ValueChanged += obj => stepList.SearchTerm = obj.NewValue;
 
             addNewStep.Action = CreateNewStep;
         }
 
-        private void RunArrowAnimation() => Task.Run(() => HandleNextAnimation());
+        private void RunArrowAnimation()
+        {
+            Task.Run(() => HandleNextAnimation());
+        }
+
         private void HandleNextAnimation(Task t = null)
         {
             Task.Delay(3000).ContinueWith(HandleNextAnimation);
-            for (int i = 0; i < Cards.Count; i++)
+            for (var i = 0; i < Cards.Count; i++)
             {
                 try
                 {
                     Cards[i].AnimateArrow();
                 }
-                catch { } // SHUT THE FUCK UP WITH THESE EXCEPTIONS
+                catch
+                {
+                } // SHUT THE FUCK UP WITH THESE EXCEPTIONS
+
                 Thread.Sleep(75);
             }
         }
 
-        private void UpdateNoStepDialogVisibility(List<SourceTargetRange> currentTabRanges) => noSteps.FadeTo(currentTabRanges.Count == 0 ? 1 : 0, 100, Easing.InOutQuint);
+        private void UpdateNoStepDialogVisibility(List<SourceTargetRange> currentTabRanges)
+        {
+            noSteps.FadeTo(currentTabRanges.Count == 0 ? 1 : 0, 100, Easing.InOutQuint);
+        }
 
         public void AddStep(SourceTargetRange range, bool addToEditor = true, int? newIndex = null)
         {
@@ -240,7 +251,12 @@ namespace GDE.App.Main.Screens.Edit.Components
                 editor.AddIDMigrationStep(range);
             UpdateNoStepDialogVisibility(TabRanges);
         }
-        public void CreateNewStep() => AddStep(new SourceTargetRange(1, 10, 11));
+
+        public void CreateNewStep()
+        {
+            AddStep(new SourceTargetRange(1, 10, 11));
+        }
+
         public void CloneSelectedSteps()
         {
             var oldSelection = SelectedStepIndices;
@@ -254,45 +270,52 @@ namespace GDE.App.Main.Screens.Edit.Components
                 AddSelectedStep(newIndex);
                 Cards[newIndex].Select();
             }
+
             OnSelectionChanged();
         }
+
         public void RemoveSelectedSteps()
         {
-            int[] indices = new int[SelectedStepIndices.Count];
+            var indices = new int[SelectedStepIndices.Count];
             SelectedStepIndices.CopyTo(indices);
-            for (int i = indices.Length - 1; i >= 0; i--)
+            for (var i = indices.Length - 1; i >= 0; i--)
             {
                 editor.RemoveIDMigrationStep(Cards[indices[i]].StepRange);
                 stepList.Remove(Cards[indices[i]]);
                 Cards.RemoveAt(indices[i]);
             }
+
             ClearSelectedSteps();
             OnSelectionChanged();
 
             // Fix indices
-            for (int i = 0; i < Cards.Count; i++)
+            for (var i = 0; i < Cards.Count; i++)
                 Cards[i].Index = i;
 
             UpdateNoStepDialogVisibility(TabRanges);
         }
+
         public void RemoveAllSteps()
         {
             SelectAll();
             RemoveSelectedSteps();
         }
+
         public void CutSelectedSteps()
         {
             CopySelectedSteps();
             RemoveSelectedSteps();
         }
+
         public void CopySelectedSteps()
         {
-            int[] indices = new int[SelectedStepIndices.Count];
+            var indices = new int[SelectedStepIndices.Count];
             SelectedStepIndices.CopyTo(indices);
             clipboard = new List<SourceTargetRange>(indices.Length);
             foreach (var i in indices)
                 clipboard.Add(Cards[i].StepRange);
         }
+
         public void PasteSteps()
         {
             InitializeSelectedSteps();
@@ -303,16 +326,31 @@ namespace GDE.App.Main.Screens.Edit.Components
                 AddSelectedStep(newIndex);
                 Cards[newIndex].Select();
             }
+
             OnSelectionChanged();
         }
-        public void LoadSteps() => OpenDialog(OpenFileDialogBindable, OnLoadFile);
+
+        public void LoadSteps()
+        {
+            OpenDialog(OpenFileDialogBindable, OnLoadFile);
+        }
+
         public void SaveSteps()
         {
             if (!editor.SaveCurrentIDMigrationSteps())
                 SaveStepsAs();
         }
-        public void SaveStepsAs() => OpenDialog(SaveFileDialogBindable, OnSaveFile);
-        public void SelectAll() => SelectAll(true);
+
+        public void SaveStepsAs()
+        {
+            OpenDialog(SaveFileDialogBindable, OnSaveFile);
+        }
+
+        public void SelectAll()
+        {
+            SelectAll(true);
+        }
+
         public void SelectAll(bool triggerEvent = true)
         {
             SelectedSteps.Clear();
@@ -321,11 +359,17 @@ namespace GDE.App.Main.Screens.Edit.Components
                 c.Select();
                 SelectedSteps.Add(c.StepRange);
             }
+
             SelectedStepIndices = new SortedSet<int>(Enumerable.Range(0, Cards.Count));
             if (triggerEvent)
                 OnSelectionChanged();
         }
-        public void DeselectAll() => DeselectAll(true);
+
+        public void DeselectAll()
+        {
+            DeselectAll(true);
+        }
+
         public void DeselectAll(bool triggerEvent = true)
         {
             ClearSelectedSteps();
@@ -342,6 +386,7 @@ namespace GDE.App.Main.Screens.Edit.Components
             if (triggerEvent)
                 OnStepDeselected(Cards[index]);
         }
+
         public void SelectStep(int index, bool appendToSelection = false, bool triggerEvent = true)
         {
             if (!appendToSelection)
@@ -351,6 +396,7 @@ namespace GDE.App.Main.Screens.Edit.Components
                 foreach (var i in oldSelection)
                     Cards[i].Deselect();
             }
+
             Cards[index].Select();
             AddSelectedStep(index);
             if (triggerEvent)
@@ -359,6 +405,7 @@ namespace GDE.App.Main.Screens.Edit.Components
                 else
                     OnSelectionChanged();
         }
+
         public void ToggleStepSelection(int index, bool appendToSelection = false, bool triggerEvent = true)
         {
             if (triggerEvent)
@@ -370,17 +417,19 @@ namespace GDE.App.Main.Screens.Edit.Components
 
         private void OnStepSelected(IDMigrationStepCard card)
         {
-            var commonSteps = new List<SourceTargetRange> { card.StepRange };
+            var commonSteps = new List<SourceTargetRange> {card.StepRange};
             if (CommonIDMigrationStep.Value != null)
                 commonSteps.Add(CommonIDMigrationStep.Value);
             CommonIDMigrationStep.Value = GetCommon(commonSteps); // Additive logic works
             StepSelected?.Invoke(card);
         }
+
         private void OnStepDeselected(IDMigrationStepCard card)
         {
             CommonIDMigrationStep.Value = GetCommon(SelectedSteps);
             StepDeselected?.Invoke(card);
         }
+
         private void OnSelectionChanged()
         {
             CommonIDMigrationStep.Value = GetCommon(SelectedSteps);
@@ -391,6 +440,7 @@ namespace GDE.App.Main.Screens.Edit.Components
         {
             editor.SaveCurrentIDMigrationSteps(fileName);
         }
+
         private void OnLoadFile(string fileName)
         {
             editor.LoadIDMigrationSteps(fileName);
@@ -398,7 +448,7 @@ namespace GDE.App.Main.Screens.Edit.Components
 
             // Update steps after loading them
             RemoveAllSteps();
-            for (int i = 0; i < steps.Count; i++)
+            for (var i = 0; i < steps.Count; i++)
                 AddStep(steps[i], false, i);
         }
 
@@ -413,10 +463,10 @@ namespace GDE.App.Main.Screens.Edit.Components
         {
             return new IDMigrationStepCard(r)
             {
-                Margin = new MarginPadding { Top = CardMargin },
+                Margin = new MarginPadding {Top = CardMargin},
                 Index = index,
                 CardDragged = (c, e) => RearrangeCards(index, e),
-                CardClicked = HandleCardClicked,
+                CardClicked = HandleCardClicked
             };
         }
 
@@ -426,16 +476,19 @@ namespace GDE.App.Main.Screens.Edit.Components
             SelectedStepIndices.Add(index);
             SelectedSteps.Add(Cards[index].StepRange);
         }
+
         private void RemoveSelectedStep(int index)
         {
             SelectedStepIndices.Remove(index);
             SelectedSteps.Remove(Cards[index].StepRange);
         }
+
         private void ClearSelectedSteps()
         {
             SelectedStepIndices.Clear();
             SelectedSteps.Clear();
         }
+
         private void InitializeSelectedSteps()
         {
             SelectedStepIndices = new SortedSet<int>();
@@ -455,18 +508,18 @@ namespace GDE.App.Main.Screens.Edit.Components
             {
                 DeselectAll(false);
 
-                int start = lastClickedBeforeShift.Index;
-                int end = c.Index;
+                var start = lastClickedBeforeShift.Index;
+                var end = c.Index;
 
                 // Swap the indices
                 if (start > end)
                 {
-                    int t = start;
+                    var t = start;
                     start = end;
                     end = t;
                 }
 
-                for (int i = start; i <= end; i++)
+                for (var i = start; i <= end; i++)
                     SelectStep(i, true, false);
 
                 OnSelectionChanged();
@@ -474,7 +527,9 @@ namespace GDE.App.Main.Screens.Edit.Components
             else
             {
                 if (e.ControlPressed)
+                {
                     ToggleStepSelection(c.Index, true);
+                }
                 else
                 {
                     var otherSelectedSteps = SelectedStepIndices.Clone();
@@ -486,31 +541,39 @@ namespace GDE.App.Main.Screens.Edit.Components
                 }
             }
         }
+
         private void RearrangeCards(int selectedCardIndex, DragEvent e)
         {
-            int newIndex = GetCardIndexFromYPosition(Cards[selectedCardIndex].Y);
+            var newIndex = GetCardIndexFromYPosition(Cards[selectedCardIndex].Y);
             Cards.Swap(selectedCardIndex, newIndex);
             stepList.SetLayoutPosition(Cards[selectedCardIndex], newIndex);
         }
 
-        private static float GetCardYPositionThreshold(int index) => index * (CardHeight + CardMargin) + CardHeight / 2;
-        private static int GetCardIndexFromYPosition(float y) => (int)((y + CardHeight / 2) / (CardHeight + CardMargin));
+        private static float GetCardYPositionThreshold(int index)
+        {
+            return index * (CardHeight + CardMargin) + CardHeight / 2;
+        }
+
+        private static int GetCardIndexFromYPosition(float y)
+        {
+            return (int) ((y + CardHeight / 2) / (CardHeight + CardMargin));
+        }
 
         protected override void InitializeActionDictionary()
         {
             // Capacity is greater than the total actions to allow future improvements without *constantly* having to change the constant
             Actions = new Dictionary<IDMigrationAction, Action>(20)
             {
-                { IDMigrationAction.SelectAll, SelectAll },
-                { IDMigrationAction.DeselectAll, DeselectAll },
-                { IDMigrationAction.Cut, CutSelectedSteps },
-                { IDMigrationAction.Copy, CopySelectedSteps },
-                { IDMigrationAction.Paste, PasteSteps },
-                { IDMigrationAction.Clone, CloneSelectedSteps },
-                { IDMigrationAction.Remove, RemoveSelectedSteps },
-                { IDMigrationAction.Load, LoadSteps },
-                { IDMigrationAction.Save, SaveSteps },
-                { IDMigrationAction.SaveAs, SaveStepsAs },
+                {IDMigrationAction.SelectAll, SelectAll},
+                {IDMigrationAction.DeselectAll, DeselectAll},
+                {IDMigrationAction.Cut, CutSelectedSteps},
+                {IDMigrationAction.Copy, CopySelectedSteps},
+                {IDMigrationAction.Paste, PasteSteps},
+                {IDMigrationAction.Clone, CloneSelectedSteps},
+                {IDMigrationAction.Remove, RemoveSelectedSteps},
+                {IDMigrationAction.Load, LoadSteps},
+                {IDMigrationAction.Save, SaveSteps},
+                {IDMigrationAction.SaveAs, SaveStepsAs}
             };
         }
     }

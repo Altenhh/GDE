@@ -1,7 +1,7 @@
-﻿using GDE.App.Main.Colors;
+﻿using GDAPI.Objects.GeometryDash.LevelObjects;
+using GDE.App.Main.Colors;
 using GDE.App.Main.Objects;
 using GDE.App.Main.Panels;
-using GDAPI.Utilities.Objects.GeometryDash.LevelObjects;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -12,17 +12,13 @@ namespace GDE.App.Main.Screens.Edit.Components
 {
     public class ObjectAdditionPanel : Panel
     {
-        protected override string Name => "Object Addition";
-
-        private ObjectButton currentlyActiveButton;
-        private FillFlowContainer container;
+        private readonly FillFlowContainer container;
+        public BindableBool AbleToPlace = new BindableBool();
         private Camera camera;
 
-        public int SelectedObjectID { get; private set; }
+        private ObjectButton currentlyActiveButton;
 
         public float SnapResolution = 30f;
-
-        public BindableBool AbleToPlace = new BindableBool();
 
         public ObjectAdditionPanel(Camera camera)
         {
@@ -35,7 +31,7 @@ namespace GDE.App.Main.Screens.Edit.Components
                 {
                     Top = 35,
                     Horizontal = 5
-                },
+                }
             });
 
             for (var i = 1; i < 10; i++)
@@ -44,7 +40,7 @@ namespace GDE.App.Main.Screens.Edit.Components
 
                 container.Add(objectButton = new ObjectButton(i)
                 {
-                    Size = new Vector2(40),
+                    Size = new Vector2(40)
                 });
 
                 objectButton.Action = () =>
@@ -69,17 +65,13 @@ namespace GDE.App.Main.Screens.Edit.Components
             }
         }
 
+        protected override string Name => "Object Addition";
+
+        public int SelectedObjectID { get; private set; }
+
         private class ObjectButton : Button
         {
             private bool active;
-
-            public bool Active
-            {
-                get => active;
-                set => this.TransformTo(nameof(BackgroundColour), GDEColors.FromHex((active = value) ? "383" : "333"));
-            }
-            public int ObjectID => Object.ObjectID;
-            public ObjectBase Object { get; }
 
             public ObjectButton(int objectID = 1)
             {
@@ -92,8 +84,20 @@ namespace GDE.App.Main.Screens.Edit.Components
                 });
             }
 
+            public bool Active
+            {
+                get => active;
+                set => this.TransformTo(nameof(BackgroundColour), GDEColors.FromHex((active = value) ? "383" : "333"));
+            }
+
+            public int ObjectID => Object.ObjectID;
+            public ObjectBase Object { get; }
+
             /// <summary>Inverts the Active property and returns the new value.</summary>
-            public bool ToggleActive() => Active = !Active;
+            public bool ToggleActive()
+            {
+                return Active = !Active;
+            }
         }
     }
 }
