@@ -21,11 +21,9 @@ namespace GDEdit.App.Level
             }
             
             // Defaults to the normal 30x30 square texture
-            var texture = store.Get($"Objects/{id}.png");
-            
             return new Sprite
                    {
-                       Texture = texture
+                       Texture = store.Get($"Objects/{id}.png")
                    };
         }
     }

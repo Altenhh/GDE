@@ -4,6 +4,7 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.Testing;
+using osuTK;
 
 namespace GDEdit.Tests.Visual.TestSceneObjects
 {
@@ -33,7 +34,7 @@ namespace GDEdit.Tests.Visual.TestSceneObjects
                 var obj = ObjectManager.GetAppropriateObject(i, Textures);
                 
                 if (obj != null)
-                    container.Add(obj);
+                    container.Add(obj.With(o => o.Scale = new Vector2(0.5f)));
             }
         }
     }
