@@ -1,8 +1,6 @@
-﻿using System.Globalization;
-using GDE.App.Main.Colors;
+﻿using GDE.App.Main.Colors;
 using GDE.App.Main.UI.Graphics;
 using GDE.App.Main.UI.Shadowed;
-using NUnit.Framework.Internal.Execution;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -11,7 +9,7 @@ using osu.Framework.Graphics.Sprites;
 using osu.Framework.Input.Events;
 using osuTK;
 using osuTK.Graphics;
-using osuTK.Input;
+using System.Globalization;
 
 namespace GDE.App.Main.UI
 {
@@ -48,7 +46,7 @@ namespace GDE.App.Main.UI
                 Text = Bindable.Value.ToString(),
                 Depth = -1
             };
-            
+
             Add(new FillFlowContainer
             {
                 Direction = FillDirection.Horizontal,
@@ -72,7 +70,7 @@ namespace GDE.App.Main.UI
                 else
                     textBox.Text = Bindable.Value.ToString();
             };
-            
+
             Bindable.ValueChanged += text => textBox.Text = text.NewValue.ToString();
             Bindable.TriggerChange();
         }
@@ -84,7 +82,7 @@ namespace GDE.App.Main.UI
             Bindable.Value += isReversed ? -threshold : threshold;
             return base.OnScroll(e);
         }
-        
+
         protected override bool OnKeyDown(KeyDownEvent e)
         {
             UpdateThreshold(e);
@@ -111,20 +109,20 @@ namespace GDE.App.Main.UI
             private float threshold = 1;
 
             public BindableDouble Value = new BindableDouble();
-            
+
             public ArrowButton(BindableDouble value, bool flipped = false)
             {
                 Text = flipped ? "<" : ">";
                 BackgroundColour = GDEColors.FromHex("333333");
                 Height = 20;
                 Width = 20;
-                
+
                 Value.BindTo(value);
 
                 value.ValueChanged += val =>
                 {
                     var newValue = val.NewValue;
-                    
+
                     bool onMax = newValue + 1 > value.MaxValue;
                     bool onMin = newValue - 1 < value.MinValue;
 

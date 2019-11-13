@@ -1,6 +1,6 @@
-﻿using GDE.App.Main.Containers.KeyBindingContainers;
+﻿using GDAPI.Enumerations;
+using GDE.App.Main.Containers.KeyBindingContainers;
 using GDE.App.Main.UI.Containers;
-using GDAPI.Enumerations;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -10,8 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using static GDE.App.Main.Colors.GDEColors;
 using static GDAPI.Functions.General.PathExpansionPack;
+using static GDE.App.Main.Colors.GDEColors;
 using static System.Math;
 
 namespace GDE.App.Main.UI.FileDialogComponents

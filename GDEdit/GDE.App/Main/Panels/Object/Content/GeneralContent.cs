@@ -1,13 +1,6 @@
 ﻿using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using System.Collections.Generic;
-using System.Linq;
-using GDE.App.Main.UI.Graphics;
-using osu.Framework.Allocation;
-using osu.Framework.Extensions;
-using osu.Framework.Graphics.Sprites;
-using osuTK;
-using osuTK.Graphics;
 
 namespace GDE.App.Main.Panels.Object.Content
 {
@@ -21,7 +14,7 @@ namespace GDE.App.Main.Panels.Object.Content
             RowSize = new Dimension(GridSizeMode.Absolute, 25f);
 
             Content = null;
-            
+
             Columns = CreateHeaders();
             Content = CreateContent();
         }
@@ -36,7 +29,7 @@ namespace GDE.App.Main.Panels.Object.Content
                 new TableColumn("", Anchor.CentreRight, new Dimension()), // Name
                 new TableColumn("", Anchor.CentreLeft, new Dimension(minSize:50, maxSize:200)), // Value
             };
-            
+
             return columns.ToArray();
         }
 

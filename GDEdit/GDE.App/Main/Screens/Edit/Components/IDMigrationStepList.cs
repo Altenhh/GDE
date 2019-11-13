@@ -1,12 +1,12 @@
-﻿using GDE.App.Main.Colors;
+﻿using GDAPI.Application.Editors;
+using GDAPI.Enumerations;
+using GDAPI.Functions.Extensions;
+using GDAPI.Objects.General;
+using GDE.App.Main.Colors;
 using GDE.App.Main.Containers.KeyBindingContainers;
 using GDE.App.Main.UI;
 using GDE.App.Main.UI.Containers;
 using GDE.App.Main.UI.FileDialogComponents;
-using GDAPI.Application.Editors;
-using GDAPI.Enumerations;
-using GDAPI.Functions.Extensions;
-using GDAPI.Objects.General;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;

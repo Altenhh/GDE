@@ -1,5 +1,4 @@
-﻿using GDAPI.Objects.GeometryDash.General;
-using GDAPI.Objects.GeometryDash.LevelObjects;
+﻿using GDAPI.Objects.GeometryDash.LevelObjects;
 using GDE.App.Main.Objects;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;

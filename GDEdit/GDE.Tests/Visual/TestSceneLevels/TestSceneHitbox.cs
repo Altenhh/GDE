@@ -1,7 +1,6 @@
-﻿using GDE.App.Main.Hitboxes;
-using GDAPI.Objects.General;
-using GDAPI.Objects.General.Shapes;
+﻿using GDAPI.Objects.General;
 using GDAPI.Objects.GeometryDash.ObjectHitboxes;
+using GDE.App.Main.Hitboxes;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;

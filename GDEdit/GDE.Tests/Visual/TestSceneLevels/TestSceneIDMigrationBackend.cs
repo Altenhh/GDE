@@ -1,5 +1,4 @@
-﻿using GDAPI.Application.Editor;
-using GDAPI.Objects.General;
+﻿using GDAPI.Objects.General;
 using GDAPI.Objects.GeometryDash.General;
 using GDAPI.Objects.GeometryDash.LevelObjects;
 using GDAPI.Objects.GeometryDash.LevelObjects.SpecialObjects;

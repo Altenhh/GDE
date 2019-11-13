@@ -1,7 +1,7 @@
-﻿using GDE.App.Main.Colors;
-using GDE.App.Main.UI;
-using GDAPI.Application;
+﻿using GDAPI.Application;
 using GDAPI.Objects.GeometryDash.General;
+using GDE.App.Main.Colors;
+using GDE.App.Main.UI;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -10,7 +10,6 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using System;
 using static System.Threading.Tasks.TaskStatus;
-using GDAPI.Objects.GeometryDash.General;
 
 namespace GDE.App.Main.Screens.Menu.Components
 {

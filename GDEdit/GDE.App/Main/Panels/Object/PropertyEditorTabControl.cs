@@ -6,7 +6,6 @@ using osu.Framework.Graphics.Effects;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.UserInterface;
-using osu.Framework.Input.Events;
 using osuTK;
 
 namespace GDE.App.Main.Panels.Object
@@ -23,7 +22,7 @@ namespace GDE.App.Main.Panels.Object
             TabContainer.Spacing = new Vector2(0, 10);
             TabContainer.Direction = FillDirection.Vertical;
             TabContainer.AllowMultiline = true;
-            
+
             //Background
             AddInternal(new Box
             {
@@ -39,12 +38,12 @@ namespace GDE.App.Main.Panels.Object
             private readonly Container container;
             private readonly Box background;
 
-            public PropertyEditorTabItem(PropertyEditorTab value) 
+            public PropertyEditorTabItem(PropertyEditorTab value)
                 : base(value)
             {
                 AutoSizeAxes = Axes.Both;
                 AlwaysPresent = true;
-                
+
                 Children = new Drawable[]
                 {
                     container = new Container()

@@ -1,10 +1,10 @@
-﻿using osu.Framework.Graphics;
+﻿using GDE.App.Main.Colors;
+using osu.Framework.Extensions.Color4Extensions;
+using osu.Framework.Graphics;
+using osu.Framework.Graphics.Effects;
+using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
 using osuTK;
-using GDE.App.Main.Colors;
-using osu.Framework.Graphics.UserInterface;
-using osu.Framework.Graphics.Effects;
-using osu.Framework.Extensions.Color4Extensions;
 using osuTK.Graphics;
 
 namespace GDE.App.Main.UI.Shadowed

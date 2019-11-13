@@ -7,7 +7,7 @@ namespace GDE.App.Main.Panels.Object.Tabs
         public IconUsage Icon { get; set; }
         public TabEnumeration Tab { get; set; }
     }
-    
+
     public enum TabEnumeration
     {
         General,

@@ -1,11 +1,9 @@
-﻿using GDE.App.Main.Colors;
+﻿using GDAPI.Application.Editors;
+using GDE.App.Main.Colors;
 using GDE.App.Main.Levels;
 using GDE.App.Main.Objects;
-using GDE.App.Main.UI;
-using GDAPI.Application;
-using GDAPI.Application.Editors;
-using GDAPI.Objects.GeometryDash.General;
 using GDE.App.Main.Panels;
+using GDE.App.Main.UI;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;

@@ -1,13 +1,13 @@
-﻿using GDE.App.Main.Containers.KeyBindingContainers;
+﻿using GDAPI.Application.Editors;
+using GDAPI.Enumerations;
+using GDAPI.Objects.General;
+using GDE.App.Main.Containers.KeyBindingContainers;
 using GDE.App.Main.Panels;
 using GDE.App.Main.Screens.Edit.Components;
 using GDE.App.Main.Screens.Edit.Components.IDMigration;
 using GDE.App.Main.Toasts;
 using GDE.App.Main.UI;
 using GDE.App.Main.UI.FileDialogComponents;
-using GDAPI.Application.Editors;
-using GDAPI.Enumerations;
-using GDAPI.Objects.General;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -17,8 +17,8 @@ using osuTK;
 using osuTK.Graphics;
 using System;
 using System.Threading.Tasks;
-using static GDE.App.Main.Colors.GDEColors;
 using static GDAPI.Objects.General.SourceTargetRange;
+using static GDE.App.Main.Colors.GDEColors;
 
 namespace GDE.App.Main.Screens.Edit
 {

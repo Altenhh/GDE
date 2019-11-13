@@ -1,5 +1,4 @@
 ﻿using GDE.App.Main.UI.Shadowed;
-using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osuTK;

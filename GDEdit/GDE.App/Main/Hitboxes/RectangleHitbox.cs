@@ -1,6 +1,6 @@
 ﻿using GDAPI.Objects.General;
-using GDAPI.Objects.Shapes;
 using GDAPI.Objects.GeometryDash.ObjectHitboxes;
+using GDAPI.Objects.Shapes;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
 using osuTK;

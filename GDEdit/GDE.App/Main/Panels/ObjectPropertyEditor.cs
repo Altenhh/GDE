@@ -25,7 +25,7 @@ namespace GDE.App.Main.Panels
         protected override string Name => "Object Property Editor";
 
         public Bindable<LevelObjectCollection> SelectedObjects;
-        
+
         public ObjectPropertyEditor(LevelObjectCollection objects)
         {
             AutoSizeAxes = Axes.Both;
@@ -76,7 +76,7 @@ namespace GDE.App.Main.Panels
                         }
                     }
                 };
-                
+
                 fillFlow.Children = new Drawable[]
                 {
                     header = new PropertyEditorHeader
@@ -90,13 +90,13 @@ namespace GDE.App.Main.Panels
                     },
                 };
             };
-            
+
             SelectedObjects.TriggerChange();
         }
         protected override void LoadComplete()
         {
             base.LoadComplete();
-            
+
             var list = new List<PropertyEditorTab>()
             {
                 //TODO: Import custom icons to use
@@ -106,7 +106,7 @@ namespace GDE.App.Main.Panels
                     Tab = TabEnumeration.General
                 }
             };
-            
+
             foreach (var item in list)
                 tabControl.AddItem(item);
 

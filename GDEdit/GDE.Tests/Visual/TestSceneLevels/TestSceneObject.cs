@@ -1,5 +1,5 @@
-﻿using GDE.App.Main.Objects;
-using GDAPI.Objects.GeometryDash.LevelObjects;
+﻿using GDAPI.Objects.GeometryDash.LevelObjects;
+using GDE.App.Main.Objects;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Testing;

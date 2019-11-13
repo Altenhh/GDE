@@ -1,12 +1,9 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-using GDAPI.Objects.GeometryDash.LevelObjects;
+﻿using GDAPI.Objects.GeometryDash.LevelObjects;
 using GDE.App.Main.UI;
-using GDE.App.Main.UI.Shadowed;
-using JetBrains.Annotations;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
+using System.Collections.Generic;
 
 namespace GDE.App.Main.Panels.Object.Content
 {
@@ -32,13 +29,13 @@ namespace GDE.App.Main.Panels.Object.Content
 
             var rotBind = new BindableDouble(selectedObjects.CommonRotation) { MinValue = 0, MaxValue = 360 };
             var scaBind = new BindableDouble(selectedObjects.CommonScaling);
-            
+
             var zOrdBind = new BindableDouble(selectedObjects.CommonZOrder) { MinValue = 0, MaxValue = double.MaxValue };
             var zLayBind = new BindableDouble(selectedObjects.CommonZLayer) { MinValue = 0, MaxValue = double.MaxValue };
-            
+
             var ed1Bind = new BindableDouble(selectedObjects.CommonEL1) { MinValue = 0, MaxValue = double.MaxValue };
             var ed2Bind = new BindableDouble(selectedObjects.CommonEL2) { MinValue = 0, MaxValue = double.MaxValue };
-            
+
             var lgiBind = new BindableDouble(selectedObjects.CommonLinkedGroupID);
 
             var position = CreateDrawable(Name = "Position", "X", posXBind, "Y", posYBind);
@@ -80,7 +77,7 @@ namespace GDE.App.Main.Panels.Object.Content
 
             return drawables.ToArray();
         }
-        
+
         // Used to make Z Layer have an extra button
         private Drawable[] CreateDrawable(Drawable title, BindableDouble value, Drawable extra1 = null, BindableDouble value1 = null,
             Drawable extra2 = null, BindableDouble value2 = null)

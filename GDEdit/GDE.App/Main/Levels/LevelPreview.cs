@@ -1,17 +1,16 @@
-﻿using GDE.App.Main.Containers.KeyBindingContainers;
+﻿using GDAPI.Application;
+using GDAPI.Application.Editors;
+using GDAPI.Objects.GeometryDash.General;
+using GDE.App.Main.Containers.KeyBindingContainers;
 using GDE.App.Main.Objects;
 using GDE.App.Main.Screens.Edit;
 using GDE.App.Main.Screens.Edit.Components;
 using GDE.App.Main.UI;
-using GDAPI.Application;
-using GDAPI.Application.Editors;
-using GDAPI.Objects.GeometryDash.General;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Input.Bindings;
 using System.Collections.Generic;
-using GDAPI.Objects.GeometryDash.General;
 
 namespace GDE.App.Main.Levels
 {
