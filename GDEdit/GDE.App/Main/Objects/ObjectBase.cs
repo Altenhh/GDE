@@ -1,6 +1,6 @@
 ﻿using GDE.App.Main.UI;
-using GDAPI.Application.Editor;
-using GDAPI.Utilities.Objects.GeometryDash.LevelObjects;
+using GDAPI.Application.Editors;
+using GDAPI.Objects.GeometryDash.LevelObjects;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;

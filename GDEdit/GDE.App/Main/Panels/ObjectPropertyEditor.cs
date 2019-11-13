@@ -1,48 +1,16 @@
-﻿//abnormally huge usings yes
-using osu.Framework.Allocation;
-using osu.Framework.Audio.Track;
-using osu.Framework.Graphics.Sprites;
-using osu.Framework.Graphics.Textures;
-using osu.Framework.Screens;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System;
-using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.Shapes;
-using osu.Framework.Input.Events;
-using osu.Framework.Testing;
-using osuTK;
-using osuTK.Graphics;
-using osu.Framework.Graphics.Lines;
-using osu.Framework.MathUtils;
-using System.Linq;
-using osu.Framework;
-using osu.Framework.Audio;
-using osu.Framework.Audio.Sample;
-using osu.Framework.Bindables;
-using osu.Framework.Extensions.IEnumerableExtensions;
-using osu.Framework.Input.Bindings;
-using osu.Framework.Logging;
-using osu.Framework.Platform;
-using osu.Framework.Threading;
-using osuTK.Input;
-using GDE.App.Main.Levels;
-using GDE.App.Main.UI.Containers;
-using GDE.App.Main.UI;
-using GDE.App.Main.Objects;
-using GDE.App.Main.Panels;
+﻿using GDAPI.Objects.GeometryDash.LevelObjects;
 using GDE.App.Main.Colors;
-using GDAPI.Utilities.Objects.GeometryDash.LevelObjects;
-using GDAPI.Utilities.Objects.GeometryDash;
-using GDAPI.Application;
-using osu.Framework.Graphics.UserInterface;
-using osu.Framework.Graphics.Effects;
-using osu.Framework.Extensions.Color4Extensions;
 using GDE.App.Main.Panels.Object;
 using GDE.App.Main.Panels.Object.Content;
 using GDE.App.Main.Panels.Object.Tabs;
+using osu.Framework.Bindables;
+using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
+using osu.Framework.Graphics.Shapes;
+using osu.Framework.Graphics.Sprites;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GDE.App.Main.Panels
 {
@@ -52,18 +20,18 @@ namespace GDE.App.Main.Panels
         private PropertyEditorHeader header;
         private PropertyEditorFooter footer;
         private PropertyEditorTabControl tabControl;
+        private FillFlowContainer fillFlow;
 
         protected override string Name => "Object Property Editor";
 
-        public Bindable<GeneralObject> ObjectBindable;
-        private FillFlowContainer fillFlow;
-
-        public ObjectPropertyEditor(GeneralObject Object)
+        public Bindable<LevelObjectCollection> SelectedObjects;
+        
+        public ObjectPropertyEditor(LevelObjectCollection objects)
         {
             AutoSizeAxes = Axes.Both;
-            ObjectBindable = new Bindable<GeneralObject>(Object);
+            SelectedObjects = new Bindable<LevelObjectCollection>(objects);
 
-            ObjectBindable.ValueChanged += o =>
+            SelectedObjects.ValueChanged += o =>
             {
                 Children = new Drawable[]
                 {
@@ -113,17 +81,17 @@ namespace GDE.App.Main.Panels
                 {
                     header = new PropertyEditorHeader
                     {
-                        Object = ObjectBindable
+                        Objects = SelectedObjects
                     },
-                    content = new ObjectContent(ObjectBindable.Value),
+                    content = new ObjectContent(SelectedObjects.Value),
                     footer = new PropertyEditorFooter
                     {
-                        Object = ObjectBindable
+                        Objects = SelectedObjects
                     },
                 };
             };
             
-            ObjectBindable.TriggerChange();
+            SelectedObjects.TriggerChange();
         }
         protected override void LoadComplete()
         {
@@ -151,15 +119,9 @@ namespace GDE.App.Main.Panels
                     case TabEnumeration.General:
                         fillFlow.Children = new Drawable[]
                         {
-                            header = new PropertyEditorHeader
-                            {
-                                Object = ObjectBindable
-                            },
-                            content = new ObjectContent(ObjectBindable.Value),
-                            footer = new PropertyEditorFooter
-                            {
-                                Object = ObjectBindable
-                            },
+                            header = new PropertyEditorHeader(SelectedObjects),
+                            content = new ObjectContent(SelectedObjects.Value),
+                            footer = new PropertyEditorFooter(SelectedObjects),
                         };
                         break;
                 }

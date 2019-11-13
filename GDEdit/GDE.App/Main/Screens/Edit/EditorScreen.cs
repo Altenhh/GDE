@@ -1,15 +1,17 @@
 ﻿using DiscordRPC;
+using GDAPI.Application;
+using GDAPI.Application.Editors;
+using GDAPI.Objects.GeometryDash.General;
+using GDAPI.Objects.GeometryDash.LevelObjects;
 using GDE.App.Main.Colors;
 using GDE.App.Main.Levels;
 using GDE.App.Main.Objects;
+using GDE.App.Main.Panels;
 using GDE.App.Main.Screens.Edit.Components;
 using GDE.App.Main.Screens.Edit.Components.Menu;
 using GDE.App.Main.Tools;
 using GDE.App.Main.UI;
 using GDE.App.Main.UI.FileDialogComponents;
-using GDAPI.Application;
-using GDAPI.Application.Editor;
-using GDAPI.Utilities.Objects.GeometryDash;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -21,8 +23,6 @@ using osu.Framework.Input.Events;
 using osu.Framework.Screens;
 using osuTK;
 using System.Collections.Generic;
-using GDE.App.Main.Panels;
-using GDAPI.Utilities.Objects.GeometryDash.LevelObjects;
 
 namespace GDE.App.Main.Screens.Edit
 {
@@ -177,7 +177,7 @@ namespace GDE.App.Main.Screens.Edit
                     Origin = Anchor.Centre,
                     LockDrag = true,
                 },
-                objectPropertyEditor = new ObjectPropertyEditor(new GeneralObject(0))
+                objectPropertyEditor = new ObjectPropertyEditor(new LevelObjectCollection())
                 {
                     Anchor = Anchor.Centre,
                     Origin = Anchor.Centre

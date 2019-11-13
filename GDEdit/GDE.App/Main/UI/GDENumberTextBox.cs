@@ -2,6 +2,7 @@
 using GDE.App.Main.Colors;
 using GDE.App.Main.UI.Graphics;
 using GDE.App.Main.UI.Shadowed;
+using NUnit.Framework.Internal.Execution;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -18,19 +19,35 @@ namespace GDE.App.Main.UI
     {
         private float threshold = 1;
 
-        public BindableDouble Bindable;
+        protected bool AllowDecimalNumbers { get; set; }
+
+        public BindableDouble Bindable { get; private set; }
+
+        public double Value => Bindable.Value;
+        public int ValueInt => (int)Value;
+
+        public GDENumberTextBox(bool allowDecimalNumbers = true)
+        {
+            AutoSizeAxes = Axes.Y;
+
+            AllowDecimalNumbers = allowDecimalNumbers;
+        }
 
         [BackgroundDependencyLoader]
         private void load()
         {
             if (Bindable == null)
                 Bindable = new BindableDouble();
-            
-            NumberedTextBox textBox;
-            AutoSizeAxes = Axes.Y;
 
             var arrowLeft = new ArrowButton(Bindable, true);
             var arrowRight = new ArrowButton(Bindable);
+            var textBox = new NumberedTextBox(AllowDecimalNumbers)
+            {
+                Height = 20,
+                RelativeSizeAxes = Axes.X,
+                Text = Bindable.Value.ToString(),
+                Depth = -1
+            };
             
             Add(new FillFlowContainer
             {
@@ -41,29 +58,22 @@ namespace GDE.App.Main.UI
                 Children = new Drawable[]
                 {
                     arrowLeft,
-                    textBox = new NumberedTextBox
-                    {
-                        Height = 20,
-                        RelativeSizeAxes = Axes.X,
-                        Text = Bindable.Value.ToString(),
-                        Depth = -1
-                    },
-                    arrowRight
+                    textBox,
+                    arrowRight,
                 }
             });
 
-            textBox.OnCommit += (sender, text) =>
+            textBox.OnCommit += (_, text) =>
             {
-                double.TryParse(sender.Text, NumberStyles.Any, null, out double numValue);
+                double.TryParse(textBox.Text, NumberStyles.Any, null, out double numValue);
 
                 if (numValue <= Bindable.MaxValue || numValue >= Bindable.MinValue)
-                    arrowLeft.Value.Value = arrowRight.Value.Value = Bindable.Value = numValue;
+                    Bindable.Value = numValue;
                 else
-                    Bindable.TriggerChange();
+                    textBox.Text = Bindable.Value.ToString();
             };
             
             Bindable.ValueChanged += text => textBox.Text = text.NewValue.ToString();
-            
             Bindable.TriggerChange();
         }
 
@@ -77,24 +87,23 @@ namespace GDE.App.Main.UI
         
         protected override bool OnKeyDown(KeyDownEvent e)
         {
-            switch (e.Key)
-            {
-                case Key.ShiftLeft:
-                    threshold = 0.5f;
-                    break;
-                case Key.ControlLeft:
-                    threshold = 0.25f;
-                    break;
-            }
-
+            UpdateThreshold(e);
             return base.OnKeyDown(e);
         }
-
         protected override bool OnKeyUp(KeyUpEvent e)
         {
-            //Returns to normal
-            threshold = 1;
+            UpdateThreshold(e);
             return base.OnKeyUp(e);
+        }
+
+        private void UpdateThreshold(KeyboardEvent e)
+        {
+            if (e.ControlPressed)
+                threshold = 0.25f;
+            else if (e.ShiftPressed)
+                threshold = 0.5f;
+            else
+                threshold = 1;
         }
 
         private class ArrowButton : GDEButton
@@ -114,13 +123,12 @@ namespace GDE.App.Main.UI
 
                 value.ValueChanged += val =>
                 {
-                    // there was an attempt
                     var newValue = val.NewValue;
                     
                     bool onMax = newValue + 1 > value.MaxValue;
                     bool onMin = newValue - 1 < value.MinValue;
 
-                    if ((flipped && onMax) || onMin)
+                    if (Enabled.Value = (flipped && onMax) || onMin)
                         SpriteText.Colour = GDEColors.FromHex("595959");
                     else
                         SpriteText.Colour = Color4.White;
@@ -129,51 +137,44 @@ namespace GDE.App.Main.UI
                 Action = () =>
                 {
                     var newValue = Value.Value += flipped ? -threshold : threshold;
-
-                    if (newValue < value.MaxValue || newValue > value.MinValue)
-                        value.Value = Value.Value = newValue;
-                    else
-                    {
-                        Value.TriggerChange();
-                        value.TriggerChange();
-                        SpriteText.Colour = GDEColors.FromHex("595959");
-                    }
                 };
             }
 
             protected override bool OnKeyDown(KeyDownEvent e)
             {
-                switch (e.Key)
-                {
-                    case Key.ShiftLeft:
-                        threshold = 0.5f;
-                        break;
-                    case Key.ControlLeft:
-                        threshold = 0.25f;
-                        break;
-                }
-
+                UpdateThreshold(e);
                 return base.OnKeyDown(e);
             }
-
             protected override bool OnKeyUp(KeyUpEvent e)
             {
-                //Returns to normal
-                threshold = 1;
+                UpdateThreshold(e);
                 return base.OnKeyUp(e);
+            }
+
+            private void UpdateThreshold(KeyboardEvent e)
+            {
+                if (e.ControlPressed)
+                    threshold = 0.25f;
+                else if (e.ShiftPressed)
+                    threshold = 0.5f;
+                else
+                    threshold = 1;
             }
         }
 
         private class NumberedTextBox : ShadowedTextBox
         {
-            protected override bool CanAddCharacter(char character) => char.IsNumber(character) || character == '.' || character == '-';
+            public bool AllowDecimalNumbers = true;
 
-            public NumberedTextBox()
+            protected override bool CanAddCharacter(char character) => char.IsNumber(character) || (AllowDecimalNumbers && character == '.') || character == '-';
+
+            public NumberedTextBox(bool allowDecimalNumbers = true)
             {
                 BackgroundUnfocused = GDEColors.FromHex("262626");
                 BackgroundFocused = GDEColors.FromHex("303030");
                 BackgroundCommit = GDEColors.FromHex("404040");
                 CornerRadius = 0;
+                AllowDecimalNumbers = allowDecimalNumbers;
             }
 
             protected override Drawable GetDrawableCharacter(char c) => new SpriteText

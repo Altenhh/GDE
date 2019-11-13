@@ -1,4 +1,4 @@
-﻿using GDAPI.Utilities.Objects.GeometryDash.LevelObjects;
+﻿using GDAPI.Objects.GeometryDash.LevelObjects;
 using GDE.App.Main.Objects;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -10,11 +10,12 @@ namespace GDE.App.Main.Panels.Object
 {
     public class PropertyEditorFooter : Container
     {
-        public Bindable<GeneralObject> Object;
+        public Bindable<LevelObjectCollection> Objects;
 
-        public PropertyEditorFooter()
+        public PropertyEditorFooter() : this(new Bindable<LevelObjectCollection>()) { }
+        public PropertyEditorFooter(Bindable<LevelObjectCollection> bindable)
         {
-            Object = new Bindable<GeneralObject>();
+            Objects = bindable;
 
             AutoSizeAxes = Axes.Y;
             Width = 800;

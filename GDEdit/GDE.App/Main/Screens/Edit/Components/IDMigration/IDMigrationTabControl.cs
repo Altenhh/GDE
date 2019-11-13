@@ -1,4 +1,5 @@
-﻿using GDAPI.Utilities.Enumerations;
+﻿using GDAPI.Enumerations;
+using GDAPI.Enumerations;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osuTK;

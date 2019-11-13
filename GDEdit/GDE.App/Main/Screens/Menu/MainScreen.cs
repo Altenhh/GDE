@@ -5,7 +5,7 @@ using GDE.App.Main.Overlays;
 using GDE.App.Main.Screens.Menu.Components;
 using GDE.App.Main.Tools;
 using GDAPI.Application;
-using GDAPI.Utilities.Objects.GeometryDash;
+using GDAPI.Objects.GeometryDash.General;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -18,6 +18,7 @@ using osu.Framework.Screens;
 using osuTK;
 using System;
 using System.Collections.Generic;
+using GDAPI.Objects.GeometryDash.General;
 
 namespace GDE.App.Main.Screens.Menu
 {

@@ -4,7 +4,7 @@ using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
 using osuTK.Graphics;
 using System;
-using static GDAPI.Utilities.Functions.General.PathExpansionPack;
+using static GDAPI.Functions.General.PathExpansionPack;
 
 namespace GDE.App.Main.UI
 {

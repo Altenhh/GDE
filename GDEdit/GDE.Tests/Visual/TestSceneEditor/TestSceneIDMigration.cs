@@ -1,8 +1,8 @@
-﻿using GDE.App.Main.Screens.Edit;
+﻿using GDAPI.Enumerations;
+using GDAPI.Objects.General;
+using GDAPI.Objects.GeometryDash.General;
+using GDE.App.Main.Screens.Edit;
 using GDE.App.Main.Screens.Edit.Components;
-using GDAPI.Utilities.Enumerations;
-using GDAPI.Utilities.Objects.General;
-using GDAPI.Utilities.Objects.GeometryDash;
 using osu.Framework.Testing;
 using System;
 using System.Collections.Generic;

@@ -1,5 +1,5 @@
 ﻿using GDE.App.Main.Colors;
-using GDAPI.Utilities.Enumerations;
+using GDAPI.Enumerations;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;

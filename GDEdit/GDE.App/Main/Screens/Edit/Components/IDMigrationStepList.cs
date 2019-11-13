@@ -3,10 +3,10 @@ using GDE.App.Main.Containers.KeyBindingContainers;
 using GDE.App.Main.UI;
 using GDE.App.Main.UI.Containers;
 using GDE.App.Main.UI.FileDialogComponents;
-using GDAPI.Application.Editor;
-using GDAPI.Utilities.Enumerations;
-using GDAPI.Utilities.Functions.Extensions;
-using GDAPI.Utilities.Objects.General;
+using GDAPI.Application.Editors;
+using GDAPI.Enumerations;
+using GDAPI.Functions.Extensions;
+using GDAPI.Objects.General;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using static GDAPI.Utilities.Objects.General.SourceTargetRange;
+using static GDAPI.Objects.General.SourceTargetRange;
 
 namespace GDE.App.Main.Screens.Edit.Components
 {

@@ -1,9 +1,9 @@
 ﻿using GDAPI.Application.Editor;
-using GDAPI.Utilities.Objects.General;
-using GDAPI.Utilities.Objects.GeometryDash;
-using GDAPI.Utilities.Objects.GeometryDash.LevelObjects;
-using GDAPI.Utilities.Objects.GeometryDash.LevelObjects.SpecialObjects;
-using GDAPI.Utilities.Objects.GeometryDash.LevelObjects.Triggers;
+using GDAPI.Objects.General;
+using GDAPI.Objects.GeometryDash.General;
+using GDAPI.Objects.GeometryDash.LevelObjects;
+using GDAPI.Objects.GeometryDash.LevelObjects.SpecialObjects;
+using GDAPI.Objects.GeometryDash.LevelObjects.Triggers;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Testing;

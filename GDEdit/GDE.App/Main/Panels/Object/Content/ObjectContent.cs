@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
-using GDAPI.Utilities.Objects.GeometryDash.LevelObjects;
+using GDAPI.Objects.GeometryDash.LevelObjects;
 using GDE.App.Main.UI;
 using GDE.App.Main.UI.Shadowed;
 using JetBrains.Annotations;
@@ -12,10 +12,9 @@ namespace GDE.App.Main.Panels.Object.Content
 {
     public class ObjectContent : GeneralContent
     {
-        private GeneralObject obj;
+        private LevelObjectCollection selectedObjects;
 
-        public ObjectContent(GeneralObject obj) =>
-            this.obj = obj;
+        public ObjectContent(LevelObjectCollection objects) => selectedObjects = objects;
 
         protected override Drawable[,] CreateContent()
         {
@@ -26,19 +25,21 @@ namespace GDE.App.Main.Panels.Object.Content
 
             int cellIndex = 0;
 
-            var posXBind = new BindableDouble(obj?.X ?? 0);
-            var posYBind = new BindableDouble(obj?.Y ?? 0);
+            var objectIDBind = new BindableDouble(selectedObjects.CommonObjectID);
 
-            var rotBind = new BindableDouble(obj?.Rotation ?? 0) { MinValue = 0, MaxValue = 360 };
-            var scaBind = new BindableDouble(obj?.Scaling ?? 0);
+            var posXBind = new BindableDouble(selectedObjects.CommonX);
+            var posYBind = new BindableDouble(selectedObjects.CommonY);
+
+            var rotBind = new BindableDouble(selectedObjects.CommonRotation) { MinValue = 0, MaxValue = 360 };
+            var scaBind = new BindableDouble(selectedObjects.CommonScaling);
             
-            var zOrdBind = new BindableDouble(obj?.ZOrder ?? 0) { MinValue = 0, MaxValue = double.MaxValue };
-            var zLayBind = new BindableDouble(obj?.ZLayer ?? 0) { MinValue = 0, MaxValue = double.MaxValue };
+            var zOrdBind = new BindableDouble(selectedObjects.CommonZOrder) { MinValue = 0, MaxValue = double.MaxValue };
+            var zLayBind = new BindableDouble(selectedObjects.CommonZLayer) { MinValue = 0, MaxValue = double.MaxValue };
             
-            var ed1Bind = new BindableDouble(obj?.EL1 ?? 0) { MinValue = 0, MaxValue = double.MaxValue };
-            var ed2Bind = new BindableDouble(obj?.EL2 ?? 0) { MinValue = 0, MaxValue = double.MaxValue };
+            var ed1Bind = new BindableDouble(selectedObjects.CommonEL1) { MinValue = 0, MaxValue = double.MaxValue };
+            var ed2Bind = new BindableDouble(selectedObjects.CommonEL2) { MinValue = 0, MaxValue = double.MaxValue };
             
-            var lgiBind = new BindableDouble(obj?.LinkedGroupID ?? 0);
+            var lgiBind = new BindableDouble(selectedObjects.CommonLinkedGroupID);
 
             var position = CreateDrawable(Name = "Position", "X", posXBind, "Y", posYBind);
             var rotation = CreateDrawable(Name = "Rotation", null, rotBind);
@@ -71,11 +72,11 @@ namespace GDE.App.Main.Panels.Object.Content
             {
                 new SpriteText { Text = title, Anchor = Anchor.CentreRight, Origin = Anchor.CentreRight },
                 new SpriteText { Text = extra1, Anchor = Anchor.CentreRight, Origin = Anchor.CentreRight },
-                new GDENumberTextBox { Bindable = value, Anchor = Anchor.CentreLeft, Origin = Anchor.CentreLeft, X = 20, Width = 125 },
+                new GDENumberTextBox { Anchor = Anchor.CentreLeft, Origin = Anchor.CentreLeft, X = 20, Width = 125 },
                 new SpriteText { Text = extra2, Anchor = Anchor.CentreRight, Origin = Anchor.CentreRight }
             };
             if (extra1 != null)
-                drawables.Add(new GDENumberTextBox { Bindable = value1, Anchor = Anchor.CentreLeft, Origin = Anchor.CentreLeft, X = 20, Width = 125 });
+                drawables.Add(new GDENumberTextBox { Anchor = Anchor.CentreLeft, Origin = Anchor.CentreLeft, X = 20, Width = 125 });
 
             return drawables.ToArray();
         }
@@ -88,11 +89,11 @@ namespace GDE.App.Main.Panels.Object.Content
             drawables = new List<Drawable>();
 
             drawables.Add(title);
-            drawables.Add(new GDENumberTextBox { Bindable = value });
+            drawables.Add(new GDENumberTextBox());
             drawables.Add(extra1);
-            drawables.Add(extra1 != null ? new GDENumberTextBox { Bindable = value1 } : null);
+            drawables.Add(extra1 != null ? new GDENumberTextBox() : null);
             drawables.Add(extra2);
-            drawables.Add(extra2 != null ? new GDENumberTextBox { Bindable = value2 } : null);
+            drawables.Add(extra2 != null ? new GDENumberTextBox() : null);
 
             return drawables.ToArray();
         }

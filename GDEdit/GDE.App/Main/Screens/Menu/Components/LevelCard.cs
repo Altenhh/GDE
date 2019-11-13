@@ -1,6 +1,6 @@
 ﻿using GDE.App.Main.Colors;
 using GDAPI.Application;
-using GDAPI.Utilities.Objects.GeometryDash;
+using GDAPI.Objects.GeometryDash.General;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;

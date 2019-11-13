@@ -3,8 +3,8 @@ using GDE.App.Main.Levels;
 using GDE.App.Main.Objects;
 using GDE.App.Main.UI;
 using GDAPI.Application;
-using GDAPI.Application.Editor;
-using GDAPI.Utilities.Objects.GeometryDash;
+using GDAPI.Application.Editors;
+using GDAPI.Objects.GeometryDash.General;
 using GDE.App.Main.Panels;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -24,17 +24,9 @@ namespace GDE.App.Main.Screens.Edit.Components
         private GDEButton addObject;
         private GDEButton deleteSelectedObjects;
         private ObjectAdditionPanel panel;
-        private Database database;
-        private Level level => database.UserLevels[0];
 
         public int CurrentSelectedObjectID => panel.SelectedObjectID;
         public readonly BindableBool AbleToPlaceBlock = new BindableBool();
-
-        [BackgroundDependencyLoader]
-        private void load(DatabaseCollection databases)
-        {
-            database = databases[0];
-        }
 
         public EditorTools(LevelPreview level, Camera camera, ObjectPropertyEditor propertyEditor)
         {
@@ -98,8 +90,8 @@ namespace GDE.App.Main.Screens.Edit.Components
                             Action = () =>
                             {
                                 propertyEditor.ToggleVisibility();
-                                propertyEditor.ObjectBindable.Value = ObjectBase.DrawableSelectedObjects[0].LevelObject;
-                                propertyEditor.ObjectBindable.TriggerChange();
+                                propertyEditor.SelectedObjects.Value = editor.SelectedObjects;
+                                propertyEditor.SelectedObjects.TriggerChange();
                             },
                             Text = "Edit Object",
                             BackgroundColour = GDEColors.FromHex("2f2f2f"),

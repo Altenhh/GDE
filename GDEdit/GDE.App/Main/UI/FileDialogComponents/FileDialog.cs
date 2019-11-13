@@ -1,6 +1,6 @@
 ﻿using GDE.App.Main.Containers.KeyBindingContainers;
 using GDE.App.Main.Panels;
-using GDAPI.Utilities.Enumerations;
+using GDAPI.Enumerations;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -11,7 +11,7 @@ using osuTK;
 using System;
 using System.IO;
 using static GDE.App.Main.Colors.GDEColors;
-using static GDAPI.Utilities.Functions.General.PathExpansionPack;
+using static GDAPI.Functions.General.PathExpansionPack;
 using static System.Environment;
 using static System.Environment.SpecialFolder;
 using static System.IO.Directory;

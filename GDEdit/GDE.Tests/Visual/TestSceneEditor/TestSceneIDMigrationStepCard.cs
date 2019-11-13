@@ -1,5 +1,5 @@
 ﻿using GDE.App.Main.Screens.Edit.Components;
-using GDAPI.Utilities.Objects.General;
+using GDAPI.Objects.General;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Testing;
