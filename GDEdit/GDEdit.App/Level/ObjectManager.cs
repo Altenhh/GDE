@@ -7,9 +7,9 @@ namespace GDEdit.App.Level
 {
     public static class ObjectManager
     {
-        private static readonly IGDObject[] objectClasses = 
+        private static readonly GDObject[] objectClasses = 
         {
-            new GDObject()
+            new Sawblade(), 
         };
             
         public static Drawable GetAppropriateObject(int id, TextureStore store)
@@ -17,7 +17,7 @@ namespace GDEdit.App.Level
             foreach (var objClass in objectClasses)
             {
                 if (id == objClass.ID)
-                    return objClass.CreateDrawable();
+                    return objClass.CreateDrawable(store);
             }
             
             // Defaults to the normal 30x30 square texture
@@ -25,7 +25,8 @@ namespace GDEdit.App.Level
             
             return new Sprite
                    {
-                       Texture = texture
+                       Texture = texture,
+                       Name = id.ToString()
                    };
         }
     }
