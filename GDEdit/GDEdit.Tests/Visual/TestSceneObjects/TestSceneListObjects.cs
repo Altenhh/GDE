@@ -1,4 +1,7 @@
-﻿using GDEdit.App.Level;
+﻿using System;
+using System.Collections.Generic;
+using GDEdit.App.Level;
+using GDEdit.App.Level.Object;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -9,6 +12,13 @@ namespace GDEdit.Tests.Visual.TestSceneObjects
 {
     public class TestSceneListObjects : TestScene
     {
+        public override IReadOnlyList<Type> RequiredTypes => new[]
+        {
+            typeof(GDObject),
+            typeof(ObjectManager),
+            typeof(Sawblade)
+        };
+
         [Resolved]
         private TextureStore Textures { get; set; }
         
