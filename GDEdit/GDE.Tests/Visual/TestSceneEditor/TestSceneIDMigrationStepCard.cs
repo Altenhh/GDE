@@ -1,18 +1,18 @@
-﻿using GDE.App.Main.Screens.Edit.Components;
-using GDAPI.Utilities.Objects.General;
+﻿using System;
+using System.Collections.Generic;
+using GDAPI.Objects.General;
+using GDE.App.Main.Screens.Edit.Components;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Testing;
-using System;
-using System.Collections.Generic;
 
 namespace GDE.Tests.Visual.TestSceneEditor
 {
     public class TestSceneIDMigrationStepCard : TestScene
     {
-        private IDMigrationStepCard card;
+        private readonly IDMigrationStepCard card;
 
-        public override IReadOnlyList<Type> RequiredTypes => new Type[] { typeof(IDMigrationStepCard) };
+        public override IReadOnlyList<Type> RequiredTypes => new[] {typeof(IDMigrationStepCard)};
 
         public TestSceneIDMigrationStepCard()
         {
@@ -21,7 +21,7 @@ namespace GDE.Tests.Visual.TestSceneEditor
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
                 Width = 0.5f,
-                Index = 0,
+                Index = 0
             };
             card.CardClicked += (c, e) => c.ToggleSelection();
             Add(card);
@@ -30,7 +30,9 @@ namespace GDE.Tests.Visual.TestSceneEditor
             AddAssert("Check index is 0", () => card.Index == 0);
             AddStep("Set index to 3", () => card.Index = 3);
             AddAssert("Check index is 3", () => card.Index == 3);
-            AddStep("Set index to 9999", () => card.Index = 9999); // Something needs to be done so that text does not overflow out of the index box
+            AddStep("Set index to 9999",
+                () => card.Index =
+                    9999); // Something needs to be done so that text does not overflow out of the index box
             AddAssert("Check index is 9999", () => card.Index == 9999);
             AddStep("Set index to 69", () => card.Index = 69);
             AddAssert("Check index is 69", () => card.Index == 69);

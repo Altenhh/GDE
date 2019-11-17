@@ -1,13 +1,11 @@
 ﻿//Code copied from https://github.com/ppy/osu-framework/pull/2255
 
-using osu.Framework.Bindables;
-using osu.Framework.Graphics.Containers;
-using osu.Framework.Graphics.UserInterface;
-using osu.Framework.Input.Events;
-using osuTK.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using osu.Framework.Bindables;
+using osu.Framework.Graphics.Containers;
+using osu.Framework.Input.Events;
 
 namespace GDE.App.Main.UI
 {
@@ -15,6 +13,14 @@ namespace GDE.App.Main.UI
     {
         private readonly FillFlowContainer<Breadcrumb> fillFlowContainer;
         private readonly BindableList<T> items = new BindableList<T>();
+
+        protected BreadcrumbNavigation()
+        {
+            fillFlowContainer = CreateAndAddFillFlowContainer();
+
+            items.ItemsAdded += ItemsChanged;
+            items.ItemsRemoved += ItemsChanged;
+        }
 
         /// <summary>The items displayed in the breadcrumb navigation.</summary>
         public BindableList<T> Items
@@ -24,14 +30,6 @@ namespace GDE.App.Main.UI
         }
 
         public event Action<T> BreadcrumbClicked;
-
-        protected BreadcrumbNavigation()
-        {
-            fillFlowContainer = CreateAndAddFillFlowContainer();
-
-            items.ItemsAdded += ItemsChanged;
-            items.ItemsRemoved += ItemsChanged;
-        }
 
         protected virtual void ItemsChanged(IEnumerable<T> changeset)
         {
@@ -43,18 +41,15 @@ namespace GDE.App.Main.UI
             fillFlowContainer.AddRange(items.Select(val =>
             {
                 var breadcrumb = CreateBreadcrumb(val);
-                breadcrumb.Clicked += HandleBreadcrumbClicked;
-                breadcrumb.RightClicked += HandleBreadcrumbRightClicked;
+                breadcrumb.Selected += HandleBreadcrumbSelected;
                 return breadcrumb;
             }));
-
-            fillFlowContainer.Children.Last().Current.Value = true;
         }
 
         /// <summary>
-        /// Override this method for customising the design of the breadcrumb.
-        /// remember to set
-        /// <code>
+        ///     Override this method for customising the design of the breadcrumb.
+        ///     remember to set
+        ///     <code>
         ///    AutoSizeAxes = Axes.X,
         ///    RelativeSizeAxes = Axes.Y,
         /// </code>
@@ -65,14 +60,9 @@ namespace GDE.App.Main.UI
         /// <summary>Creates and adds the FillFlowContainer that contains all breadcrumbs.</summary>
         protected abstract FillFlowContainer<Breadcrumb> CreateAndAddFillFlowContainer();
 
-        private void HandleBreadcrumbClicked(Breadcrumb breadcrumb)
+        private void HandleBreadcrumbSelected(Breadcrumb breadcrumb)
         {
             UpdateItems(fillFlowContainer.Children.ToList().IndexOf(breadcrumb));
-            BreadcrumbClicked?.Invoke(breadcrumb.Value);
-        }
-        private void HandleBreadcrumbRightClicked(Breadcrumb breadcrumb)
-        {
-            UpdateItems(fillFlowContainer.Children.ToList().IndexOf(breadcrumb) - 1);
             BreadcrumbClicked?.Invoke(breadcrumb.Value);
         }
 
@@ -82,48 +72,31 @@ namespace GDE.App.Main.UI
         {
             if (newIndex > Items.Count - 1)
                 throw new IndexOutOfRangeException($"Could not find an appropriate item for the index {newIndex}");
-            if (newIndex < -1)
-                throw new IndexOutOfRangeException("The index can not be below -1.");
+            if (newIndex < 0)
+                throw new IndexOutOfRangeException("The index can not be below 0.");
 
             if (newIndex + 1 == Items.Count)
                 return;
 
             Items.RemoveRange(newIndex + 1, Items.Count - newIndex - 1);
-
-            if (fillFlowContainer.Count > 0)
-                fillFlowContainer.Children.Last().Current.Value = true;
         }
 
-        protected abstract class Breadcrumb : CompositeDrawable, IHasCurrentValue<bool>
+        protected abstract class Breadcrumb : CompositeDrawable
         {
-            private readonly Bindable<bool> current = new Bindable<bool>();
-
-            public Bindable<bool> Current
+            protected Breadcrumb(T value)
             {
-                get => current;
-                set => current.BindTo(value);
+                Value = value;
             }
-
-            // Fixes last breadcrumb acting as it is not there
-            public override bool AcceptsFocus => true;
 
             public T Value { get; }
 
-            public event Action<Breadcrumb> Clicked;
-            public event Action<Breadcrumb> RightClicked;
+            public event Action<Breadcrumb> Selected;
 
-            protected Breadcrumb(T value) => Value = value;
-
-            protected override bool OnMouseDown(MouseDownEvent e) => true;
-            protected override bool OnMouseUp(MouseUpEvent e)
+            protected override bool OnClick(ClickEvent e)
             {
-                if (e.Button == MouseButton.Right)
-                    RightClicked?.Invoke(this);
-                else
-                    Clicked?.Invoke(this);
+                Selected?.Invoke(this);
                 return true;
             }
-            protected override bool OnClick(ClickEvent e) => true;
         }
     }
 }

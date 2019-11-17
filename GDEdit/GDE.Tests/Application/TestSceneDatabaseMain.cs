@@ -1,11 +1,11 @@
-﻿using GDAPI.Application;
-using GDAPI.Utilities.Objects.GeometryDash;
+﻿using System.Threading.Tasks;
+using GDAPI.Application;
+using GDAPI.Objects.GeometryDash.General;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Testing;
-using System.Threading.Tasks;
 
 namespace GDE.Tests.Application
 {
@@ -13,7 +13,12 @@ namespace GDE.Tests.Application
     {
         private Database database;
         private LevelCollection levels;
-        private SpriteText name, description, revision, version, objectCount, length;
+        private readonly SpriteText name;
+        private readonly SpriteText description;
+        private readonly SpriteText revision;
+        private readonly SpriteText version;
+        private readonly SpriteText objectCount;
+        private readonly SpriteText length;
         private bool finishedLoading;
 
         public TestSceneDatabaseMain()
@@ -30,35 +35,35 @@ namespace GDE.Tests.Application
                         name = new SpriteText
                         {
                             RelativeSizeAxes = Axes.X,
-                            Font = new FontUsage(size: 40),
+                            Font = new FontUsage(size: 40)
                         },
                         description = new SpriteText
                         {
                             RelativeSizeAxes = Axes.X,
-                            Font = new FontUsage(size: 15),
+                            Font = new FontUsage(size: 15)
                         },
                         revision = new SpriteText
                         {
                             RelativeSizeAxes = Axes.X,
-                            Font = new FontUsage(size: 20),
+                            Font = new FontUsage(size: 20)
                         },
                         version = new SpriteText
                         {
                             RelativeSizeAxes = Axes.X,
-                            Font = new FontUsage(size: 20),
+                            Font = new FontUsage(size: 20)
                         },
                         objectCount = new SpriteText
                         {
                             RelativeSizeAxes = Axes.X,
-                            Font = new FontUsage(size: 20),
+                            Font = new FontUsage(size: 20)
                         },
                         length = new SpriteText
                         {
                             RelativeSizeAxes = Axes.X,
-                            Font = new FontUsage(size: 20),
-                        },
+                            Font = new FontUsage(size: 20)
+                        }
                     }
-                },
+                }
             };
         }
 
@@ -83,8 +88,11 @@ namespace GDE.Tests.Application
                     length.Text = $"Length: {level.Length}";
                 }
                 else
+                {
                     name.Text = "No levels";
+                }
             }
+
             if (!finishedLoading)
                 name.Text = "Loading";
 

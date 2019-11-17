@@ -1,17 +1,17 @@
-﻿using GDAPI.Application;
-using GDAPI.Utilities.Objects.GeometryDash;
+﻿using System.Threading.Tasks;
+using GDAPI.Application;
+using GDAPI.Objects.GeometryDash.General;
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Testing;
-using System.Threading.Tasks;
 
 namespace GDE.Tests.Visual.TestSceneLevel
 {
     public class TestSceneLoadLevel : TestScene
     {
         private Database database;
-        private SpriteText levelName;
+        private readonly SpriteText levelName;
         private LevelCollection levels;
         private bool finishedLoading;
 
@@ -23,7 +23,7 @@ namespace GDE.Tests.Visual.TestSceneLevel
                 {
                     RelativeSizeAxes = Axes.Both,
                     AllowMultiline = true,
-                    Font = new FontUsage(size: 40),
+                    Font = new FontUsage(size: 40)
                 }
             };
         }

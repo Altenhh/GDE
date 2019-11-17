@@ -1,5 +1,5 @@
-﻿using GDE.App.Main.Objects;
-using GDAPI.Utilities.Objects.GeometryDash.LevelObjects;
+﻿using GDAPI.Objects.GeometryDash.LevelObjects;
+using GDE.App.Main.Objects;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Testing;
@@ -10,7 +10,7 @@ namespace GDE.Tests.Visual.TestSceneLevel
 {
     public class TestSceneObject : TestScene
     {
-        private ObjectBase obj;
+        private readonly ObjectBase obj;
 
         public TestSceneObject()
         {
