@@ -2,6 +2,7 @@
 using GDE.App.Main.Colors;
 using GDE.App.Main.Panels.Object;
 using GDE.App.Main.Panels.Object.Content;
+using GDE.App.Main.Panels.Object.Content.PropertyEditorTabContents;
 using GDE.App.Main.Panels.Object.Tabs;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -16,11 +17,13 @@ namespace GDE.App.Main.Panels
 {
     public class ObjectPropertyEditor : Panel
     {
-        private CompositeDrawable content;
+        private PropertyEditorTabContent content;
         private PropertyEditorHeader header;
         private PropertyEditorFooter footer;
         private PropertyEditorTabControl tabControl;
         private FillFlowContainer fillFlow;
+
+        private BindableBool deltaModeBindable;
 
         protected override string Name => "Object Property Editor";
 
@@ -76,19 +79,6 @@ namespace GDE.App.Main.Panels
                         }
                     }
                 };
-
-                fillFlow.Children = new Drawable[]
-                {
-                    header = new PropertyEditorHeader
-                    {
-                        Objects = SelectedObjects
-                    },
-                    content = new ObjectContent(SelectedObjects.Value),
-                    footer = new PropertyEditorFooter
-                    {
-                        Objects = SelectedObjects
-                    },
-                };
             };
 
             SelectedObjects.TriggerChange();
@@ -103,7 +93,7 @@ namespace GDE.App.Main.Panels
                 new PropertyEditorTab
                 {
                     Icon = FontAwesome.Regular.Square,
-                    Tab = TabEnumeration.General
+                    Tab = PropertyEditorTabType.General
                 }
             };
 
@@ -114,18 +104,35 @@ namespace GDE.App.Main.Panels
             tabControl.Current.ValueChanged += value =>
             {
                 Console.WriteLine(value.NewValue.Tab.ToString());
-                switch (value.NewValue.Tab)
-                {
-                    case TabEnumeration.General:
-                        fillFlow.Children = new Drawable[]
-                        {
-                            header = new PropertyEditorHeader(SelectedObjects),
-                            content = new ObjectContent(SelectedObjects.Value),
-                            footer = new PropertyEditorFooter(SelectedObjects),
-                        };
-                        break;
-                }
+                fillFlow.Children = GetContent(value.NewValue.Tab);
             };
+
+            deltaModeBindable = new BindableBool { BindTarget = header.DeltaMode };
+        }
+
+        private Drawable[] GetContent(PropertyEditorTabType type)
+        {
+            switch (type)
+            {
+                case PropertyEditorTabType.Other:
+                    return new Drawable[]
+                    {
+                        // ...
+                    };
+                case PropertyEditorTabType.Special:
+                    return new Drawable[]
+                    {
+                        // ...
+                    };
+                case PropertyEditorTabType.General:
+                default:
+                    return new Drawable[]
+                    {
+                         header = new PropertyEditorHeader(SelectedObjects),
+                         content = new PropertyEditorGeneralTabContent(SelectedObjects.Value, deltaModeBindable),
+                         footer = new PropertyEditorFooter(SelectedObjects),
+                    };
+            }
         }
     }
 }

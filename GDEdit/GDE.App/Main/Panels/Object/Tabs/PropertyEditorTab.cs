@@ -5,10 +5,10 @@ namespace GDE.App.Main.Panels.Object.Tabs
     public class PropertyEditorTab
     {
         public IconUsage Icon { get; set; }
-        public TabEnumeration Tab { get; set; }
+        public PropertyEditorTabType Tab { get; set; }
     }
 
-    public enum TabEnumeration
+    public enum PropertyEditorTabType
     {
         General,
         Special,

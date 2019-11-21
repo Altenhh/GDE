@@ -12,10 +12,6 @@ namespace GDE.App.Main.Panels.Object
 {
     public class PropertyEditorTabControl : TabControl<PropertyEditorTab>
     {
-        //We dont want to handle any dropdown.
-        protected override Dropdown<PropertyEditorTab> CreateDropdown() => null;
-
-        protected override TabItem<PropertyEditorTab> CreateTabItem(PropertyEditorTab value) => new PropertyEditorTabItem(value);
 
         public PropertyEditorTabControl()
         {
@@ -31,6 +27,10 @@ namespace GDE.App.Main.Panels.Object
                 Colour = GDEColors.FromHex("2B2B2B")
             });
         }
+
+        // We dont want to handle any dropdown.
+        protected override Dropdown<PropertyEditorTab> CreateDropdown() => null;
+        protected override TabItem<PropertyEditorTab> CreateTabItem(PropertyEditorTab value) => new PropertyEditorTabItem(value);
 
         private class PropertyEditorTabItem : TabItem<PropertyEditorTab>
         {

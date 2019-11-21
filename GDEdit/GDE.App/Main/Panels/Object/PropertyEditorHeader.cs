@@ -14,9 +14,10 @@ namespace GDE.App.Main.Panels.Object
         private ObjectBase drawableObject;
 
         private Bindable<string> name = new Bindable<string>();
-        private BindableBool deltaMode = new BindableBool();
 
         public Bindable<LevelObjectCollection> Objects;
+
+        public readonly BindableBool DeltaMode = new BindableBool();
 
         public PropertyEditorHeader() : this(new Bindable<LevelObjectCollection>()) { }
         public PropertyEditorHeader(Bindable<LevelObjectCollection> bindable)
@@ -63,7 +64,7 @@ namespace GDE.App.Main.Panels.Object
                     Anchor = Anchor.TopRight,
                     Origin = Anchor.TopRight,
                     LabelText = "δ Mode",
-                    Bindable = deltaMode
+                    Bindable = DeltaMode
                 }
             });
         }
