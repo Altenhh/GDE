@@ -15,7 +15,7 @@ namespace GDE.App.Main.Panels.Object.Components
         public PropertyEditorGroup(string groupTitle)
         {
             RelativeSizeAxes = Axes.X;
-            Height = 30;
+            AutoSizeAxes = Axes.Y;
 
             Add(GroupTitle = new SpriteText
             {

@@ -16,6 +16,9 @@ namespace GDE.App.Main.Panels.Object.Content.PropertyEditorTabContents
             if (deltaModeBindable == null)
                 deltaModeBindable = new BindableBool();
             
+            RelativeSizeAxes = Axes.X;
+            AutoSizeAxes = Axes.Y;
+            
             SelectedObjects = objects;
             AddRangeInternal(CreateContent());
             var groups = GetGroups();
