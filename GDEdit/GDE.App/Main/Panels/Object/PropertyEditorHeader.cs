@@ -1,4 +1,5 @@
-﻿using GDAPI.Objects.GeometryDash.LevelObjects;
+﻿using System;
+using GDAPI.Objects.GeometryDash.LevelObjects;
 using GDE.App.Main.Objects;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -14,6 +15,8 @@ namespace GDE.App.Main.Panels.Object
         private ObjectBase drawableObject;
 
         private Bindable<string> name = new Bindable<string>();
+
+        private FillFlowContainer container;
 
         public Bindable<LevelObjectCollection> Objects;
 
@@ -33,22 +36,13 @@ namespace GDE.App.Main.Panels.Object
         {
             AddRange(new Drawable[]
             {
-                new FillFlowContainer
+                container = new FillFlowContainer
                 {
                     Direction = FillDirection.Horizontal,
                     AutoSizeAxes = Axes.Both,
                     Spacing = new Vector2(5, 0),
                     Children = new Drawable[]
                     {
-                        drawableObject = new ObjectBase(Objects.Value.FirstOrDefault())
-                        {
-                            Size = new Vector2(50),
-                            Anchor = Anchor.TopLeft,
-                            Origin = Anchor.TopLeft,
-                            // Resets values to avoid causing problems
-                            Position = new Vector2(0),
-                            Scale = new Vector2(1)
-                        },
                         new FillFlowContainer
                         {
                             /*new EditableTextBox
@@ -67,6 +61,19 @@ namespace GDE.App.Main.Panels.Object
                     Bindable = DeltaMode
                 }
             });
+            
+            if (Objects.Value.Any())
+                container.Add(drawableObject = new ObjectBase(Objects.Value.FirstOrDefault())
+                {
+                    Size = new Vector2(50),
+                    Anchor = Anchor.TopLeft,
+                    Origin = Anchor.TopLeft,
+                    // Resets values to avoid causing problems
+                    Position = new Vector2(0),
+                    Scale = new Vector2(1)
+                });
+
+            Console.WriteLine("h");
         }
     }
 }

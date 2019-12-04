@@ -12,6 +12,8 @@ using osu.Framework.Graphics.Sprites;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NuGet;
+using osu.Framework.Allocation;
 
 namespace GDE.App.Main.Panels
 {
@@ -83,10 +85,26 @@ namespace GDE.App.Main.Panels
 
             SelectedObjects.TriggerChange();
         }
-        protected override void LoadComplete()
-        {
-            base.LoadComplete();
 
+        protected override void LoadAsyncComplete()
+        {
+            base.LoadAsyncComplete();
+            
+            header = new PropertyEditorHeader(SelectedObjects);
+            content = new PropertyEditorGeneralTabContent(SelectedObjects.Value, deltaModeBindable);
+            footer = new PropertyEditorFooter(SelectedObjects);
+            
+            fillFlow.AddRange(new Drawable[]
+            {
+                header,
+                content,
+                footer
+            });
+
+            header.OnLoadComplete += load => { Console.WriteLine("Header loaded"); };
+            content.OnLoadComplete += load => { Console.WriteLine("content loaded"); };
+            footer.OnLoadComplete += load => { Console.WriteLine("footer loaded"); };
+            
             var list = new List<PropertyEditorTab>()
             {
                 //TODO: Import custom icons to use
@@ -96,6 +114,8 @@ namespace GDE.App.Main.Panels
                     Tab = PropertyEditorTabType.General
                 }
             };
+            
+            deltaModeBindable = new BindableBool { BindTarget = header.DeltaMode };
 
             foreach (var item in list)
                 tabControl.AddItem(item);
@@ -106,8 +126,6 @@ namespace GDE.App.Main.Panels
                 Console.WriteLine(value.NewValue.Tab.ToString());
                 fillFlow.Children = GetContent(value.NewValue.Tab);
             };
-
-            deltaModeBindable = new BindableBool { BindTarget = header.DeltaMode };
         }
 
         private Drawable[] GetContent(PropertyEditorTabType type)
@@ -124,13 +142,10 @@ namespace GDE.App.Main.Panels
                     {
                         // ...
                     };
-                case PropertyEditorTabType.General:
                 default:
                     return new Drawable[]
                     {
-                         header = new PropertyEditorHeader(SelectedObjects),
-                         content = new PropertyEditorGeneralTabContent(SelectedObjects.Value, deltaModeBindable),
-                         footer = new PropertyEditorFooter(SelectedObjects),
+                         // Since we already have it initialized before, we dont need to initialize it again.
                     };
             }
         }

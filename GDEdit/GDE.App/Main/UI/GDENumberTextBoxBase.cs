@@ -17,7 +17,7 @@ namespace GDE.App.Main.UI
     public abstract class GDENumberTextBoxBase<T> : Container, IHasCurrentValue<T>
         where T : struct, IComparable, IComparable<T>, IConvertible
     {
-        private BindableBool mixedValue;
+        private BindableBool mixedValue = new BindableBool();
 
         protected bool IsMixedCommonValue
         {
