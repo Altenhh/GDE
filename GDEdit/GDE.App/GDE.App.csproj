@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GDAPI" Version="1.1.6" />
+    <PackageReference Include="GDAPI" Version="1.1.7" />
     <PackageReference Include="ppy.squirrel.windows" Version="1.9.0.4" />
     <PackageReference Include="ppy.osu.Framework" Version="2019.823.0" />
     <PackageReference Include="SharpRaven" Version="2.4.1-unstable0015" />
