@@ -23,7 +23,7 @@ namespace GDE.App.Main.Panels
         private PropertyEditorHeader header;
         private PropertyEditorFooter footer;
         private PropertyEditorTabControl tabControl;
-        private TestFillFlowContainer fillFlow;
+        private FillFlowContainer fillFlow;
 
         private BindableBool deltaModeBindable;
 
@@ -70,7 +70,7 @@ namespace GDE.App.Main.Panels
                                         Width = 30,
                                         AutoSort = true,
                                     },
-                                    fillFlow = new TestFillFlowContainer
+                                    fillFlow = new FillFlowContainer
                                     {
                                         Direction = FillDirection.Vertical,
                                         AutoSizeAxes = Axes.Both,
@@ -81,10 +81,6 @@ namespace GDE.App.Main.Panels
                                         },
                                         Children = new Drawable[]
                                         {
-                                            new Box
-                                            {
-                                                Size = new Vector2(20, 50),
-                                            },
                                             header = new PropertyEditorHeader(SelectedObjects),
                                             content = new PropertyEditorGeneralTabContent(SelectedObjects.Value, deltaModeBindable),
                                             footer = new PropertyEditorFooter(SelectedObjects),
@@ -100,30 +96,9 @@ namespace GDE.App.Main.Panels
             SelectedObjects.TriggerChange();
         }
 
-        private class TestFillFlowContainer : FillFlowContainer
-        {
-            public override void Add(Drawable drawable)
-            {
-                base.Add(drawable);
-                Console.WriteLine($"Added a drawable ({nameof(drawable)})");
-            }
-        }
-        
         protected override void LoadComplete()
         {
             base.LoadComplete();
-
-            fillFlow.Add(new Box
-            {
-                Size = new Vector2(20, 50)
-            });
-            
-            fillFlow.AddRange(new Drawable[]
-            {
-                header = new PropertyEditorHeader(SelectedObjects),
-                content = new PropertyEditorGeneralTabContent(SelectedObjects.Value, deltaModeBindable),
-                footer = new PropertyEditorFooter(SelectedObjects),
-            });
 
             var list = new List<PropertyEditorTab>
             {
@@ -142,7 +117,7 @@ namespace GDE.App.Main.Panels
             tabControl.Current.ValueChanged += value =>
             {
                 Console.WriteLine(value.NewValue.Tab.ToString());
-                //fillFlow.WithChildren(GetContent(value.NewValue.Tab));
+                fillFlow.Children = GetContent(value.NewValue.Tab);
             };
             
             tabControl.Current.TriggerChange();

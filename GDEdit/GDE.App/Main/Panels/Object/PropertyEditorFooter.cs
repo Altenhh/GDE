@@ -91,8 +91,6 @@ namespace GDE.App.Main.Panels.Object
                     }
                 }
             });
-
-            Console.WriteLine("h3");
         }
     }
 }

@@ -75,8 +75,6 @@ namespace GDE.App.Main.Panels.Object
                     Position = new Vector2(0),
                     Scale = new Vector2(1)
                 });
-
-            Console.WriteLine("h");
         }
     }
 }
