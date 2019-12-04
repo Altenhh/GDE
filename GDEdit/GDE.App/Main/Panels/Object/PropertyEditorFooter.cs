@@ -1,4 +1,5 @@
-﻿using GDAPI.Objects.GeometryDash.LevelObjects;
+﻿using System;
+using GDAPI.Objects.GeometryDash.LevelObjects;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -90,6 +91,8 @@ namespace GDE.App.Main.Panels.Object
                     }
                 }
             });
+
+            Console.WriteLine("h3");
         }
     }
 }

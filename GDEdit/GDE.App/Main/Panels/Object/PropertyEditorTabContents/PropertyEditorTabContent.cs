@@ -1,4 +1,5 @@
-﻿using GDAPI.Objects.GeometryDash.LevelObjects;
+﻿using System;
+using GDAPI.Objects.GeometryDash.LevelObjects;
 using GDE.App.Main.Panels.Object.Components;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
@@ -24,6 +25,8 @@ namespace GDE.App.Main.Panels.Object.Content.PropertyEditorTabContents
                 if (group is IDeltable d)
                     d.InitializeDeltaModeBindable(deltaModeBindable);
             }
+
+            Console.WriteLine("h2");
         }
 
         protected abstract PropertyEditorGroup[] GetGroups();
