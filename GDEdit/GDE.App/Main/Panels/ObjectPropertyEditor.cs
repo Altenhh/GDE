@@ -29,6 +29,8 @@ namespace GDE.App.Main.Panels
 
         protected override string Name => "Object Property Editor";
 
+        protected override bool DisposeOnClose => true;
+
         public Bindable<LevelObjectCollection> SelectedObjects;
 
         public ObjectPropertyEditor(LevelObjectCollection objects)
