@@ -111,8 +111,7 @@ namespace GDE.App.Main.Screens.Menu.Components
                                 Anchor = Anchor.Centre,
                                 Origin = Anchor.Centre,
                                 Text = "There doesn't seem to be anything here...",
-                                Font = @"OpenSans",
-                                TextSize = 24,
+                                Font = new FontUsage(@"OpenSans", 24),
                                 Colour = GDEColors.FromHex("666666")
                             },
                             new GDEButton

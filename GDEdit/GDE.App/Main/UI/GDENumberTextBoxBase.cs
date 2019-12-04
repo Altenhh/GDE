@@ -15,9 +15,9 @@ using System;
 namespace GDE.App.Main.UI
 {
     public abstract class GDENumberTextBoxBase<T> : Container, IHasCurrentValue<T>
-        where T : struct, IComparable, IComparable<T>, IConvertible
+        where T : struct, IComparable<T>, IConvertible, IEquatable<T>
     {
-        private BindableBool mixedValue;
+        private BindableBool mixedValue = new BindableBool();
 
         protected bool IsMixedCommonValue
         {

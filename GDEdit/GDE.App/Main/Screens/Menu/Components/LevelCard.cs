@@ -58,13 +58,13 @@ namespace GDE.App.Main.Screens.Menu.Components
                         levelName = new SpriteText
                         {
                             Text = Level.Value?.Name ?? "Unknown Name",
-                            TextSize = 30
+                            Font = new FontUsage(size: 30),
                         },
                         levelSong = new SpriteText
                         {
                             Colour = GDEColors.FromHex("aaaaaa"),
                             Text = "SongAuthor - SongTitle",
-                            TextSize = 15,
+                            Font = new FontUsage(size: 15),
                         }
                     }
                 },
@@ -75,7 +75,7 @@ namespace GDE.App.Main.Screens.Menu.Components
                     Margin = new MarginPadding(5),
                     Position = new Vector2(0, 4),
                     Text = "Loading...",
-                    TextSize = 16,
+                    Font = new FontUsage(size: 16),
                     Colour = GDEColors.FromHex("aaaaaa")
                 }
             };

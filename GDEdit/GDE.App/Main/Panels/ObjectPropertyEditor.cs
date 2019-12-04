@@ -12,6 +12,8 @@ using osu.Framework.Graphics.Sprites;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using osu.Framework.Allocation;
+using osuTK;
 
 namespace GDE.App.Main.Panels
 {
@@ -21,7 +23,7 @@ namespace GDE.App.Main.Panels
         private PropertyEditorHeader header;
         private PropertyEditorFooter footer;
         private PropertyEditorTabControl tabControl;
-        private FillFlowContainer fillFlow;
+        private TestFillFlowContainer fillFlow;
 
         private BindableBool deltaModeBindable;
 
@@ -33,7 +35,11 @@ namespace GDE.App.Main.Panels
         {
             AutoSizeAxes = Axes.Both;
             SelectedObjects = new Bindable<LevelObjectCollection>(objects);
+        }
 
+        [BackgroundDependencyLoader]
+        private void load()
+        {
             SelectedObjects.ValueChanged += o =>
             {
                 Children = new Drawable[]
@@ -64,7 +70,7 @@ namespace GDE.App.Main.Panels
                                         Width = 30,
                                         AutoSort = true,
                                     },
-                                    fillFlow = new FillFlowContainer
+                                    fillFlow = new TestFillFlowContainer
                                     {
                                         Direction = FillDirection.Vertical,
                                         AutoSizeAxes = Axes.Both,
@@ -73,6 +79,16 @@ namespace GDE.App.Main.Panels
                                             Vertical = 5,
                                             Horizontal = 10
                                         },
+                                        Children = new Drawable[]
+                                        {
+                                            new Box
+                                            {
+                                                Size = new Vector2(20, 50),
+                                            },
+                                            header = new PropertyEditorHeader(SelectedObjects),
+                                            content = new PropertyEditorGeneralTabContent(SelectedObjects.Value, deltaModeBindable),
+                                            footer = new PropertyEditorFooter(SelectedObjects),
+                                        }
                                     }
                                 }
                             },
@@ -83,11 +99,33 @@ namespace GDE.App.Main.Panels
 
             SelectedObjects.TriggerChange();
         }
+
+        private class TestFillFlowContainer : FillFlowContainer
+        {
+            public override void Add(Drawable drawable)
+            {
+                base.Add(drawable);
+                Console.WriteLine($"Added a drawable ({nameof(drawable)})");
+            }
+        }
+        
         protected override void LoadComplete()
         {
             base.LoadComplete();
 
-            var list = new List<PropertyEditorTab>()
+            fillFlow.Add(new Box
+            {
+                Size = new Vector2(20, 50)
+            });
+            
+            fillFlow.AddRange(new Drawable[]
+            {
+                header = new PropertyEditorHeader(SelectedObjects),
+                content = new PropertyEditorGeneralTabContent(SelectedObjects.Value, deltaModeBindable),
+                footer = new PropertyEditorFooter(SelectedObjects),
+            });
+
+            var list = new List<PropertyEditorTab>
             {
                 //TODO: Import custom icons to use
                 new PropertyEditorTab
@@ -104,8 +142,10 @@ namespace GDE.App.Main.Panels
             tabControl.Current.ValueChanged += value =>
             {
                 Console.WriteLine(value.NewValue.Tab.ToString());
-                fillFlow.Children = GetContent(value.NewValue.Tab);
+                //fillFlow.WithChildren(GetContent(value.NewValue.Tab));
             };
+            
+            tabControl.Current.TriggerChange();
 
             deltaModeBindable = new BindableBool { BindTarget = header.DeltaMode };
         }

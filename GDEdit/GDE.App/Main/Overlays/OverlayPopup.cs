@@ -74,13 +74,13 @@ namespace GDE.App.Main.Overlays
                     {
                         header = new SpriteText
                         {
-                            TextSize = 70,
+                            Font = new FontUsage(size: 70),
                             Anchor = Anchor.TopCentre,
                             Origin = Anchor.TopCentre,
                         },
                         body = new SpriteText
                         {
-                            TextSize = 40,
+                            Font = new FontUsage(size: 40),
                             Anchor = Anchor.TopCentre,
                             Origin = Anchor.TopCentre,
                         }

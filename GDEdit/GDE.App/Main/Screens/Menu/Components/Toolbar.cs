@@ -44,7 +44,7 @@ namespace GDE.App.Main.Screens.Menu.Components
                         {
                             Margin = new MarginPadding(5),
                             Text = "No level selected",
-                            TextSize = 30
+                            Font = new FontUsage(size: 30),
                         },
                         SongName = new SpriteText
                         {
@@ -52,7 +52,7 @@ namespace GDE.App.Main.Screens.Menu.Components
                             Origin = Anchor.BottomLeft,
                             Margin = new MarginPadding(5),
                             Colour = GDEColors.FromHex("666666"),
-                            TextSize = 25,
+                            Font = new FontUsage(size: 25),
                         }
                     }
                 },

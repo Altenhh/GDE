@@ -12,6 +12,9 @@ namespace GDE.App.Main.Panels.Object.Content.PropertyEditorTabContents
 
         public PropertyEditorTabContent(LevelObjectCollection objects, BindableBool deltaModeBindable)
         {
+            if (deltaModeBindable == null)
+                deltaModeBindable = new BindableBool();
+            
             SelectedObjects = objects;
             AddRangeInternal(CreateContent());
             var groups = GetGroups();

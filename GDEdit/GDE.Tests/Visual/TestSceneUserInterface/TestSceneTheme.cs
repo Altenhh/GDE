@@ -31,14 +31,14 @@ namespace GDE.Tests.Visual.TestSceneUserInterface
                             Text = "151515",
                             Size = new Vector2(80, 20),
                         },
-                        new Button
+                        new BasicButton
                         {
                             Text = "Dark theme",
                             Size = new Vector2(80, 20),
                             Action = () => hexValue.Value = "151515",
                             BackgroundColour = GDEColors.FromHex("1c1c1c")
                         },
-                        new Button
+                        new BasicButton
                         {
                             Text = "Light theme",
                             Size = new Vector2(80, 20),

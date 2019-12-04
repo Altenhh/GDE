@@ -69,7 +69,7 @@ namespace GDE.App.Main.Screens.Edit.Components
             }
         }
 
-        private class ObjectButton : Button
+        private class ObjectButton : BasicButton
         {
             private bool active;
 

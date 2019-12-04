@@ -6,7 +6,7 @@ using osuTK.Graphics;
 
 namespace GDE.App.Main.UI
 {
-    public class GDEButton : Button
+    public class GDEButton : BasicButton
     {
         public GDEButton()
             : base()

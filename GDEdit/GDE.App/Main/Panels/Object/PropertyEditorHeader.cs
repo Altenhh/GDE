@@ -31,6 +31,9 @@ namespace GDE.App.Main.Panels.Object
         [BackgroundDependencyLoader]
         private void load()
         {
+            if (!Objects.Value.Any())
+                Objects.Value.Add(new GeneralObject(0));
+            
             AddRange(new Drawable[]
             {
                 new FillFlowContainer
