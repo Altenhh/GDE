@@ -119,7 +119,7 @@ namespace GDE.App.Main.Screens.Edit.Components
                                 };
                                 
                                 screen.Add(propertyEditor);
-                                
+
                                 propertyEditor.ToggleVisibility();
                             },
                             Text = "Edit Object",
