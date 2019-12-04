@@ -16,6 +16,8 @@ namespace GDE.App.Main.Panels
         public bool AllowDrag = true;
         public bool LockDrag = false;
 
+        protected virtual bool DisposeOnClose => false;
+
         protected new virtual string Name
         {
             get => (string)text?.Text ?? "";
@@ -113,6 +115,12 @@ namespace GDE.App.Main.Panels
             ClearTransforms();
 
             this.ScaleTo(new Vector2(1, 0), 500, Easing.OutExpo);
+            
+            if (DisposeOnClose)
+                using (BeginDelayedSequence(500))
+                {
+                    Dispose();
+                }
         }
 
         protected override bool OnDrag(DragEvent e)

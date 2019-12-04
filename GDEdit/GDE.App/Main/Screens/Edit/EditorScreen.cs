@@ -177,18 +177,18 @@ namespace GDE.App.Main.Screens.Edit
                     Origin = Anchor.Centre,
                     LockDrag = true,
                 },
-                objectPropertyEditor = new ObjectPropertyEditor(new LevelObjectCollection())
-                {
-                    Anchor = Anchor.Centre,
-                    Origin = Anchor.Centre
-                },
-                tools = new EditorTools(preview, camera, objectPropertyEditor)
+                tools = new EditorTools(preview, camera, objectPropertyEditor, this)
                 {
                     Size = new Vector2(150, 300),
                     Anchor = Anchor.CentreLeft,
                     Origin = Anchor.CentreLeft
                 },
             });
+        }
+
+        public void Add(Drawable d)
+        {
+            AddInternal(d);
         }
 
         protected override bool OnClick(ClickEvent e)

@@ -1,4 +1,6 @@
-﻿using GDAPI.Application.Editors;
+﻿using System.Linq;
+using GDAPI.Application.Editors;
+using GDAPI.Objects.GeometryDash.LevelObjects;
 using GDE.App.Main.Colors;
 using GDE.App.Main.Levels;
 using GDE.App.Main.Objects;
@@ -26,7 +28,7 @@ namespace GDE.App.Main.Screens.Edit.Components
         public int CurrentSelectedObjectID => panel.SelectedObjectID;
         public readonly BindableBool AbleToPlaceBlock = new BindableBool();
 
-        public EditorTools(LevelPreview level, Camera camera, ObjectPropertyEditor propertyEditor)
+        public EditorTools(LevelPreview level, Camera camera, ObjectPropertyEditor propertyEditor, EditorScreen screen)
         {
             Children = new Drawable[]
             {
@@ -87,9 +89,38 @@ namespace GDE.App.Main.Screens.Edit.Components
                         {
                             Action = () =>
                             {
+                                static Vector2 getCenteredVector(Vector2 top, Vector2 bottom) => new Vector2(top.X, top.Y + (bottom.Y - top.Y) / 2);
+                                
+                                if (propertyEditor != null)
+                                    propertyEditor.ToggleVisibility();
+
+                                Vector2 position;
+
+                                GeneralObject objTopLeft = editor.SelectedObjects.FirstOrDefault();
+                                GeneralObject objBotRight = editor.SelectedObjects.LastOrDefault();
+
+                                foreach (var obj in editor.SelectedObjects)
+                                {
+                                    if (obj.X < objTopLeft.X && obj.Y > objTopLeft.Y)
+                                        objTopLeft = obj;
+                                    else if (obj.X > objBotRight.X && obj.Y < objBotRight.Y)
+                                        objBotRight = obj;
+                                }
+
+                                var drawableTopLeft = level.Children.First(o => o.LevelObject == objTopLeft);
+                                var drawableBotRight = level.Children.First(o => o.LevelObject == objBotRight);
+
+                                position = getCenteredVector(drawableTopLeft.Position,
+                                    drawableBotRight.Position);
+                                
+                                propertyEditor = new ObjectPropertyEditor(editor.SelectedObjects)
+                                {
+                                    Position = position
+                                };
+                                
+                                screen.Add(propertyEditor);
+                                
                                 propertyEditor.ToggleVisibility();
-                                propertyEditor.SelectedObjects.Value = editor.SelectedObjects;
-                                propertyEditor.SelectedObjects.TriggerChange();
                             },
                             Text = "Edit Object",
                             BackgroundColour = GDEColors.FromHex("2f2f2f"),
