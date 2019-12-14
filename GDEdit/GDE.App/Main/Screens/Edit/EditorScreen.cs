@@ -122,7 +122,7 @@ namespace GDE.App.Main.Screens.Edit
         private Level level => database.UserLevels[i];
 
         [BackgroundDependencyLoader]
-        private void load(DatabaseCollection databases, TextureStore ts)
+        private void Load(DatabaseCollection databases, TextureStore ts)
         {
             database = databases[0];
 

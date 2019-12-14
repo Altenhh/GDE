@@ -75,7 +75,7 @@ namespace GDE.App.Main.Levels
         }
 
         [BackgroundDependencyLoader]
-        private void load(DatabaseCollection databases)
+        private void Load(DatabaseCollection databases)
         {
             database = databases[0];
 

@@ -27,7 +27,7 @@ namespace GDE.App.Main.Screens.Edit.Components
         }
 
         [BackgroundDependencyLoader]
-        private void load()
+        private void Load()
         {
             Add(snappedCursorContainer = new GridSnappedCursorContainer(cameraOffsetBindable)
                 {Anchor = Anchor.Centre, Origin = Anchor.Centre});

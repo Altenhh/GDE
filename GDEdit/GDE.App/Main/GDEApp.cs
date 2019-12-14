@@ -17,7 +17,7 @@ namespace GDE.App.Main
         private ToastNotification notification;
 
         [BackgroundDependencyLoader]
-        private void load()
+        private void Load()
         {
             Children = new Drawable[]
             {

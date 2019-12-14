@@ -65,7 +65,7 @@ namespace GDE.App.Main.UI.Toolbar
             }
 
             [BackgroundDependencyLoader]
-            private void load(AudioManager audio)
+            private void Load(AudioManager audio)
             {
                 BackgroundColour = Color4.Transparent;
                 BackgroundColourHover = GDEColors.FromHex(@"172023");

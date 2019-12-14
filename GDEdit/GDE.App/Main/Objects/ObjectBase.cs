@@ -49,7 +49,7 @@ namespace GDE.App.Main.Objects
         [Resolved] private Editor editor { get; set; }
 
         [BackgroundDependencyLoader]
-        private void load(TextureStore ts)
+        private void Load(TextureStore ts)
         {
             textureStore = ts;
             UpdateObjectID(LevelObject.ObjectID);

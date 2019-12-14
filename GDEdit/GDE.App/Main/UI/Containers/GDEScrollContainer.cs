@@ -108,7 +108,7 @@ namespace GDE.App.Main.UI.Containers
             }
 
             [BackgroundDependencyLoader]
-            private void load()
+            private void Load()
             {
                 Colour = defaultColour = GDEColors.FromHex("888");
                 hoverColour = GDEColors.FromHex("fff");

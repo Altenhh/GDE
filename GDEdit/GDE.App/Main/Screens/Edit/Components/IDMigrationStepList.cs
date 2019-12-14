@@ -192,7 +192,7 @@ namespace GDE.App.Main.Screens.Edit.Components
         }
 
         [BackgroundDependencyLoader]
-        private void load()
+        private void Load()
         {
             RunArrowAnimation();
         }

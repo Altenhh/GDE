@@ -33,7 +33,7 @@ namespace GDE.App.Main
         }
 
         [BackgroundDependencyLoader]
-        private void load()
+        private void Load()
         {
             Resources.AddStore(new DllResourceStore(mainResourceFile));
 

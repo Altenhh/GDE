@@ -92,7 +92,7 @@ namespace GDE.App.Main.Screens.Edit.Components
         public int CurrentSelectedObjectID => panel.SelectedObjectID;
 
         [BackgroundDependencyLoader]
-        private void load(DatabaseCollection databases)
+        private void Load(DatabaseCollection databases)
         {
             database = databases[0];
         }
