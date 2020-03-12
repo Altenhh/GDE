@@ -7,7 +7,6 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.Screens;
-using osuTK.Graphics;
 namespace GDEdit.App.Screens.Menu
 {
     public class MainMenu : Screen
