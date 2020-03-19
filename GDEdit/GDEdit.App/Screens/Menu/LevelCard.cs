@@ -1,4 +1,4 @@
-using GDAPI.Objects.GeometryDash.General;
+﻿using GDAPI.Objects.GeometryDash.General;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
@@ -50,7 +50,11 @@ namespace GDEdit.App.Screens.Menu
                 Roundness = 4,
                 Offset = new Vector2(0, 4)
             };
+        }
 
+        [BackgroundDependencyLoader]
+        private void load(TextureStore store)
+        {
             TextFlowContainer description;
 
             InternalChildren = new Drawable[]
@@ -77,6 +81,25 @@ namespace GDEdit.App.Screens.Menu
                     Spacing = new Vector2(0, 8),
                     Children = new Drawable[]
                     {
+                        levelSpriteContainer = new Container
+                        {
+                            RelativeSizeAxes = Axes.X,
+                            Size = new Vector2(1, 0),
+                            Masking = true,
+                            CornerRadius = 4,
+                            Alpha = 0, // make it act like it's not there.
+                            Children = new Drawable[]
+                            {
+                                new Sprite
+                                {
+                                    RelativeSizeAxes = Axes.Both,
+                                    FillMode = FillMode.Fill,
+                                    Anchor = Anchor.Centre,
+                                    Origin = Anchor.Centre,
+                                    Texture = store.Get("https://i.imgur.com/SM58hh7.jpg"),
+                                },
+                            }
+                        },
                         new SpriteText
                         {
                             Font = new FontUsage("Roboto", 18, "Bold"),
