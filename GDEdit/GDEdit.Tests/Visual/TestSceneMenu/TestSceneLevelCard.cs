@@ -41,7 +41,7 @@ namespace GDEdit.Tests.Visual.TestSceneMenu
             });
             
             AddToggleStep("Toggle details", v => card.State.Value = v ? CarouselItemState.Selected : CarouselItemState.NotSelected);
-            AddSliderStep("Scale", 1, 10, 1, s => container.Scale = new Vector2(s));
+            AddSliderStep("Scale", 1f, 5f, 1f, s => container.Scale = new Vector2(s));
         }
     }
 }
