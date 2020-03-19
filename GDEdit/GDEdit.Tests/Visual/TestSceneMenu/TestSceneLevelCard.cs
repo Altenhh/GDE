@@ -21,13 +21,14 @@ namespace GDEdit.Tests.Visual.TestSceneMenu
         public TestSceneLevelCard()
         {
             LevelCard card;
+            Container container;
             
             Add(new Box
             {
                 Colour = Color4.White,
                 RelativeSizeAxes = Axes.Both
             });
-            Add(new Container
+            Add(container = new Container
             {
                 Anchor = Anchor.Centre,
                 Origin = Anchor.Centre,
@@ -40,6 +41,7 @@ namespace GDEdit.Tests.Visual.TestSceneMenu
             });
             
             AddToggleStep("Toggle details", v => card.State.Value = v ? CarouselItemState.Selected : CarouselItemState.NotSelected);
+            AddSliderStep("Scale", 1, 10, 1, s => container.Scale = new Vector2(s));
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using GDAPI.Objects.GeometryDash.General;
+using GDAPI.Objects.GeometryDash.General;
+using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
@@ -6,6 +7,8 @@ using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Effects;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
+using osu.Framework.Graphics.Textures;
+using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
 using osuTK;
 using osuTK.Graphics;
@@ -26,6 +29,9 @@ namespace GDEdit.App.Screens.Menu
 
         private Box background;
         private Box accent;
+        private Container levelSpriteContainer;
+        private BasicButton editLevel;
+        private BasicButton deleteLevel;
 
         public LevelCard(lvl lvlpleasekthx)
         {
@@ -120,11 +126,16 @@ namespace GDEdit.App.Screens.Menu
             {
                 accent.FadeColour(Color4Extensions.FromHex("4182A7"), 100);
                 BorderThickness = 3;
+
+                levelSpriteContainer.Alpha = 1;
+                levelSpriteContainer.ResizeHeightTo(80, 500, Easing.OutQuint);
             }
             else
             {
                 accent.FadeColour(Color4Extensions.FromHex("404040"), 100);
                 BorderThickness = 0;
+                
+                levelSpriteContainer.ResizeHeightTo(0, 500, Easing.OutQuint).OnComplete(c => c.Alpha = 0);
             }
         }
 
@@ -138,6 +149,16 @@ namespace GDEdit.App.Screens.Menu
         {
             background.FadeColour(Color4Extensions.FromHex("262626"), 100);
             base.OnHoverLost(e);
+        }
+
+        protected override bool OnClick(ClickEvent e)
+        {
+            if (State.Value == CarouselItemState.NotSelected)
+                State.Value = CarouselItemState.Selected;
+            else
+                State.Value = CarouselItemState.NotSelected;
+            
+            return base.OnClick(e);
         }
     }
     
