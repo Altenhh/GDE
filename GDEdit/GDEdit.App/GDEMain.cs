@@ -25,7 +25,7 @@ namespace GDEdit.App
 
             screenStack.ScreenPushed += (oldScreen, newScreen) =>
             {
-                if (!DebugUtils.IsDebugBuild) // returns inverted, so we need to invert it back
+                if (DebugUtils.IsDebugBuild)
                 {
                     var screen = newScreen.GetType();
 
