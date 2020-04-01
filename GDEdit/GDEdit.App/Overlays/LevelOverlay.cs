@@ -1,4 +1,5 @@
-﻿using GDAPI.Objects.GeometryDash.General;
+using GDAPI.Application;
+using GDAPI.Objects.GeometryDash.General;
 using GDEdit.App.Graphics;
 using GDEdit.App.Graphics.UserInterface;
 using GDEdit.App.Overlays.Level;
@@ -20,7 +21,7 @@ namespace GDEdit.App.Overlays
         private GDAPI.Objects.GeometryDash.General.Level level;
         private SongMetadata songMetadata;
         
-        public LevelOverlay(GDAPI.Objects.GeometryDash.General.Level level)
+        public LevelOverlay(GDAPI.Objects.GeometryDash.General.Level level, Database database)
         {
             this.level = level;
             level.InitializeLoadingLevelString();
@@ -43,7 +44,7 @@ namespace GDEdit.App.Overlays
                 Hollow = true
             };
 
-            songMetadata = level.GetSongMetadata(new SongMetadataCollection());
+            songMetadata = level.GetSongMetadata(database.SongMetadataInformation);
         }
 
         [BackgroundDependencyLoader]

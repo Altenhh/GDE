@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using GDAPI.Objects.GeometryDash.LevelObjects;
@@ -159,11 +159,11 @@ namespace GDEdit.App.Overlays.Level
             if (lastObj == 0)
                 lastObj = collection.Last().X;
 
-            int granularity = (int) lastObj / 30;
+            int granularity = (int) (lastObj / 30);
             Values = new int[granularity];
             
             foreach (var o in collection)
-                Values[(int) o.X / 30 - 1]++;
+                Values[Math.Clamp((int) o.X / 30 - 1, 0, int.MaxValue)]++;
         }
 
         public void AddGraph()
