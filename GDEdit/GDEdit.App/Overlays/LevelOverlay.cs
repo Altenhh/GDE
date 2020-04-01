@@ -1,6 +1,7 @@
 ﻿using GDAPI.Objects.GeometryDash.General;
 using GDEdit.App.Graphics;
 using GDEdit.App.Graphics.UserInterface;
+using GDEdit.App.Overlays.Level;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
@@ -143,6 +144,42 @@ namespace GDEdit.App.Overlays
                                         Height = 20,
                                         TextAnchor = Anchor.BottomLeft,
                                     }
+                                }
+                            }
+                        }
+                    },
+                    #endregion
+                    #region Components
+                    new Container
+                    {
+                        Name = "Components",
+                        RelativeSizeAxes = Axes.X,
+                        Height = 125,
+                        Children = new Drawable[]
+                        {
+                            new Box
+                            {
+                                Colour = GDEColour.Gray10,
+                                RelativeSizeAxes = Axes.Both
+                            },
+                            new FillFlowContainer
+                            {
+                                RelativeSizeAxes = Axes.Both,
+                                Direction = FillDirection.Horizontal,
+                                Spacing = new Vector2(20, 0),
+                                Padding = new MarginPadding
+                                {
+                                    Horizontal = 70,
+                                    Vertical = 20
+                                },
+                                Children = new Drawable[]
+                                {
+                                    new LevelPill(FontAwesome.Solid.Star, "0.00*")
+                                    {
+                                        BorderColour = Color4.FromHsl(new Vector4(292 / 360f, 1, 0.7f, 1)),
+                                        BorderThickness = 2,
+                                    },
+                                    new LevelPill(FontAwesome.Solid.Clock, level.TimeLength.ToString(@"m\:ss"))
                                 }
                             }
                         }
