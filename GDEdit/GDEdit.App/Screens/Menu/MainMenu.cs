@@ -33,7 +33,7 @@ namespace GDEdit.App.Screens.Menu
                         {
                             RelativeSizeAxes = Axes.Both,
                             FillMode = FillMode.Fill,
-                            Texture = store.Get("https://i.imgur.com/SM58hh7.jpg"),
+                            Texture = store.Get("https://pbs.twimg.com/media/EUWEe0IU8AEqYod?format=jpg&name=orig"),
                             Anchor = Anchor.Centre,
                             Origin = Anchor.Centre,
                         },
