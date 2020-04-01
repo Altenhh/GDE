@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using GDAPI.Objects.GeometryDash.LevelObjects;
@@ -18,7 +18,13 @@ namespace GDEdit.App.Overlays.Level
 {
     public class ObjectDensity : CompositeDrawable
     {
-        private LevelObjectCollection collection;
+        private readonly LevelObjectCollection collection;
+
+        /// <summary>
+        /// Resolution at which the graphs renders at.
+        /// Set to 1 for full resolution.
+        /// </summary>
+        public int Resolution = 10;
         
         private Color4 defColour;
 
@@ -173,7 +179,7 @@ namespace GDEdit.App.Overlays.Level
 
             if (values == null)
             {
-                for (float i = 0; i < DrawWidth; i++)
+                for (float i = 0; i < (DrawWidth / Resolution); i++)
                     newValues.Add(0);
                 
                 return;
@@ -181,7 +187,7 @@ namespace GDEdit.App.Overlays.Level
 
             var max = values.Max();
 
-            float step = values.Length / DrawWidth;
+            float step = values.Length / (DrawWidth / Resolution);
 
             for (float i = 0; i < values.Length; i += step)
             {
@@ -194,8 +200,8 @@ namespace GDEdit.App.Overlays.Level
                 {
                     RelativeSizeAxes = Axes.Both,
                     RelativePositionAxes = Axes.X,
-                    Width = 1 / DrawWidth,
-                    X = i / DrawWidth
+                    Width = 1 / (DrawWidth / Resolution),
+                    X = i / (DrawWidth / Resolution)
                 };
 
                 Color4 colour = defColour;
