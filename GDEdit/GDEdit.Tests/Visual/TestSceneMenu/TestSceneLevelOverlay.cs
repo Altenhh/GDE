@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using GDAPI.Application;
 using GDEdit.App.Graphics;
@@ -6,7 +6,6 @@ using GDEdit.App.Overlays;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Testing;
-using osuTK.Graphics;
 
 namespace GDEdit.Tests.Visual.TestSceneMenu
 {
