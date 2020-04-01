@@ -23,6 +23,7 @@ namespace GDEdit.App.Overlays
         public LevelOverlay(GDAPI.Objects.GeometryDash.General.Level level)
         {
             this.level = level;
+            level.InitializeLoadingLevelString();
             
             RelativeSizeAxes = Axes.X;
             AutoSizeAxes = Axes.Y;
