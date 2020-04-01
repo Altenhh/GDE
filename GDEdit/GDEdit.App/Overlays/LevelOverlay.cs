@@ -216,15 +216,19 @@ namespace GDEdit.App.Overlays
         protected override void PopIn()
         {
             base.PopIn();
-            FadeEdgeEffectTo(0.4f, 200, Easing.Out);
-            this.FadeIn(200, Easing.Out);
+            
+            FadeEdgeEffectTo(0.4f, 100, Easing.Out);
+            this.FadeIn(100, Easing.Out);
+            this.ScaleTo(1, 100, Easing.Out);
         }
 
         protected override void PopOut()
         {
             base.PopOut();
-            FadeEdgeEffectTo(0f, 200, Easing.In);
-            this.FadeOut(200, Easing.In);
+            
+            FadeEdgeEffectTo(0f, 100, Easing.In);
+            this.FadeOut(100, Easing.In);
+            this.ScaleTo(0.99f, 100, Easing.InQuint);
         }
     }
 }

@@ -78,13 +78,13 @@ namespace GDEdit.App.Graphics.UserInterface
         
         protected override bool OnHover(HoverEvent e)
         {
-            hover.FadeIn(200, Easing.Out);
+            hover.FadeIn(100, Easing.Out);
             return base.OnHover(e);
         }
 
         protected override void OnHoverLost(HoverLostEvent e)
         {
-            hover.FadeOut(200, Easing.Out);
+            hover.FadeOut(100, Easing.Out);
             base.OnHoverLost(e);
         }
 
@@ -96,13 +96,13 @@ namespace GDEdit.App.Graphics.UserInterface
 
         protected override bool OnMouseDown(MouseDownEvent e)
         {
-            Content.ScaleTo(0.9f, 200, Easing.Out);
+            Content.ScaleTo(0.9f, 100, Easing.Out);
             return base.OnMouseDown(e);
         }
 
         protected override void OnMouseUp(MouseUpEvent e)
         {
-            Content.ScaleTo(1, 200, Easing.Out);
+            Content.ScaleTo(1, 100, Easing.Out);
             base.OnMouseUp(e);
         }
     }

@@ -26,7 +26,7 @@ namespace GDEdit.Tests.Visual.TestSceneMenu
         {
             Add(new Box
             {
-                Colour = GDEColour.Gray05,
+                Colour = GDEColour.Gray20,
                 RelativeSizeAxes = Axes.Both
             });
             Add(overlay);
