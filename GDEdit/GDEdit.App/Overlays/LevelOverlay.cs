@@ -1,9 +1,12 @@
+﻿using GDAPI.Objects.GeometryDash.General;
+using GDEdit.App.Graphics;
 using GDEdit.App.Graphics.UserInterface;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Effects;
+using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using osuTK;
@@ -13,8 +16,13 @@ namespace GDEdit.App.Overlays
 {
     public class LevelOverlay : FocusedOverlayContainer
     {
+        private GDAPI.Objects.GeometryDash.General.Level level;
+        private SongMetadata songMetadata;
+        
         public LevelOverlay(GDAPI.Objects.GeometryDash.General.Level level)
         {
+            this.level = level;
+            
             RelativeSizeAxes = Axes.X;
             AutoSizeAxes = Axes.Y;
             Width = 0.85f;
@@ -32,11 +40,15 @@ namespace GDEdit.App.Overlays
                 Radius = 10,
                 Hollow = true
             };
+
+            songMetadata = level.GetSongMetadata(new SongMetadataCollection());
         }
 
         [BackgroundDependencyLoader]
         private void load(TextureStore store)
         {
+            TextFlowContainer textFlow;
+            
             Child = new FillFlowContainer
             {
                 RelativeSizeAxes = Axes.X,
@@ -85,8 +97,71 @@ namespace GDEdit.App.Overlays
                         }
                     },
                     #endregion
+                    #region Title
+                    new Container
+                    {
+                        Name = "Title",
+                        RelativeSizeAxes = Axes.X,
+                        Height = 90,
+                        Masking = true,
+                        MaskingSmoothness = 1,
+                        Children = new Drawable[]
+                        {
+                            new Box
+                            {
+                                Colour = GDEColour.Gray15,
+                                RelativeSizeAxes = Axes.Both
+                            },
+                            new Box
+                            {
+                                Colour = Color4.FromHsl(new Vector4(292 / 360f, 1, 0.7f, 1)),
+                                RelativeSizeAxes = Axes.X,
+                                Height = 3,
+                                Anchor = Anchor.BottomCentre,
+                                Origin = Anchor.BottomCentre
+                            },
+                            new FillFlowContainer
+                            {
+                                RelativeSizeAxes = Axes.Both,
+                                Direction = FillDirection.Vertical,
+                                Padding = new MarginPadding
+                                {
+                                    Horizontal = 70,
+                                    Vertical = 20
+                                },
+                                Children = new Drawable[]
+                                {
+                                    new SpriteText
+                                    {
+                                        Text = level.Name,
+                                        Font = new FontUsage(size: 24)
+                                    },
+                                    textFlow = new TextFlowContainer
+                                    {
+                                        // a bit of a cheat here, but do i care? no.
+                                        RelativeSizeAxes = Axes.X,
+                                        Height = 20,
+                                        TextAnchor = Anchor.BottomLeft,
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    #endregion
                 }
             };
+
+            textFlow.AddText(songMetadata.Title, t =>
+            {
+                t.Font = new FontUsage(size: 18);
+                t.Colour = GDEColour.Gray80;
+            });
+            
+            textFlow.AddText(" by " + songMetadata.Artist, t =>
+            {
+                t.Font = new FontUsage(size: 14);
+                t.Colour = GDEColour.Gray70;
+            });
         }
         
         public override void Show()

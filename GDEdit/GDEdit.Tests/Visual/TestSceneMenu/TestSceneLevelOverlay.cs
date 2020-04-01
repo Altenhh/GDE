@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using GDAPI.Objects.GeometryDash.General;
+using GDEdit.App.Graphics;
 using GDEdit.App.Overlays;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Shapes;
@@ -25,7 +26,7 @@ namespace GDEdit.Tests.Visual.TestSceneMenu
         {
             Add(new Box
             {
-                Colour = Color4.White,
+                Colour = GDEColour.Gray05,
                 RelativeSizeAxes = Axes.Both
             });
             Add(overlay);
