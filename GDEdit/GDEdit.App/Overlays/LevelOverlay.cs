@@ -168,8 +168,8 @@ namespace GDEdit.App.Overlays
                             new FillFlowContainer
                             {
                                 RelativeSizeAxes = Axes.Both,
-                                Direction = FillDirection.Horizontal,
-                                Spacing = new Vector2(20, 0),
+                                Direction = FillDirection.Vertical,
+                                Spacing = new Vector2(0, 10),
                                 Padding = new MarginPadding
                                 {
                                     Horizontal = 70,
@@ -177,24 +177,34 @@ namespace GDEdit.App.Overlays
                                 },
                                 Children = new Drawable[]
                                 {
-                                    new LevelPill(FontAwesome.Solid.Star, "0.00")
+                                    new FillFlowContainer
                                     {
-                                        BorderColour = Color4.FromHsl(new Vector4(292 / 360f, 1, 0.7f, 1)),
-                                        BorderThickness = 2
+                                        RelativeSizeAxes = Axes.X,
+                                        AutoSizeAxes = Axes.Y,
+                                        Direction = FillDirection.Horizontal,
+                                        Spacing = new Vector2(20, 0),
+                                        Children = new Drawable[]
+                                        {
+                                            new LevelPill(FontAwesome.Solid.Star, "0.00")
+                                            {
+                                                BorderColour = Color4.FromHsl(new Vector4(292 / 360f, 1, 0.7f, 1)),
+                                                BorderThickness = 2
+                                            },
+                                            new LevelPill(FontAwesome.Solid.Clock, level.TimeLength.ToString(@"m\:ss")),
+                                        }
                                     },
-                                    new LevelPill(FontAwesome.Solid.Clock, level.TimeLength.ToString(@"m\:ss")),
+                                    new ObjectDensity(level.LevelObjects)
+                                    {
+                                        LowColour = Color4Extensions.FromHex(@"1F8EAD"),
+                                        MidColour = Color4Extensions.FromHex(@"52B1E0"),
+                                        HighColour = Color4Extensions.FromHex(@"66CCFF"),
+                                        DefColour = Color4Extensions.FromHex(@"2E3538")
+                                    }
                                 }
                             }
                         }
                     },
                     #endregion
-                    new ObjectDensity(level.LevelObjects)
-                    {
-                        LowColour = Color4Extensions.FromHex(@"1F8EAD"),
-                        MidColour = Color4Extensions.FromHex(@"52B1E0"),
-                        HighColour = Color4Extensions.FromHex(@"66CCFF"),
-                        DefColour = Color4Extensions.FromHex(@"2E3538")
-                    }
                 }
             };
 
