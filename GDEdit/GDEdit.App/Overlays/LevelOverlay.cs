@@ -1,4 +1,4 @@
-﻿using GDEdit.App.Graphics.UserInterface;
+using GDEdit.App.Graphics.UserInterface;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
@@ -40,6 +40,7 @@ namespace GDEdit.App.Overlays
             Child = new FillFlowContainer
             {
                 RelativeSizeAxes = Axes.X,
+                AutoSizeAxes = Axes.Y,
                 Direction = FillDirection.Vertical,
                 Children = new Drawable[]
                 {
@@ -47,8 +48,8 @@ namespace GDEdit.App.Overlays
                     new Container
                     {
                         Name = "Header",
-                        RelativeSizeAxes = Axes.Both,
-                        Height = 0.251f,
+                        RelativeSizeAxes = Axes.X,
+                        Height = 125,
                         Masking = true,
                         MaskingSmoothness = 1,
                         Children = new Drawable[]
