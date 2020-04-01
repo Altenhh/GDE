@@ -209,7 +209,17 @@ namespace GDEdit.App.Overlays.Level
                 // colouring is applied in the order of interest to a viewer.
                 colour = Interpolation.ValueAt(newValues[i], colour, lowColour, 0f, 0.3f);
                 colour = Interpolation.ValueAt(newValues[i], colour, midColour, 0.3f, 0.6f);
-                colour = Interpolation.ValueAt(newValues[i], colour, highColour, 0.6f, 1);
+                colour = Interpolation.ValueAt(newValues[i], colour, highColour, 0.6f, 0.9f);
+                colour = Interpolation.ValueAt(newValues[i], colour, highColour, 0.9f, 1f);
+
+                /*if (newValues[i] >= 0.1f)
+                    colour = lowColour;
+
+                if (newValues[i] >= 0.3f)
+                    colour = midColour;
+
+                if (newValues[i] >= 0.6f)
+                    colour = highColour;*/
 
                 box.Colour = colour;
 
