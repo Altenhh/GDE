@@ -181,12 +181,19 @@ namespace GDEdit.App.Overlays
                                         BorderColour = Color4.FromHsl(new Vector4(292 / 360f, 1, 0.7f, 1)),
                                         BorderThickness = 2
                                     },
-                                    new LevelPill(FontAwesome.Solid.Clock, level.TimeLength.ToString(@"m\:ss"))
+                                    new LevelPill(FontAwesome.Solid.Clock, level.TimeLength.ToString(@"m\:ss")),
                                 }
                             }
                         }
-                    }
+                    },
                     #endregion
+                    new ObjectDensity(level.LevelObjects)
+                    {
+                        LowColour = Color4Extensions.FromHex(@"1F8EAD"),
+                        MidColour = Color4Extensions.FromHex(@"52B1E0"),
+                        HighColour = Color4Extensions.FromHex(@"66CCFF"),
+                        DefColour = Color4Extensions.FromHex(@"2E3538")
+                    }
                 }
             };
 
