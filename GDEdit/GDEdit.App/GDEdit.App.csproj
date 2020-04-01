@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
@@ -12,6 +12,10 @@
     <ItemGroup>
       <PackageReference Include="GDAPI" Version="1.1.1" />
       <PackageReference Include="ppy.osu.Framework" Version="2020.310.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Overlays\Level" />
     </ItemGroup>
 
 </Project>

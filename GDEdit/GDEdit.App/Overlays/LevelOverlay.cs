@@ -1,8 +1,12 @@
-﻿using osu.Framework.Extensions.Color4Extensions;
+﻿using GDEdit.App.Graphics.UserInterface;
+using osu.Framework.Allocation;
+using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Effects;
-using osu.Framework.Graphics.Shapes;
+using osu.Framework.Graphics.Sprites;
+using osu.Framework.Graphics.Textures;
+using osuTK;
 using osuTK.Graphics;
 
 namespace GDEdit.App.Overlays
@@ -11,9 +15,9 @@ namespace GDEdit.App.Overlays
     {
         public LevelOverlay(GDAPI.Objects.GeometryDash.General.Level level)
         {
-            RelativeSizeAxes = Axes.Both;
+            RelativeSizeAxes = Axes.X;
+            AutoSizeAxes = Axes.Y;
             Width = 0.85f;
-            Height = 0.85f;
             Anchor = Anchor.Centre;
             Origin = Anchor.Centre;
 
@@ -28,10 +32,59 @@ namespace GDEdit.App.Overlays
                 Radius = 10,
                 Hollow = true
             };
-            
-            Children = new Drawable[]
+        }
+
+        [BackgroundDependencyLoader]
+        private void load(TextureStore store)
+        {
+            Child = new FillFlowContainer
             {
-                
+                RelativeSizeAxes = Axes.X,
+                Direction = FillDirection.Vertical,
+                Children = new Drawable[]
+                {
+                    #region Header
+                    new Container
+                    {
+                        Name = "Header",
+                        RelativeSizeAxes = Axes.Both,
+                        Height = 0.251f,
+                        Masking = true,
+                        MaskingSmoothness = 1,
+                        Children = new Drawable[]
+                        {
+                            new Sprite
+                            {
+                                RelativeSizeAxes = Axes.Both,
+                                FillMode = FillMode.Fill,
+                                Texture = store.Get("https://pbs.twimg.com/media/ENFcYM_UYAY5yV5?format=jpg&name=orig"),
+                                Anchor = Anchor.Centre,
+                                Origin = Anchor.Centre,
+                            },
+                            new Container
+                            {
+                                RelativeSizeAxes = Axes.Both,
+                                Padding = new MarginPadding
+                                {
+                                    Vertical = 30,
+                                    Horizontal = 70
+                                },
+                                Children = new Drawable[]
+                                {
+                                    new IconButton
+                                    {
+                                        Icon = FontAwesome.Solid.Times,
+                                        IconScale = new Vector2(0.5f),
+                                        Action = ToggleVisibility,
+                                        Anchor = Anchor.TopRight,
+                                        Origin = Anchor.Centre,
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    #endregion
+                }
             };
         }
         
