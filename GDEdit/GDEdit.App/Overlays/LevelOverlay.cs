@@ -1,4 +1,4 @@
-using GDAPI.Application;
+﻿using GDAPI.Application;
 using GDAPI.Objects.GeometryDash.General;
 using GDEdit.App.Graphics;
 using GDEdit.App.Graphics.UserInterface;
@@ -203,7 +203,7 @@ namespace GDEdit.App.Overlays
                 t.Font = new FontUsage(size: 18);
                 t.Colour = GDEColour.Gray80;
             });
-            
+
             textFlow.AddText(" by " + songMetadata.Artist, t =>
             {
                 t.Font = new FontUsage(size: 14);
