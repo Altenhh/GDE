@@ -72,7 +72,7 @@ namespace GDEdit.App.Screens.Menu
                     {
                         new SpriteText
                         {
-                            Font = new FontUsage("Roboto", 18, "Bold"),
+                            Font = new FontUsage("Torus", 18, "SemiBold"),
                             Text = Level.Name,
                             RelativeSizeAxes = Axes.X,
                             Colour = Color4Extensions.FromHex("E5E5E5")

@@ -104,7 +104,7 @@ namespace GDEdit.App.Overlays
                     {
                         Name = "Title",
                         RelativeSizeAxes = Axes.X,
-                        Height = 90,
+                        AutoSizeAxes = Axes.Y,
                         Masking = true,
                         MaskingSmoothness = 1,
                         Children = new Drawable[]
@@ -124,7 +124,8 @@ namespace GDEdit.App.Overlays
                             },
                             new FillFlowContainer
                             {
-                                RelativeSizeAxes = Axes.Both,
+                                RelativeSizeAxes = Axes.X,
+                                AutoSizeAxes = Axes.Y,
                                 Direction = FillDirection.Vertical,
                                 Padding = new MarginPadding
                                 {
