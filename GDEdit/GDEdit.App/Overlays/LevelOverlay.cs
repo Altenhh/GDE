@@ -178,7 +178,7 @@ namespace GDEdit.App.Overlays
                                     new LevelPill(FontAwesome.Solid.Star, "0.00*")
                                     {
                                         BorderColour = Color4.FromHsl(new Vector4(292 / 360f, 1, 0.7f, 1)),
-                                        BorderThickness = 2,
+                                        BorderThickness = 2
                                     },
                                     new LevelPill(FontAwesome.Solid.Clock, level.TimeLength.ToString(@"m\:ss"))
                                 }

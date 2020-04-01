@@ -1,6 +1,4 @@
 ﻿using GDEdit.App.Graphics;
-using GDEdit.App.Graphics.UserInterface;
-using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Graphics.Shapes;
@@ -10,7 +8,7 @@ using osuTK.Graphics;
 
 namespace GDEdit.App.Overlays.Level
 {
-    public class LevelPill : Container
+    public class LevelPill : CircularContainer
     {
         /// <summary>
         /// The colour used for the background.
@@ -46,8 +44,6 @@ namespace GDEdit.App.Overlays.Level
         public LevelPill(IconUsage icon, string text)
         {
             AutoSizeAxes = Axes.Both;
-
-            CornerRadius = 3;
             Masking = true;
             
             Children = new Drawable[]
@@ -65,11 +61,11 @@ namespace GDEdit.App.Overlays.Level
                     Padding = new MarginPadding
                     {
                         Vertical = 1,
-                        Horizontal = 5
+                        Horizontal = 10
                     },
                     Children = new Drawable[]
                     {
-                        new SpriteIcon
+                        this.icon = new SpriteIcon
                         {
                             Size = new Vector2(8),
                             Origin = Anchor.CentreLeft,
