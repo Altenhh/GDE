@@ -175,7 +175,7 @@ namespace GDEdit.App.Overlays
                                 },
                                 Children = new Drawable[]
                                 {
-                                    new LevelPill(FontAwesome.Solid.Star, "0.00*")
+                                    new LevelPill(FontAwesome.Solid.Star, "0.00")
                                     {
                                         BorderColour = Color4.FromHsl(new Vector4(292 / 360f, 1, 0.7f, 1)),
                                         BorderThickness = 2

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using GDEdit.Resources;
 using osu.Framework;
 using osu.Framework.Allocation;
 using osu.Framework.Configuration;
@@ -31,10 +32,20 @@ namespace GDEdit.App
         [BackgroundDependencyLoader]
         private void Load()
         {
-            Resources.AddStore(new DllResourceStore("GDEdit.Resources.dll"));
+            Resources.AddStore(new DllResourceStore(GDEResources.ResourceAssembly));
             
             dependencies.Cache(this);
             dependencies.CacheAs(storage);
+            
+            AddFont(Resources, @"Fonts/Torus-Regular");
+            AddFont(Resources, @"Fonts/Torus-Light");
+            AddFont(Resources, @"Fonts/Torus-SemiBold");
+            AddFont(Resources, @"Fonts/Torus-Bold");
+
+            AddFont(Resources, @"Fonts/Noto-Basic");
+            AddFont(Resources, @"Fonts/Noto-Hangul");
+            AddFont(Resources, @"Fonts/Noto-CJK-Basic");
+            AddFont(Resources, @"Fonts/Noto-CJK-Compatibility");
         }
         
         public override void SetHost(GameHost host)
