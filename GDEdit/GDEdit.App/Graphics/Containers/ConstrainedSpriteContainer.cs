@@ -9,16 +9,21 @@ namespace GDEdit.App.Graphics.Containers
     /// <summary>Display a sprite that is forced to scale to the size of this container.</summary>
     public class ConstrainedSpriteContainer : CompositeDrawable
     {
+        public ConstrainedSpriteContainer()
+        {
+            Masking = true;
+        }
+
         public Drawable Sprite
         {
             get => InternalChild;
 
             set => InternalChild = value;
         }
-        
-        /// <summary>Determines an edge effect of this <see cref="Container"/>.
+
+        /// <summary>Determines an edge effect of this <see cref="Container" />.
         /// Edge effects are e.g. glow or a shadow.
-        /// Only has an effect when <see cref="CompositeDrawable.Masking"/> is true.</summary>
+        /// Only has an effect when <see cref="CompositeDrawable.Masking" /> is true.</summary>
         public new EdgeEffectParameters EdgeEffect
         {
             get => base.EdgeEffect;
@@ -37,15 +42,10 @@ namespace GDEdit.App.Graphics.Containers
                 //   We can't do this because we would need access to AutoSizeAxes to set it to none.
                 //   Other issues come up along the way too, so it's not a good solution.
                 var fitScale = Math.Min(DrawSize.X / InternalChild.DrawSize.X, DrawSize.Y / InternalChild.DrawSize.Y);
-                InternalChild.Scale  = new Vector2(fitScale);
+                InternalChild.Scale = new Vector2(fitScale);
                 InternalChild.Anchor = Anchor.Centre;
                 InternalChild.Origin = Anchor.Centre;
             }
-        }
-
-        public ConstrainedSpriteContainer()
-        {
-            Masking = true;
         }
     }
 }

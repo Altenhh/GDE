@@ -8,7 +8,6 @@ using osu.Framework.Graphics.Effects;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
-using osu.Framework.Graphics.UserInterface;
 using osu.Framework.Input.Events;
 using osuTK;
 using osuTK.Graphics;
@@ -20,12 +19,8 @@ namespace GDEdit.App.Screens.Menu
 {
     public class LevelCard : CompositeDrawable
     {
-        public lvl Level { get; }
-
         public readonly Bindable<CarouselItemState> State =
             new Bindable<CarouselItemState>(CarouselItemState.NotSelected);
-
-        public bool Visible => State.Value != CarouselItemState.Collapsed;
 
         private Box background;
 
@@ -46,6 +41,10 @@ namespace GDEdit.App.Screens.Menu
                 Offset = new Vector2(0, 4)
             };
         }
+
+        public lvl Level { get; }
+
+        public bool Visible => State.Value != CarouselItemState.Collapsed;
 
         [BackgroundDependencyLoader]
         private void load(TextureStore store)
@@ -81,7 +80,7 @@ namespace GDEdit.App.Screens.Menu
                         {
                             RelativeSizeAxes = Axes.X,
                             AutoSizeAxes = Axes.Y,
-                            Colour = Color4Extensions.FromHex("E5E5E5"),
+                            Colour = Color4Extensions.FromHex("E5E5E5")
                         },
                         new FillFlowContainer
                         {
@@ -98,9 +97,10 @@ namespace GDEdit.App.Screens.Menu
                                 },
                                 new SpriteText
                                 {
-                                    Text = Level.GetSongMetadata(new SongMetadataCollection()).Artist + " - " + Level.GetSongMetadata(new SongMetadataCollection()).Title,
+                                    Text = Level.GetSongMetadata(new SongMetadataCollection()).Artist + " - " +
+                                           Level.GetSongMetadata(new SongMetadataCollection()).Title,
                                     Colour = Color4Extensions.FromHex("4182A7"),
-                                    Font = new FontUsage(size: 14),
+                                    Font = new FontUsage(size: 14)
                                 }
                             }
                         }
@@ -114,6 +114,7 @@ namespace GDEdit.App.Screens.Menu
         protected override bool OnHover(HoverEvent e)
         {
             background.FadeColour(Color4Extensions.FromHex("333"), 100);
+
             return base.OnHover(e);
         }
 
@@ -129,15 +130,17 @@ namespace GDEdit.App.Screens.Menu
                 State.Value = CarouselItemState.Selected;
             else
                 State.Value = CarouselItemState.NotSelected;
-            
+
             return base.OnClick(e);
         }
     }
-    
+
     public enum CarouselItemState
     {
         Collapsed,
         NotSelected,
-        Selected,
+        Selected
     }
 }
+
+// TODO: Open up overlay when selected.

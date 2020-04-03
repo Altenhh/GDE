@@ -9,7 +9,7 @@ namespace GDEdit.Tests.Visual
     {
         public TestSceneMainMenu()
         {
-            Add(new ScreenStack(new MainMenu()) { RelativeSizeAxes = Axes.Both });
+            Add(new ScreenStack(new MainMenu()) {RelativeSizeAxes = Axes.Both});
         }
     }
 }

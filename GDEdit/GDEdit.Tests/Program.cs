@@ -1,5 +1,4 @@
 ﻿using osu.Framework;
-using osu.Framework.Platform;
 
 namespace GDEdit.Tests
 {
@@ -7,8 +6,10 @@ namespace GDEdit.Tests
     {
         public static void Main()
         {
-            using (DesktopGameHost host = Host.GetSuitableHost("GDE Tests", true))
+            using (var host = Host.GetSuitableHost("GDE Tests", true))
+            {
                 host.Run(new GDETestBrowser());
+            }
         }
     }
 }

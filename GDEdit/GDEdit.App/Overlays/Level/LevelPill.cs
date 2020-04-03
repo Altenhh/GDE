@@ -10,42 +10,18 @@ namespace GDEdit.App.Overlays.Level
 {
     public class LevelPill : CircularContainer
     {
-        /// <summary>
-        /// The colour used for the background.
-        /// </summary>
-        public Color4 BackgroundColour = GDEColour.Gray20;
-        
-        private Color4? iconColour;
-
-        /// <summary>
-        /// The icon colour. This does not affect <see cref="Drawable.Colour">Colour</see>.
-        /// </summary>
-        public Color4 IconColour
-        {
-            get => iconColour ?? Color4.White;
-            set
-            {
-                iconColour = value;
-                icon.Colour = value;
-            }
-        }
-
-        /// <summary>
-        /// The icon scale. This does not affect <see cref="Drawable.Scale">Scale</see>.
-        /// </summary>
-        public Vector2 IconScale
-        {
-            get => icon.Scale;
-            set => icon.Scale = value;
-        }
-
         private readonly SpriteIcon icon;
+
+        /// <summary>The colour used for the background.</summary>
+        public Color4 BackgroundColour = GDEColour.Gray20;
+
+        private Color4? iconColour;
 
         public LevelPill(IconUsage icon, string text)
         {
             AutoSizeAxes = Axes.Both;
             Masking = true;
-            
+
             Children = new Drawable[]
             {
                 new Box
@@ -80,6 +56,24 @@ namespace GDEdit.App.Overlays.Level
                     }
                 }
             };
+        }
+
+        /// <summary>The icon colour. This does not affect <see cref="Drawable.Colour">Colour</see>.</summary>
+        public Color4 IconColour
+        {
+            get => iconColour ?? Color4.White;
+            set
+            {
+                iconColour = value;
+                icon.Colour = value;
+            }
+        }
+
+        /// <summary>The icon scale. This does not affect <see cref="Drawable.Scale">Scale</see>.</summary>
+        public Vector2 IconScale
+        {
+            get => icon.Scale;
+            set => icon.Scale = value;
         }
     }
 }

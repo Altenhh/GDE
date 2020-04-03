@@ -1,16 +1,10 @@
-﻿using osu.Framework.Extensions.Color4Extensions;
-using osuTK;
+﻿using osuTK;
 using osuTK.Graphics;
 
 namespace GDEdit.App.Graphics
 {
     public static class GDEColour
     {
-        public static Color4 Gray(float amt) => new Color4(amt, amt, amt, 1f);
-        public static Color4 Gray(byte amt) => new Color4(amt, amt, amt, 255);
-
-        public static Color4 GetLightness(float lightness) => Color4.FromHsl(new Vector4(0, 0, lightness, 1));
-
         public static readonly Color4 Gray0 = GetLightness(0);
         public static readonly Color4 Gray05 = GetLightness(0.05f);
         public static readonly Color4 Gray10 = GetLightness(0.1f);
@@ -32,5 +26,10 @@ namespace GDEdit.App.Graphics
         public static readonly Color4 Gray90 = GetLightness(0.9f);
         public static readonly Color4 Gray95 = GetLightness(0.95f);
         public static readonly Color4 Gray100 = GetLightness(1f);
+
+        public static Color4 Gray(float amt) => new Color4(amt, amt, amt, 1f);
+        public static Color4 Gray(byte amt) => new Color4(amt, amt, amt, 255);
+
+        public static Color4 GetLightness(float lightness) => Color4.FromHsl(new Vector4(0, 0, lightness, 1));
     }
 }

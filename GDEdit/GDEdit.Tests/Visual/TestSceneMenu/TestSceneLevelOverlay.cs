@@ -16,7 +16,7 @@ namespace GDEdit.Tests.Visual.TestSceneMenu
             typeof(LevelOverlay)
         };
 
-        private Database collection = new DatabaseCollection()[0];
+        private readonly Database collection = new DatabaseCollection()[0];
 
         [SetUpSteps]
         public void Setup()

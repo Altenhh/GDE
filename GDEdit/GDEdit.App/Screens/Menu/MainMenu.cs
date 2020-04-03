@@ -7,6 +7,7 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.Screens;
+
 namespace GDEdit.App.Screens.Menu
 {
     public class MainMenu : Screen
@@ -35,14 +36,14 @@ namespace GDEdit.App.Screens.Menu
                             FillMode = FillMode.Fill,
                             Texture = store.Get("https://pbs.twimg.com/media/EUWEe0IU8AEqYod?format=jpg&name=orig"),
                             Anchor = Anchor.Centre,
-                            Origin = Anchor.Centre,
+                            Origin = Anchor.Centre
                         },
                         new Box
                         {
                             Colour = ColourInfo.GradientVertical(Color4Extensions.FromHex("1A1A1A").Opacity(0),
-                                                                           Color4Extensions.FromHex("1A1A1A")),
+                                                                 Color4Extensions.FromHex("1A1A1A")),
                             RelativeSizeAxes = Axes.Both
-                        },
+                        }
                     }
                 }
             });

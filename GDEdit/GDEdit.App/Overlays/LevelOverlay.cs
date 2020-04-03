@@ -18,14 +18,14 @@ namespace GDEdit.App.Overlays
 {
     public class LevelOverlay : FocusedOverlayContainer
     {
-        private GDAPI.Objects.GeometryDash.General.Level level;
-        private SongMetadata songMetadata;
-        
+        private readonly GDAPI.Objects.GeometryDash.General.Level level;
+        private readonly SongMetadata songMetadata;
+
         public LevelOverlay(GDAPI.Objects.GeometryDash.General.Level level, Database database)
         {
             this.level = level;
             level.InitializeLoadingLevelString();
-            
+
             RelativeSizeAxes = Axes.X;
             AutoSizeAxes = Axes.Y;
             Width = 0.85f;
@@ -52,7 +52,8 @@ namespace GDEdit.App.Overlays
         {
             TextFlowContainer songTextFlow;
             TextFlowContainer descriptionTextFlow;
-            
+
+            // TODO: Split this out onto multiple classes.
             Child = new FillFlowContainer
             {
                 RelativeSizeAxes = Axes.X,
@@ -76,7 +77,7 @@ namespace GDEdit.App.Overlays
                                 FillMode = FillMode.Fill,
                                 Texture = store.Get("https://pbs.twimg.com/media/ENFcYM_UYAY5yV5?format=jpg&name=orig"),
                                 Anchor = Anchor.Centre,
-                                Origin = Anchor.Centre,
+                                Origin = Anchor.Centre
                             },
                             new Container
                             {
@@ -94,13 +95,14 @@ namespace GDEdit.App.Overlays
                                         IconScale = new Vector2(0.5f),
                                         Action = ToggleVisibility,
                                         Anchor = Anchor.TopRight,
-                                        Origin = Anchor.Centre,
+                                        Origin = Anchor.Centre
                                     }
                                 }
                             }
                         }
                     },
                     #endregion
+
                     #region Title
                     new Container
                     {
@@ -146,13 +148,14 @@ namespace GDEdit.App.Overlays
                                         // a bit of a cheat here, but do i care? no.
                                         RelativeSizeAxes = Axes.X,
                                         Height = 20,
-                                        TextAnchor = Anchor.BottomLeft,
+                                        TextAnchor = Anchor.BottomLeft
                                     }
                                 }
                             }
                         }
                     },
                     #endregion
+
                     #region Components
                     new Container
                     {
@@ -193,7 +196,7 @@ namespace GDEdit.App.Overlays
                                                 BorderColour = Color4.FromHsl(new Vector4(292 / 360f, 1, 0.7f, 1)),
                                                 BorderThickness = 2
                                             },
-                                            new LevelPill(FontAwesome.Solid.Clock, level.TimeLength.ToString(@"m\:ss")),
+                                            new LevelPill(FontAwesome.Solid.Clock, level.TimeLength.ToString(@"m\:ss"))
                                         }
                                     },
                                     new ObjectDensity(level.LevelObjects)
@@ -220,9 +223,9 @@ namespace GDEdit.App.Overlays
                                             {
                                                 RelativeSizeAxes = Axes.X,
                                                 AutoSizeAxes = Axes.Y
-                                            },
+                                            }
                                         }
-                                    },
+                                    }
                                 }
                             }
                         }
@@ -245,21 +248,24 @@ namespace GDEdit.App.Overlays
 
             if (string.IsNullOrEmpty(level.Description))
             {
-                descriptionTextFlow.AddText("This level does not have a description set. ", t => { t.Font = new FontUsage(size: 14); });
+                descriptionTextFlow.AddText("This level does not have a description set. ",
+                                            t => { t.Font = new FontUsage(size: 14); });
+
                 descriptionTextFlow.AddText("Click here ", t => { t.Font = new FontUsage("Torus", 14, "SemiBold"); });
                 descriptionTextFlow.AddText("to add a description!", t => { t.Font = new FontUsage(size: 14); });
             }
             else
+            {
                 descriptionTextFlow.AddText(level.Description, t => { t.Font = new FontUsage(size: 14); });
+            }
         }
 
         public override void Show()
         {
             if (State.Value == Visibility.Visible)
-            {
+
                 // re-trigger the state changed so we can potentially surface to front
                 State.TriggerChange();
-            }
             else
                 base.Show();
         }
@@ -267,7 +273,7 @@ namespace GDEdit.App.Overlays
         protected override void PopIn()
         {
             base.PopIn();
-            
+
             FadeEdgeEffectTo(0.4f, 100, Easing.Out);
             this.FadeIn(100, Easing.Out);
             this.ScaleTo(1, 100, Easing.Out);
@@ -276,7 +282,7 @@ namespace GDEdit.App.Overlays
         protected override void PopOut()
         {
             base.PopOut();
-            
+
             FadeEdgeEffectTo(0f, 100, Easing.In);
             this.FadeOut(100, Easing.In);
             this.ScaleTo(0.99f, 100, Easing.InQuint);

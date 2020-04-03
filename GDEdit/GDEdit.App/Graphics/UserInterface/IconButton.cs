@@ -10,11 +10,25 @@ namespace GDEdit.App.Graphics.UserInterface
     {
         public const float DEFAULT_BUTTON_SIZE = 30;
 
+        private readonly SpriteIcon icon;
+
         private Color4? iconColour;
 
-        /// <summary>
-        /// The icon colour. This does not affect <see cref="Drawable.Colour">Colour</see>.
-        /// </summary>
+        private Color4? iconHoverColour;
+
+        public IconButton()
+        {
+            Size = new Vector2(DEFAULT_BUTTON_SIZE);
+
+            Add(icon = new SpriteIcon
+            {
+                Origin = Anchor.Centre,
+                Anchor = Anchor.Centre,
+                Size = new Vector2(18)
+            });
+        }
+
+        /// <summary>The icon colour. This does not affect <see cref="Drawable.Colour">Colour</see>.</summary>
         public Color4 IconColour
         {
             get => iconColour ?? Color4.White;
@@ -24,53 +38,32 @@ namespace GDEdit.App.Graphics.UserInterface
                 icon.Colour = value;
             }
         }
-        
-        private Color4? iconHoverColour;
 
-        /// <summary>
-        /// The icon colour while the <see cref="IconButton"/> is hovered.
-        /// </summary>
+        /// <summary>The icon colour while the <see cref="IconButton" /> is hovered.</summary>
         public Color4 IconHoverColour
         {
             get => iconHoverColour ?? IconColour;
             set => iconHoverColour = value;
         }
 
-        /// <summary>
-        /// The icon.
-        /// </summary>
+        /// <summary>The icon.</summary>
         public IconUsage Icon
         {
             get => icon.Icon;
             set => icon.Icon = value;
         }
-        
-        /// <summary>
-        /// The icon scale. This does not affect <see cref="Drawable.Scale">Scale</see>.
-        /// </summary>
+
+        /// <summary>The icon scale. This does not affect <see cref="Drawable.Scale">Scale</see>.</summary>
         public Vector2 IconScale
         {
             get => icon.Scale;
             set => icon.Scale = value;
         }
 
-        private readonly SpriteIcon icon;
-        
-        public IconButton()
-        {
-            Size = new Vector2(DEFAULT_BUTTON_SIZE);
-
-            Add(icon = new SpriteIcon
-            {
-                Origin = Anchor.Centre,
-                Anchor = Anchor.Centre,
-                Size = new Vector2(18),
-            });
-        }
-
         protected override bool OnHover(HoverEvent e)
         {
             icon.FadeColour(IconHoverColour, 500, Easing.OutQuint);
+
             return base.OnHover(e);
         }
 

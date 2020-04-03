@@ -21,27 +21,27 @@ namespace GDEdit.Tests.Visual.TestSceneObjects
 
         [Resolved]
         private TextureStore Textures { get; set; }
-        
+
         protected override void LoadComplete()
         {
             base.LoadComplete();
-            
-            FillFlowContainer container;
-            
-            Add(new BasicScrollContainer
-                {
-                    RelativeSizeAxes = Axes.Both,
-                    Child = container = new FillFlowContainer
-                                        {
-                                            RelativeSizeAxes = Axes.X,
-                                            AutoSizeAxes     = Axes.Y,
-                                        }
-                });
 
-            for (int i = 0; i < 1911; i++)
+            FillFlowContainer container;
+
+            Add(new BasicScrollContainer
+            {
+                RelativeSizeAxes = Axes.Both,
+                Child = container = new FillFlowContainer
+                {
+                    RelativeSizeAxes = Axes.X,
+                    AutoSizeAxes = Axes.Y
+                }
+            });
+
+            for (var i = 0; i < 1911; i++)
             {
                 var obj = ObjectManager.GetAppropriateObject(i, Textures);
-                
+
                 if (obj != null)
                     container.Add(obj);
             }

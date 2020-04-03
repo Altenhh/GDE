@@ -21,7 +21,7 @@ namespace GDEdit.Tests.Visual
         {
             app = new GDEMain();
             app.SetHost(host);
-            
+
             Add(app);
         }
     }

@@ -11,13 +11,13 @@ namespace GDEdit.App.Level.Object
     {
         /// <summary>ID of the object.</summary>
         public abstract int ID { get; set; }
-        
+
         /// <summary>Origin offset.</summary>
         public abstract Vector2 Offset { get; set; }
-        
+
         public abstract Anchor Anchor { get; set; }
 
-        /// <summary>How many times should the <see cref="Sprite"/> be duplicated in a circle</summary>
+        /// <summary>How many times should the <see cref="Sprite" /> be duplicated in a circle</summary>
         protected virtual int DuplicationAmount { get; set; } = 1;
 
         /// <summary>Create what you would see on the Level Preview. Only use this for absolutely special objects.</summary>
@@ -29,14 +29,14 @@ namespace GDEdit.App.Level.Object
             var container = new Container
             {
                 Anchor = Anchor.Centre,
-                Origin = Anchor.Centre,
+                Origin = Anchor.Centre
             };
-            
-            for (int i = 0; i < DuplicationAmount; i++)
+
+            for (var i = 0; i < DuplicationAmount; i++)
             {
                 container.Add(new Sprite
                 {
-                    Texture  = store.Get($"Objects/{ID}.png"),
+                    Texture = store.Get($"Objects/{ID}.png"),
                     FillMode = FillMode.Fit,
                     Rotation = rotationOffset,
                     Origin = Anchor
@@ -44,7 +44,7 @@ namespace GDEdit.App.Level.Object
 
                 rotationOffset += rotationOffset;
             }
-            
+
             var drawable = new ConstrainedSpriteContainer
             {
                 Size = new Vector2(store.Get($"Objects/{ID}.png").Height / 2),

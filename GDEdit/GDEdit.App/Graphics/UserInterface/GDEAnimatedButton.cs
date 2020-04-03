@@ -14,24 +14,13 @@ namespace GDEdit.App.Graphics.UserInterface
         private readonly Container content;
         private readonly Box hover;
 
-        /// <summary>The colour that should be flashed when the <see cref="GDEAnimatedButton" /> is clicked.</summary>
-        protected Color4 FlashColour = GDEColour.Gray30;
-        
         /// <summary>The background colour that will stay constant.</summary>
         protected Color4 BackgroundColour = GDEColour.Gray10;
 
-        private Color4 hoverColour = GDEColour.Gray15;
+        /// <summary>The colour that should be flashed when the <see cref="GDEAnimatedButton" /> is clicked.</summary>
+        protected Color4 FlashColour = GDEColour.Gray30;
 
-        /// <summary>The background colour of the <see cref="GDEAnimatedButton" /> while it is hovered.</summary>
-        protected Color4 HoverColour
-        {
-            get => hoverColour;
-            set
-            {
-                hoverColour = value;
-                hover.Colour = value;
-            }
-        }
+        private Color4 hoverColour = GDEColour.Gray15;
 
         public GDEAnimatedButton()
         {
@@ -59,9 +48,20 @@ namespace GDEdit.App.Graphics.UserInterface
                         RelativeSizeAxes = Axes.Both,
                         Colour = HoverColour,
                         Alpha = 0
-                    },
+                    }
                 }
             });
+        }
+
+        /// <summary>The background colour of the <see cref="GDEAnimatedButton" /> while it is hovered.</summary>
+        protected Color4 HoverColour
+        {
+            get => hoverColour;
+            set
+            {
+                hoverColour = value;
+                hover.Colour = value;
+            }
         }
 
         [BackgroundDependencyLoader]
@@ -69,16 +69,19 @@ namespace GDEdit.App.Graphics.UserInterface
         {
             if (AutoSizeAxes != Axes.None)
             {
-                content.RelativeSizeAxes = (Axes.Both & ~AutoSizeAxes);
+                content.RelativeSizeAxes = Axes.Both & ~AutoSizeAxes;
                 content.AutoSizeAxes = AutoSizeAxes;
             }
-            
-            Enabled.BindValueChanged(enabled => this.FadeColour(enabled.NewValue ? Color4.White : GDEColour.Gray60, 200, Easing.OutQuint), true);
+
+            Enabled.BindValueChanged(
+                enabled => this.FadeColour(enabled.NewValue ? Color4.White : GDEColour.Gray60, 200, Easing.OutQuint),
+                true);
         }
-        
+
         protected override bool OnHover(HoverEvent e)
         {
             hover.FadeIn(100, Easing.Out);
+
             return base.OnHover(e);
         }
 
@@ -91,12 +94,14 @@ namespace GDEdit.App.Graphics.UserInterface
         protected override bool OnClick(ClickEvent e)
         {
             hover.FlashColour(FlashColour, 200, Easing.Out);
+
             return base.OnClick(e);
         }
 
         protected override bool OnMouseDown(MouseDownEvent e)
         {
             Content.ScaleTo(0.9f, 100, Easing.Out);
+
             return base.OnMouseDown(e);
         }
 
