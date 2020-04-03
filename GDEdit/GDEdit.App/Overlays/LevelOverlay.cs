@@ -50,7 +50,8 @@ namespace GDEdit.App.Overlays
         [BackgroundDependencyLoader]
         private void load(TextureStore store)
         {
-            TextFlowContainer textFlow;
+            TextFlowContainer songTextFlow;
+            TextFlowContainer descriptionTextFlow;
             
             Child = new FillFlowContainer
             {
@@ -138,9 +139,9 @@ namespace GDEdit.App.Overlays
                                     new SpriteText
                                     {
                                         Text = level.Name,
-                                        Font = new FontUsage(size: 24)
+                                        Font = new FontUsage("Torus", 24, "SemiBold")
                                     },
-                                    textFlow = new TextFlowContainer
+                                    songTextFlow = new TextFlowContainer
                                     {
                                         // a bit of a cheat here, but do i care? no.
                                         RelativeSizeAxes = Axes.X,
@@ -157,7 +158,7 @@ namespace GDEdit.App.Overlays
                     {
                         Name = "Components",
                         RelativeSizeAxes = Axes.X,
-                        Height = 125,
+                        AutoSizeAxes = Axes.Y,
                         Children = new Drawable[]
                         {
                             new Box
@@ -167,13 +168,15 @@ namespace GDEdit.App.Overlays
                             },
                             new FillFlowContainer
                             {
-                                RelativeSizeAxes = Axes.Both,
+                                RelativeSizeAxes = Axes.X,
+                                AutoSizeAxes = Axes.Y,
                                 Direction = FillDirection.Vertical,
                                 Spacing = new Vector2(0, 10),
                                 Padding = new MarginPadding
                                 {
                                     Horizontal = 70,
-                                    Vertical = 20
+                                    Top = 20,
+                                    Bottom = 10
                                 },
                                 Children = new Drawable[]
                                 {
@@ -199,7 +202,27 @@ namespace GDEdit.App.Overlays
                                         MidColour = Color4Extensions.FromHex(@"52B1E0"),
                                         HighColour = Color4Extensions.FromHex(@"66CCFF"),
                                         DefColour = Color4Extensions.FromHex(@"2E3538")
-                                    }
+                                    },
+                                    new FillFlowContainer
+                                    {
+                                        RelativeSizeAxes = Axes.X,
+                                        AutoSizeAxes = Axes.Y,
+                                        Direction = FillDirection.Vertical,
+                                        Spacing = new Vector2(0, 5),
+                                        Children = new Drawable[]
+                                        {
+                                            new SpriteText
+                                            {
+                                                Text = "Description",
+                                                Font = new FontUsage("Torus", 18, "SemiBold")
+                                            },
+                                            descriptionTextFlow = new TextFlowContainer
+                                            {
+                                                RelativeSizeAxes = Axes.X,
+                                                AutoSizeAxes = Axes.Y
+                                            },
+                                        }
+                                    },
                                 }
                             }
                         }
@@ -208,19 +231,28 @@ namespace GDEdit.App.Overlays
                 }
             };
 
-            textFlow.AddText(songMetadata.Title, t =>
+            songTextFlow.AddText(songMetadata.Title, t =>
             {
-                t.Font = new FontUsage(size: 18);
+                t.Font = new FontUsage("Torus", 18, "SemiBold");
                 t.Colour = GDEColour.Gray80;
             });
 
-            textFlow.AddText(" by " + songMetadata.Artist, t =>
+            songTextFlow.AddText(" by " + songMetadata.Artist, t =>
             {
-                t.Font = new FontUsage(size: 14);
+                t.Font = new FontUsage("Torus", 14, "SemiBold");
                 t.Colour = GDEColour.Gray70;
             });
+
+            if (string.IsNullOrEmpty(level.Description))
+            {
+                descriptionTextFlow.AddText("This level does not have a description set. ", t => { t.Font = new FontUsage(size: 14); });
+                descriptionTextFlow.AddText("Click here ", t => { t.Font = new FontUsage("Torus", 14, "SemiBold"); });
+                descriptionTextFlow.AddText("to add a description!", t => { t.Font = new FontUsage(size: 14); });
+            }
+            else
+                descriptionTextFlow.AddText(level.Description, t => { t.Font = new FontUsage(size: 14); });
         }
-        
+
         public override void Show()
         {
             if (State.Value == Visibility.Visible)

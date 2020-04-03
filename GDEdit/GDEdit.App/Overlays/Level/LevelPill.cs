@@ -75,7 +75,7 @@ namespace GDEdit.App.Overlays.Level
                         new SpriteText
                         {
                             Text = text,
-                            Font = new FontUsage(size: 14)
+                            Font = new FontUsage("Torus", 14, "SemiBold")
                         }
                     }
                 }
