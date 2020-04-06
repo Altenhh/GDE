@@ -1,4 +1,5 @@
-﻿using GDAPI.Application;
+﻿using System;
+using GDAPI.Application;
 using GDAPI.Objects.GeometryDash.General;
 using GDEdit.App.Graphics;
 using GDEdit.App.Graphics.UserInterface;
@@ -11,8 +12,13 @@ using osu.Framework.Graphics.Effects;
 using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
+using osu.Framework.Graphics.UserInterface;
+using osu.Framework.Input;
+using osu.Framework.Input.Events;
+using osu.Framework.Input.States;
 using osuTK;
 using osuTK.Graphics;
+using osuTK.Input;
 
 namespace GDEdit.App.Overlays
 {
@@ -20,10 +26,12 @@ namespace GDEdit.App.Overlays
     {
         private readonly GDAPI.Objects.GeometryDash.General.Level level;
         private readonly SongMetadata songMetadata;
+        private readonly Database database;
 
         public LevelOverlay(GDAPI.Objects.GeometryDash.General.Level level, Database database)
         {
             this.level = level;
+            this.database = database;
             level.InitializeLoadingLevelString();
 
             RelativeSizeAxes = Axes.X;
@@ -51,7 +59,8 @@ namespace GDEdit.App.Overlays
         private void load(TextureStore store)
         {
             TextFlowContainer songTextFlow;
-            TextFlowContainer descriptionTextFlow;
+            OnClickTextFlow descriptionTextFlow;
+            FillFlowContainer descriptionContainer;
 
             // TODO: Split this out onto multiple classes.
             Child = new FillFlowContainer
@@ -138,10 +147,13 @@ namespace GDEdit.App.Overlays
                                 },
                                 Children = new Drawable[]
                                 {
-                                    new SpriteText
+                                    new SpriteTextBox
                                     {
                                         Text = level.Name,
-                                        Font = new FontUsage("Torus", 24, "SemiBold")
+                                        Font = new FontUsage("Torus", 24, "SemiBold"),
+                                        Height = 34,
+                                        RelativeSizeAxes = Axes.X,
+                                        OnCommit = ChangeTitle
                                     },
                                     songTextFlow = new TextFlowContainer
                                     {
@@ -206,7 +218,7 @@ namespace GDEdit.App.Overlays
                                         HighColour = Color4Extensions.FromHex(@"66CCFF"),
                                         DefColour = Color4Extensions.FromHex(@"2E3538")
                                     },
-                                    new FillFlowContainer
+                                    descriptionContainer = new FillFlowContainer
                                     {
                                         RelativeSizeAxes = Axes.X,
                                         AutoSizeAxes = Axes.Y,
@@ -219,7 +231,7 @@ namespace GDEdit.App.Overlays
                                                 Text = "Description",
                                                 Font = new FontUsage("Torus", 18, "SemiBold")
                                             },
-                                            descriptionTextFlow = new TextFlowContainer
+                                            descriptionTextFlow = new OnClickTextFlow
                                             {
                                                 RelativeSizeAxes = Axes.X,
                                                 AutoSizeAxes = Axes.Y
@@ -234,6 +246,12 @@ namespace GDEdit.App.Overlays
                 }
             };
 
+            void ChangeTitle(TextBox textBox, bool hasNewText)
+            {
+                level.Name = textBox.Text;
+                database.WriteLevelData();
+            }
+            
             songTextFlow.AddText(songMetadata.Title, t =>
             {
                 t.Font = new FontUsage("Torus", 18, "SemiBold");
@@ -258,6 +276,24 @@ namespace GDEdit.App.Overlays
             {
                 descriptionTextFlow.AddText(level.Description, t => { t.Font = new FontUsage(size: 14); });
             }
+
+            descriptionTextFlow.OnClickEvent += e =>
+            {
+                descriptionTextFlow.Expire();
+
+                SpriteTextBox textBox;
+                descriptionContainer.Add(textBox = new SpriteTextBox
+                {
+                    RelativeSizeAxes = Axes.X,
+                    Height = 18
+                });
+
+                textBox.OnCommit += (text, hasNewText) =>
+                {
+                    level.Description = text.Text;
+                    database.WriteLevelData();
+                };
+            };
         }
 
         public override void Show()
@@ -286,6 +322,17 @@ namespace GDEdit.App.Overlays
             FadeEdgeEffectTo(0f, 100, Easing.In);
             this.FadeOut(100, Easing.In);
             this.ScaleTo(0.99f, 100, Easing.InQuint);
+        }
+
+        public class OnClickTextFlow : TextFlowContainer
+        {
+            public Action<ClickEvent> OnClickEvent;
+
+            protected override bool OnClick(ClickEvent e)
+            {
+                OnClickEvent.Invoke(e);
+                return base.OnClick(e);
+            }
         }
     }
 }
