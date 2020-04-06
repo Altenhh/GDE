@@ -5,7 +5,6 @@ using GDEdit.App.Graphics;
 using GDEdit.App.Graphics.UserInterface;
 using GDEdit.App.Overlays.Level;
 using osu.Framework.Allocation;
-using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -14,20 +13,17 @@ using osu.Framework.Graphics.Shapes;
 using osu.Framework.Graphics.Sprites;
 using osu.Framework.Graphics.Textures;
 using osu.Framework.Graphics.UserInterface;
-using osu.Framework.Input;
 using osu.Framework.Input.Events;
-using osu.Framework.Input.States;
 using osuTK;
 using osuTK.Graphics;
-using osuTK.Input;
 
 namespace GDEdit.App.Overlays
 {
     public class LevelOverlay : FocusedOverlayContainer
     {
+        private readonly Database database;
         private readonly GDAPI.Objects.GeometryDash.General.Level level;
         private readonly SongMetadata songMetadata;
-        private readonly Database database;
 
         public LevelOverlay(GDAPI.Objects.GeometryDash.General.Level level, Database database)
         {
@@ -303,7 +299,7 @@ namespace GDEdit.App.Overlays
                 level.Name = textBox.Text;
                 database.WriteLevelData();
             }
-            
+
             songTextFlow.AddText(songMetadata.Title, t =>
             {
                 t.Font = new FontUsage("Torus", 18, "SemiBold");
@@ -334,6 +330,7 @@ namespace GDEdit.App.Overlays
                 descriptionTextFlow.Expire();
 
                 SpriteTextBox textBox;
+
                 descriptionContainer.Add(textBox = new SpriteTextBox
                 {
                     RelativeSizeAxes = Axes.X,
@@ -384,6 +381,7 @@ namespace GDEdit.App.Overlays
             protected override bool OnClick(ClickEvent e)
             {
                 OnClickEvent.Invoke(e);
+
                 return base.OnClick(e);
             }
         }

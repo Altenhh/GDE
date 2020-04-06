@@ -10,7 +10,7 @@ namespace GDEdit.App.Graphics.UserInterface
             BackgroundFocused = GDEColour.Gray20;
             BackgroundCommit = GDEColour.Gray25;
         }
-        
+
         protected override Color4 SelectionColour => GDEColour.Gray40;
     }
 }

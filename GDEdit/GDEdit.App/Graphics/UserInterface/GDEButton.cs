@@ -14,37 +14,17 @@ namespace GDEdit.App.Graphics.UserInterface
 {
     public class GDEButton : Button
     {
-        public string Text
-        {
-            get => SpriteText?.Text;
-            set
-            {
-                if (SpriteText != null)
-                    SpriteText.Text = value;
-            }
-        }
+        protected Box Background;
 
         private Color4? backgroundColour;
 
-        public Color4 BackgroundColour
-        {
-            set
-            {
-                backgroundColour = value;
-                Background.FadeColour(value);
-            }
-        }
-        
-        protected override Container<Drawable> Content { get; }
-
         protected Box Hover;
-        protected Box Background;
         protected SpriteText SpriteText;
 
         public GDEButton()
         {
             Height = 40;
-            
+
             AddInternal(Content = new Container
             {
                 Anchor = Anchor.Centre,
@@ -58,7 +38,7 @@ namespace GDEdit.App.Graphics.UserInterface
                     {
                         Anchor = Anchor.Centre,
                         Origin = Anchor.Centre,
-                        RelativeSizeAxes = Axes.Both,
+                        RelativeSizeAxes = Axes.Both
                     },
                     Hover = new Box
                     {
@@ -70,12 +50,33 @@ namespace GDEdit.App.Graphics.UserInterface
                         Blending = BlendingParameters.Additive,
                         Depth = float.MinValue
                     },
-                    SpriteText = CreateText(),
+                    SpriteText = CreateText()
                 }
             });
-            
+
             Enabled.BindValueChanged(enabledChanged, true);
         }
+
+        public string Text
+        {
+            get => SpriteText?.Text;
+            set
+            {
+                if (SpriteText != null)
+                    SpriteText.Text = value;
+            }
+        }
+
+        public Color4 BackgroundColour
+        {
+            set
+            {
+                backgroundColour = value;
+                Background.FadeColour(value);
+            }
+        }
+
+        protected override Container<Drawable> Content { get; }
 
         [BackgroundDependencyLoader]
         private void load()
@@ -86,7 +87,7 @@ namespace GDEdit.App.Graphics.UserInterface
             Enabled.ValueChanged += enabledChanged;
             Enabled.TriggerChange();
         }
-        
+
         protected override bool OnClick(ClickEvent e)
         {
             if (Enabled.Value)
@@ -97,7 +98,7 @@ namespace GDEdit.App.Graphics.UserInterface
 
             return base.OnClick(e);
         }
-        
+
         protected override bool OnHover(HoverEvent e)
         {
             if (Enabled.Value)
@@ -116,6 +117,7 @@ namespace GDEdit.App.Graphics.UserInterface
         protected override bool OnMouseDown(MouseDownEvent e)
         {
             Content.ResizeHeightTo(0.9f, 100, Easing.Out);
+
             return base.OnMouseDown(e);
         }
 
@@ -133,7 +135,7 @@ namespace GDEdit.App.Graphics.UserInterface
             Origin = Anchor.Centre,
             Font = new FontUsage("Torus", 18, "SemiBold")
         };
-        
+
         private void enabledChanged(ValueChangedEvent<bool> e)
         {
             this.FadeColour(e.NewValue ? Color4.White : Color4.Gray, 200, Easing.OutQuint);

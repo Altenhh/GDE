@@ -7,18 +7,6 @@ namespace GDEdit.App.Graphics.UserInterface
 {
     public class GDETextBox : BasicTextBox
     {
-        protected override float LeftRightPadding => 0;
-
-        protected override float CaretWidth => 3;
-        
-        public FontUsage Font { get; set; }
-
-        protected override SpriteText CreatePlaceholder() => new SpriteText
-        {
-            Font = new FontUsage(size: 18),
-            Colour = GDEColour.Gray(180),
-        };
-
         public GDETextBox()
         {
             Height = 40;
@@ -33,7 +21,19 @@ namespace GDEdit.App.Graphics.UserInterface
             BackgroundCommit = GDEColour.Gray20;
         }
 
+        protected override float LeftRightPadding => 0;
+
+        protected override float CaretWidth => 3;
+
+        public FontUsage Font { get; set; }
+
         protected override Color4 SelectionColour => GDEColour.Gray30;
+
+        protected override SpriteText CreatePlaceholder() => new SpriteText
+        {
+            Font = new FontUsage(size: 18),
+            Colour = GDEColour.Gray(180)
+        };
 
         protected override Drawable GetDrawableCharacter(char c) => new SpriteText
         {
