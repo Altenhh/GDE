@@ -5,6 +5,7 @@ using GDEdit.App.Graphics;
 using GDEdit.App.Graphics.UserInterface;
 using GDEdit.App.Overlays.Level;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Extensions.Color4Extensions;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -243,6 +244,57 @@ namespace GDEdit.App.Overlays
                         }
                     },
                     #endregion
+
+                    #region Buttons
+                    new Container
+                    {
+                        Name = "Action Buttons",
+                        RelativeSizeAxes = Axes.X,
+                        AutoSizeAxes = Axes.Y,
+                        Children = new Drawable[]
+                        {
+                            new Box
+                            {
+                                Colour = GDEColour.Gray15,
+                                RelativeSizeAxes = Axes.Both
+                            },
+                            new FillFlowContainer
+                            {
+                                RelativeSizeAxes = Axes.X,
+                                AutoSizeAxes = Axes.Y,
+                                Spacing = new Vector2(10, 0),
+                                Padding = new MarginPadding
+                                {
+                                    Horizontal = 70,
+                                    Vertical = 10
+                                },
+                                Children = new Drawable[]
+                                {
+                                    new GDEButton
+                                    {
+                                        Text = "Delete Level",
+                                        BackgroundColour = Color4.FromHsl(new Vector4(0, 1, 0.65f, 1)),
+                                        Anchor = Anchor.BottomRight,
+                                        Origin = Anchor.BottomRight,
+                                        Width = 128.5f,
+                                        Height = 30,
+                                        Enabled = { Value = true }
+                                    },
+                                    new GDEButton
+                                    {
+                                        Text = "Edit Level",
+                                        BackgroundColour = Color4.FromHsl(new Vector4(292 / 360f, 1, 0.65f, 1)),
+                                        Anchor = Anchor.BottomRight,
+                                        Origin = Anchor.BottomRight,
+                                        Width = 114,
+                                        Height = 30,
+                                        Enabled = { Value = true }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    #endregion
                 }
             };
 
@@ -285,7 +337,8 @@ namespace GDEdit.App.Overlays
                 descriptionContainer.Add(textBox = new SpriteTextBox
                 {
                     RelativeSizeAxes = Axes.X,
-                    Height = 18
+                    Height = 18,
+                    Text = level.Description
                 });
 
                 textBox.OnCommit += (text, hasNewText) =>
